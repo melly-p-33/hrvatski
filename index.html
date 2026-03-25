@@ -91,16 +91,44 @@
   nav {
     background: var(--white);
     border-bottom: 1px solid var(--sand-dark);
-    padding: 0 2rem;
+  }
+  .nav-groups {
     display: flex;
-    gap: 4px;
+    gap: 0;
+    padding: 0 1.5rem;
+    border-bottom: 1px solid var(--sand-dark);
+  }
+  .nav-group-btn {
+    padding: 10px 18px;
+    border: none;
+    background: none;
+    font-family: var(--font-body);
+    font-size: 0.78rem;
+    font-weight: 500;
+    color: var(--stone-light);
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    transition: all 0.15s;
+    white-space: nowrap;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    margin-bottom: -1px;
+  }
+  .nav-group-btn:hover { color: var(--ink); }
+  .nav-group-btn.active { color: var(--ink); border-bottom-color: var(--ink); }
+
+  .nav-sub {
+    display: none;
+    gap: 2px;
+    padding: 0 1rem;
     overflow-x: auto;
     scrollbar-width: none;
   }
-  nav::-webkit-scrollbar { display: none; }
+  .nav-sub::-webkit-scrollbar { display: none; }
+  .nav-sub.active { display: flex; }
 
   .nav-btn {
-    padding: 14px 20px;
+    padding: 10px 16px;
     border: none;
     background: none;
     font-family: var(--font-body);
@@ -109,13 +137,11 @@
     color: var(--stone-light);
     cursor: pointer;
     border-bottom: 3px solid transparent;
-    transition: all 0.2s;
+    transition: all 0.15s;
     white-space: nowrap;
     letter-spacing: 0.01em;
   }
-
   .nav-btn:hover { color: var(--ink); }
-
   .nav-btn.active {
     color: var(--terracotta);
     border-bottom-color: var(--terracotta);
@@ -965,6 +991,73 @@
   }
   .fav-empty-icon { font-size: 2rem; margin-bottom: 8px; }
 
+  /* ── SRS / DIFFICULTY ── */
+  .diff-row { display:flex; gap:8px; justify-content:center; margin-top:0.75rem; flex-wrap:nowrap; }
+  .diff-btn { flex:1; max-width:110px; padding:10px 6px; border-radius:var(--radius-sm); border:1.5px solid; font-size:0.8rem; font-weight:500; cursor:pointer; font-family:var(--font-body); transition:all 0.15s; text-align:center; }
+  .diff-btn:active { transform:scale(0.97); }
+  .diff-easy { border-color:#B8D090; color:var(--olive); background:var(--olive-pale); }
+  .diff-easy:hover { background:#cde8a0; }
+  .diff-medium { border-color:var(--sand-dark); color:var(--stone); background:var(--sand); }
+  .diff-medium:hover { background:var(--sand-dark); }
+  .diff-hard { border-color:#F0A898; color:var(--terracotta); background:var(--terracotta-pale); }
+  .diff-hard:hover { background:#f5c8c0; }
+  .srs-due-badge { font-size:0.72rem; padding:2px 8px; border-radius:3px; background:var(--terracotta-pale); color:var(--terracotta); border:1px solid #F0A898; }
+
+  /* ── SESSION MODE ── */
+  .session-setup { text-align:center; padding:1rem 0; }
+  .session-size-row { display:flex; gap:10px; justify-content:center; flex-wrap:wrap; margin:1.5rem 0; }
+  .session-size-btn { padding:14px 22px; border-radius:var(--radius-sm); border:1.5px solid var(--sand-dark); background:var(--white); color:var(--ink); font-size:1rem; font-weight:500; cursor:pointer; font-family:var(--font-body); transition:all 0.15s; }
+  .session-size-btn:hover { border-color:var(--sea); background:var(--sea-pale); }
+  .session-size-btn.active { border-color:var(--sea); background:var(--sea); color:var(--white); }
+  .session-progress-wrap { display:flex; align-items:center; gap:12px; margin-bottom:1rem; }
+  .session-bar-track { flex:1; height:8px; background:var(--sand-dark); border-radius:999px; overflow:hidden; }
+  .session-bar-fill { height:100%; background:linear-gradient(90deg,var(--terracotta),var(--sea)); border-radius:999px; transition:width 0.4s ease; }
+  .session-meta { font-size:0.8rem; color:var(--stone-light); white-space:nowrap; }
+  .session-timer { font-family:var(--font-display); font-size:1.1rem; color:var(--stone-light); min-width:44px; text-align:right; }
+  .session-complete { text-align:center; padding:2rem 1rem; }
+  .session-complete-title { font-family:var(--font-display); font-size:2.2rem; font-weight:600; color:var(--ink); margin-bottom:6px; }
+  .session-complete-sub { color:var(--stone-light); font-size:0.9rem; margin-bottom:1.5rem; }
+  .session-stats-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-bottom:1.5rem; }
+  .streak-badge { display:inline-flex; align-items:center; gap:6px; padding:4px 12px; background:var(--terracotta-pale); color:var(--terracotta); border:1px solid #F0A898; border-radius:3px; font-size:0.8rem; font-weight:500; }
+
+  /* ── SPEAK MODE ── */
+  .speak-card { background:var(--white); border-radius:var(--radius); box-shadow:var(--shadow-sm); border:1px solid rgba(90,82,72,0.08); padding:2.5rem 2rem; text-align:center; margin-bottom:1rem; }
+  .speak-word { font-family:var(--font-display); font-size:2rem; font-weight:600; color:var(--ink); margin-bottom:6px; }
+  .speak-hint { font-size:0.85rem; color:var(--terracotta); font-style:italic; margin-bottom:1.5rem; }
+  .mic-btn { width:72px; height:72px; border-radius:50%; border:none; background:var(--sea); color:var(--white); font-size:1.8rem; cursor:pointer; transition:all 0.15s; display:flex; align-items:center; justify-content:center; margin:0 auto 1rem; }
+  .mic-btn:hover { background:var(--sea-light); transform:scale(1.05); }
+  .mic-btn.listening { background:var(--terracotta); animation:mic-pulse 1s infinite alternate; }
+  @keyframes mic-pulse { from{box-shadow:0 0 0 0 rgba(196,98,58,0.4);} to{box-shadow:0 0 0 16px rgba(196,98,58,0);} }
+  .speak-result { font-size:0.95rem; padding:10px 16px; border-radius:var(--radius-sm); margin-top:10px; display:none; }
+  .speak-result.correct { background:var(--olive-pale); color:var(--olive); border:1px solid #B8D090; }
+  .speak-result.wrong { background:var(--terracotta-pale); color:var(--terracotta); border:1px solid #F0A898; }
+  .speak-result.info { background:var(--sea-pale); color:var(--sea); border:1px solid #A0C8D8; }
+
+  /* ── FILL IN THE BLANK ── */
+  .blank-phrase { font-family:var(--font-display); font-size:1.4rem; color:var(--ink); line-height:1.5; margin:1rem 0; text-align:center; }
+  .blank-word { display:inline-block; border-bottom:2px solid var(--terracotta); min-width:80px; color:transparent; background:var(--terracotta-pale); border-radius:3px; padding:0 8px; vertical-align:bottom; }
+  .blank-word.revealed { color:var(--terracotta); background:var(--terracotta-pale); }
+  .blank-options { display:grid; grid-template-columns:1fr 1fr; gap:8px; margin:1rem 0; }
+  .blank-opt { padding:12px 16px; border-radius:var(--radius-sm); border:1.5px solid var(--sand-dark); background:var(--white); color:var(--ink); font-size:0.95rem; cursor:pointer; transition:all 0.15s; text-align:center; font-family:var(--font-body); }
+  .blank-opt:hover:not(.correct-ans):not(.wrong-ans) { border-color:var(--sea); background:var(--sea-pale); }
+  .blank-opt.correct-ans { background:var(--olive-pale); border-color:var(--olive); color:var(--olive); font-weight:500; }
+  .blank-opt.wrong-ans { background:var(--terracotta-pale); border-color:var(--terracotta); color:var(--terracotta); }
+
+  /* ── HEATMAP ── */
+  .heatmap-grid { display:flex; gap:3px; flex-wrap:wrap; margin:10px 0; }
+  .hm-cell { width:14px; height:14px; border-radius:2px; background:var(--sand-dark); }
+  .hm-cell.l1 { background:#C8DFA8; }
+  .hm-cell.l2 { background:#9DC870; }
+  .hm-cell.l3 { background:#6B9E3A; }
+  .hm-cell.l4 { background:#3D6B1A; }
+  .heatmap-legend { display:flex; align-items:center; gap:6px; font-size:0.72rem; color:var(--stone-light); margin-top:6px; }
+  .cat-breakdown { display:flex; flex-direction:column; gap:8px; margin-top:1rem; }
+  .cat-row { display:flex; align-items:center; gap:10px; }
+  .cat-row-label { font-size:0.82rem; color:var(--stone); min-width:80px; }
+  .cat-row-track { flex:1; height:8px; background:var(--sand-dark); border-radius:999px; overflow:hidden; }
+  .cat-row-fill { height:100%; border-radius:999px; background:linear-gradient(90deg,var(--terracotta),var(--sea)); }
+  .cat-row-pct { font-size:0.78rem; color:var(--stone-light); min-width:34px; text-align:right; }
+
 </style>
 </head>
 <body>
@@ -994,14 +1087,29 @@
 </header>
 
 <nav>
-  <button class="nav-btn active" onclick="switchTab('flashcards',this)">Flashcards</button>
-  <button class="nav-btn" onclick="switchTab('alphabet',this)">Alphabet</button>
-  <button class="nav-btn" onclick="switchTab('vocab',this)">Vocabulary</button>
-  <button class="nav-btn" onclick="switchTab('phrases',this)">Phrases</button>
-  <button class="nav-btn" onclick="switchTab('quiz',this)">Quiz</button>
-  <button class="nav-btn" onclick="switchTab('listen',this)">Listening</button>
-  <button class="nav-btn" onclick="switchTab('match',this)">Match</button>
-  <button class="nav-btn" onclick="switchTab('typeit',this)">Type It</button>
+  <div class="nav-groups">
+    <button class="nav-group-btn active" id="grp-learn" onclick="switchGroup('learn',this)">Learn</button>
+    <button class="nav-group-btn" id="grp-practice" onclick="switchGroup('practice',this)">Practice</button>
+    <button class="nav-group-btn" id="grp-reference" onclick="switchGroup('reference',this)">Reference</button>
+  </div>
+  <div class="nav-sub active" id="sub-learn">
+    <button class="nav-btn active" onclick="switchTab('flashcards',this)">Flashcards</button>
+    <button class="nav-btn" onclick="switchTab('srs',this)">Smart Review</button>
+    <button class="nav-btn" onclick="switchTab('session',this)">Session</button>
+  </div>
+  <div class="nav-sub" id="sub-practice">
+    <button class="nav-btn" onclick="switchTab('quiz',this)">Quiz</button>
+    <button class="nav-btn" onclick="switchTab('typeit',this)">Type It</button>
+    <button class="nav-btn" onclick="switchTab('speak',this)">Speak</button>
+    <button class="nav-btn" onclick="switchTab('listen',this)">Listening</button>
+    <button class="nav-btn" onclick="switchTab('match',this)">Match</button>
+    <button class="nav-btn" onclick="switchTab('fillin',this)">Fill In</button>
+  </div>
+  <div class="nav-sub" id="sub-reference">
+    <button class="nav-btn" onclick="switchTab('vocab',this)">Vocabulary</button>
+    <button class="nav-btn" onclick="switchTab('phrases',this)">Phrases</button>
+    <button class="nav-btn" onclick="switchTab('alphabet',this)">Alphabet</button>
+  </div>
 </nav>
 
 <main>
@@ -1046,6 +1154,11 @@
       <button class="btn btn-primary" onclick="nextCard()">Next &#8594;</button>
       <button class="btn btn-mastered" id="btn-know" onclick="toggleMastered()">✓ I know this</button>
       <button class="fav-btn" id="btn-fav-fc" onclick="toggleFavFC()" title="Add to favourites"><svg width="16" height="15" viewBox="0 0 22 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path class="heart-outline" d="M11 18.5C11 18.5 1.5 12.5 1.5 6.5C1.5 4.0147 3.51472 2 6 2C8.00736 2 9.72922 3.21765 10.4635 4.96328C10.6554 5.41799 11.3446 5.41799 11.5365 4.96328C12.2708 3.21765 13.9926 2 16 2C18.4853 2 20.5 4.0147 20.5 6.5C20.5 12.5 11 18.5 11 18.5Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path class="heart-fill" d="M11 18.5C11 18.5 1.5 12.5 1.5 6.5C1.5 4.0147 3.51472 2 6 2C8.00736 2 9.72922 3.21765 10.4635 4.96328C10.6554 5.41799 11.3446 5.41799 11.5365 4.96328C12.2708 3.21765 13.9926 2 16 2C18.4853 2 20.5 4.0147 20.5 6.5C20.5 12.5 11 18.5 11 18.5Z" fill="currentColor"/></svg></button>
+    </div>
+    <div class="diff-row" id="diff-row" style="display:none;">
+      <button class="diff-btn diff-easy" onclick="rateDifficulty('easy')">Easy ✓</button>
+      <button class="diff-btn diff-medium" onclick="rateDifficulty('medium')">So-so</button>
+      <button class="diff-btn diff-hard" onclick="rateDifficulty('hard')">Hard ✗</button>
     </div>
     <div style="font-size:0.78rem;color:var(--stone-light);text-align:center;margin-top:8px;" id="fc-mastered-count"></div>
   </div>
@@ -1284,6 +1397,25 @@
     </div>
 
     <div style="margin-top:1.5rem;padding-top:1.25rem;border-top:1px solid var(--sand-dark);">
+      <div class="prog-log-title" style="margin-bottom:12px;">Activity heatmap</div>
+      <div class="heatmap-grid" id="prog-heatmap"></div>
+      <div class="heatmap-legend">
+        <span>Less</span>
+        <div class="hm-cell"></div>
+        <div class="hm-cell l1"></div>
+        <div class="hm-cell l2"></div>
+        <div class="hm-cell l3"></div>
+        <div class="hm-cell l4"></div>
+        <span>More</span>
+      </div>
+    </div>
+
+    <div style="margin-top:1.5rem;padding-top:1.25rem;border-top:1px solid var(--sand-dark);">
+      <div class="prog-log-title" style="margin-bottom:12px;">Mastery by category</div>
+      <div class="cat-breakdown" id="prog-cat-breakdown"></div>
+    </div>
+
+    <div style="margin-top:1.5rem;padding-top:1.25rem;border-top:1px solid var(--sand-dark);">
       <div class="prog-log-title" style="margin-bottom:10px;">Backup &amp; restore</div>
       <div style="display:flex;gap:8px;flex-wrap:wrap;">
         <button class="btn btn-ghost" onclick="exportData()">&#8659; Download backup</button>
@@ -1303,6 +1435,156 @@
       <div class="section-sub">Words and phrases you've starred — tap ♡ anywhere to save</div>
     </div>
     <div id="fav-list"></div>
+  </div>
+  <!-- ── SMART REVIEW (SRS) ── -->
+  <div id="srs" class="section">
+    <div class="section-header">
+      <div class="section-title">Smart Review</div>
+      <div class="section-sub">Spaced repetition — words you struggle with come back more often</div>
+    </div>
+    <div class="fc-controls">
+      <span class="fc-meta" id="srs-counter">Card 1 of 10</span>
+      <span class="srs-due-badge" id="srs-due-badge">0 due</span>
+    </div>
+    <div class="flashcard" onclick="srsReveal()" id="srs-card" style="cursor:pointer;">
+      <span class="fc-cat" id="srs-cat"></span>
+      <div class="fc-word" id="srs-word" style="font-size:1.8rem;margin-top:25px;"></div>
+      <div class="fc-hint" id="srs-hint" style="visibility:hidden;opacity:0;font-size:0.82rem;color:var(--terracotta);font-style:italic;margin-top:2px;transition:opacity 0.2s;"></div>
+      <div class="fc-reveal-slot">
+        <div style="font-family:var(--font-display);font-size:1.3rem;color:var(--stone);line-height:1.2;position:absolute;visibility:hidden;opacity:0;transition:opacity 0.2s;white-space:nowrap;" id="srs-translation"></div>
+        <div style="font-size:0.75rem;color:var(--stone-pale);letter-spacing:0.05em;text-transform:uppercase;transition:opacity 0.2s;position:absolute;white-space:nowrap;" id="srs-tap">tap to reveal</div>
+      </div>
+      <div class="fc-mastered-badge" id="srs-mastered-badge" style="visibility:hidden;margin-top:14px;">✓ Mastered</div>
+    </div>
+    <div class="diff-row" id="srs-diff-row" style="display:none;margin-top:0.75rem;">
+      <button class="diff-btn diff-easy" onclick="srsRate('easy')">Easy ✓</button>
+      <button class="diff-btn diff-medium" onclick="srsRate('medium')">So-so</button>
+      <button class="diff-btn diff-hard" onclick="srsRate('hard')">Hard ✗</button>
+    </div>
+    <div style="text-align:center;margin-top:0.75rem;">
+      <button class="btn btn-sea" onclick="srsSpeakCurrent()" style="margin-right:8px;">&#9654; Hear it</button>
+      <button class="btn btn-ghost" onclick="srsNext()">Skip &#8594;</button>
+    </div>
+  </div>
+
+  <!-- ── SESSION MODE ── -->
+  <div id="session" class="section">
+    <div id="session-setup-view">
+      <div class="section-header">
+        <div class="section-title">Session</div>
+        <div class="section-sub">A focused timed study session</div>
+      </div>
+      <div style="text-align:center;padding:1rem 0;">
+        <div style="font-size:0.82rem;color:var(--stone-light);margin-bottom:1rem;">How many words?</div>
+        <div class="session-size-row">
+          <button class="session-size-btn active" onclick="setSessionSize(10,this)">10</button>
+          <button class="session-size-btn" onclick="setSessionSize(20,this)">20</button>
+          <button class="session-size-btn" onclick="setSessionSize(30,this)">30</button>
+          <button class="session-size-btn" onclick="setSessionSize(50,this)">50</button>
+        </div>
+        <div style="font-size:0.82rem;color:var(--stone-light);margin-bottom:10px;">Category</div>
+        <select class="deck-select" id="session-deck" style="margin-bottom:1.5rem;">
+          <option value="all">All categories</option>
+          <option value="greetings">Greetings</option>
+          <option value="numbers">Numbers</option>
+          <option value="colors">Colors</option>
+          <option value="days">Days</option>
+          <option value="food">Food</option>
+          <option value="basics">Basics</option>
+        </select>
+        <br/>
+        <div id="streak-display" style="margin-bottom:1.25rem;"></div>
+        <button class="btn btn-primary" style="font-size:1rem;padding:12px 32px;" onclick="startSession()">Start session ▶</button>
+      </div>
+    </div>
+    <div id="session-play-view" style="display:none;">
+      <div class="session-progress-wrap">
+        <div class="session-bar-track"><div class="session-bar-fill" id="session-bar" style="width:0%"></div></div>
+        <span class="session-meta" id="session-count-label">0/10</span>
+        <span class="session-timer" id="session-timer">0:00</span>
+      </div>
+      <div class="flashcard" onclick="sessionReveal()" id="session-card" style="cursor:pointer;">
+        <span class="fc-cat" id="session-cat"></span>
+        <div class="fc-word" id="session-word" style="font-size:1.8rem;margin-top:25px;"></div>
+        <div class="fc-hint" id="session-hint" style="visibility:hidden;opacity:0;font-size:0.82rem;color:var(--terracotta);font-style:italic;margin-top:2px;transition:opacity 0.2s;"></div>
+        <div class="fc-reveal-slot">
+          <div style="font-family:var(--font-display);font-size:1.3rem;color:var(--stone);line-height:1.2;position:absolute;visibility:hidden;opacity:0;transition:opacity 0.2s;white-space:nowrap;" id="session-translation"></div>
+          <div style="font-size:0.75rem;color:var(--stone-pale);letter-spacing:0.05em;text-transform:uppercase;position:absolute;white-space:nowrap;transition:opacity 0.2s;" id="session-tap">tap to reveal</div>
+        </div>
+      </div>
+      <div class="diff-row" id="session-diff-row" style="display:none;margin-top:0.75rem;">
+        <button class="diff-btn diff-easy" onclick="sessionRate('easy')">Easy ✓</button>
+        <button class="diff-btn diff-medium" onclick="sessionRate('medium')">So-so</button>
+        <button class="diff-btn diff-hard" onclick="sessionRate('hard')">Hard ✗</button>
+      </div>
+      <div style="text-align:center;margin-top:0.75rem;display:flex;gap:8px;justify-content:center;">
+        <button class="btn btn-sea" onclick="sessionSpeak()">&#9654; Hear it</button>
+        <button class="btn btn-ghost" onclick="endSession()">End session</button>
+      </div>
+    </div>
+    <div id="session-complete-view" style="display:none;" class="session-complete">
+      <div class="session-complete-title" id="session-complete-title">Odlično! 🎉</div>
+      <div class="session-complete-sub" id="session-complete-sub"></div>
+      <div class="session-stats-grid">
+        <div class="prog-stat"><div class="prog-stat-val" id="sc-easy">0</div><div class="prog-stat-label">Easy</div></div>
+        <div class="prog-stat"><div class="prog-stat-val" id="sc-medium">0</div><div class="prog-stat-label">So-so</div></div>
+        <div class="prog-stat"><div class="prog-stat-val" id="sc-hard">0</div><div class="prog-stat-label">Hard</div></div>
+      </div>
+      <div id="streak-complete" style="margin-bottom:1.25rem;"></div>
+      <button class="btn btn-primary" onclick="resetSession()">New session</button>
+    </div>
+  </div>
+
+  <!-- ── SPEAK MODE ── -->
+  <div id="speak" class="section">
+    <div class="section-header">
+      <div class="section-title">Speak</div>
+      <div class="section-sub">Hear a word — say it back in Croatian</div>
+    </div>
+    <div id="speak-unsupported" style="display:none;text-align:center;padding:2rem;color:var(--stone-light);">
+      Speech recognition isn't available in this browser. Try Chrome on desktop or Android.
+    </div>
+    <div id="speak-main">
+      <div class="speak-card">
+        <div style="font-size:0.72rem;text-transform:uppercase;letter-spacing:0.08em;color:var(--stone-light);margin-bottom:8px;" id="speak-cat"></div>
+        <div class="speak-word" id="speak-word">Bok</div>
+        <div class="speak-hint" id="speak-hint">boke</div>
+        <button class="mic-btn" id="mic-btn" onclick="toggleListening()">🎤</button>
+        <div style="font-size:0.8rem;color:var(--stone-light);margin-bottom:8px;" id="speak-status">Tap mic to speak</div>
+        <div class="speak-result" id="speak-result"></div>
+      </div>
+      <div style="text-align:center;margin-top:0.75rem;display:flex;gap:8px;justify-content:center;">
+        <button class="btn btn-sea" onclick="speakCurrentSpeakMode()">&#9654; Hear it</button>
+        <button class="btn btn-ghost" onclick="nextSpeak()">Skip &#8594;</button>
+      </div>
+      <div class="score-bar" style="margin-top:1rem;">
+        <span id="speak-score-label">Score: 0 / 0</span>
+        <span class="score-pct" id="speak-pct">—</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── FILL IN THE BLANK ── -->
+  <div id="fillin" class="section">
+    <div class="section-header">
+      <div class="section-title">Fill In</div>
+      <div class="section-sub">Complete the phrase — pick the missing Croatian word</div>
+    </div>
+    <div class="fc-controls">
+      <span class="fc-meta" id="fi-counter">Question 1</span>
+      <button class="btn btn-ghost" onclick="nextFillIn()" style="font-size:0.8rem;padding:5px 14px;">&#8635; New</button>
+    </div>
+    <div class="card" style="padding:1.5rem;margin-bottom:1rem;">
+      <div style="font-size:0.75rem;text-transform:uppercase;letter-spacing:0.08em;color:var(--stone-light);margin-bottom:12px;">Complete the phrase in Croatian</div>
+      <div class="blank-phrase" id="fi-phrase"></div>
+      <div style="font-size:0.82rem;color:var(--stone-light);text-align:center;margin-top:6px;" id="fi-hint-en"></div>
+    </div>
+    <div class="blank-options" id="fi-options"></div>
+    <div class="feedback" id="fi-feedback"></div>
+    <div class="score-bar" style="margin-top:1rem;">
+      <span id="fi-score-label">Score: 0 / 0</span>
+      <span class="score-pct" id="fi-pct">—</span>
+    </div>
   </div>
 
 </main>
@@ -1591,14 +1873,39 @@ function speak(text){
 // Points (removed display — kept as no-op so existing calls don't break)
 function addPoints(n){}
 
-// Tab switching
+// Nav group mapping
+const tabGroups = {
+  flashcards:'learn', srs:'learn', session:'learn',
+  quiz:'practice', typeit:'practice', speak:'practice', listen:'practice', match:'practice', fillin:'practice',
+  vocab:'reference', phrases:'reference', alphabet:'reference',
+};
+
+function switchGroup(group, el){
+  document.querySelectorAll('.nav-group-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.nav-sub').forEach(s => s.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('sub-'+group).classList.add('active');
+}
+
 function switchTab(id, el){
   document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
   document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
   document.getElementById(id).classList.add('active');
   el.classList.add('active');
+  // Auto-switch group if needed
+  const group = tabGroups[id];
+  if(group){
+    document.querySelectorAll('.nav-group-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.nav-sub').forEach(s => s.classList.remove('active'));
+    document.getElementById('grp-'+group).classList.add('active');
+    document.getElementById('sub-'+group).classList.add('active');
+  }
   if(id === 'progress') renderProgress();
   if(id === 'favourites') buildFavouritesList();
+  if(id === 'srs') initSRS();
+  if(id === 'speak') initSpeakMode();
+  if(id === 'fillin') buildFillIn();
+  if(id === 'session') resetSession();
 }
 
 // ── PERSISTENCE ──
@@ -1610,6 +1917,7 @@ function saveState(){
       mastered: [...mastered],
       favourites: [...favourites],
     }));
+    saveSRSData();
   } catch(e){}
 }
 
@@ -2313,6 +2621,8 @@ function renderProgress(){
   if(progPctEl) progPctEl.textContent = pct + '%';
   const progBtn = document.getElementById('header-prog-btn');
   if(progBtn) progBtn.classList.toggle('has-progress', m > 0);
+  buildHeatmap();
+  buildCatBreakdown();
 
   const log = loadLog();
   const logEl = document.getElementById('prog-log');
@@ -2343,10 +2653,12 @@ function renderProgress(){
 
 function exportData(){
   const data = {
-    version: 1,
+    version: 2,
     exported: new Date().toISOString(),
     mastered: [...mastered],
     favourites: [...favourites],
+    srs: srsData,
+    streak: getStreak(),
     log: loadLog(),
   };
   const blob = new Blob([JSON.stringify(data, null, 2)], {type: 'application/json'});
@@ -2374,6 +2686,8 @@ function importData(e){
       favourites.clear();
       if(Array.isArray(data.favourites)) data.favourites.forEach(k => favourites.add(k));
 
+      if(data.srs) Object.assign(srsData, data.srs);
+      if(data.streak) try{ localStorage.setItem(STREAK_KEY, JSON.stringify(data.streak)); }catch(e){}
       if(Array.isArray(data.log)) saveLog(data.log);
 
       refreshAllCounts();
@@ -2417,13 +2731,22 @@ function updateHeaderFavBtn(){
 }
 
 function switchTabById(id){
-  const el = document.querySelector(`[onclick="switchTab('${id}',this)"]`) || 
-             { classList: { add(){}, remove(){} } };
   document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
   document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
   document.getElementById(id).classList.add('active');
+  const group = tabGroups[id];
+  if(group){
+    document.querySelectorAll('.nav-group-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.nav-sub').forEach(s => s.classList.remove('active'));
+    document.getElementById('grp-'+group).classList.add('active');
+    document.getElementById('sub-'+group).classList.add('active');
+  }
   if(id === 'favourites') buildFavouritesList();
   if(id === 'progress') renderProgress();
+  if(id === 'srs') initSRS();
+  if(id === 'speak') initSpeakMode();
+  if(id === 'fillin') buildFillIn();
+  if(id === 'session') resetSession();
 }
 
 function toggleFav(key){
@@ -2497,8 +2820,440 @@ function buildFavouritesList(){
   container.innerHTML = html;
 }
 
+// ── DIFFICULTY / SRS ENGINE ──
+// difficulty: map of hr key -> {ease: 2.5, interval: 1, due: timestamp, reps: 0}
+const srsData = {};
+
+function getSRS(key){
+  if(!srsData[key]) srsData[key] = {ease:2.5, interval:1, due:Date.now(), reps:0, diff:'new'};
+  return srsData[key];
+}
+
+function updateSRS(key, rating){
+  const d = getSRS(key);
+  const q = rating === 'easy' ? 5 : rating === 'medium' ? 3 : 1;
+  if(q >= 3){
+    if(d.reps === 0) d.interval = 1;
+    else if(d.reps === 1) d.interval = 6;
+    else d.interval = Math.round(d.interval * d.ease);
+    d.reps++;
+  } else {
+    d.reps = 0; d.interval = 1;
+  }
+  d.ease = Math.max(1.3, d.ease + 0.1 - (5-q)*(0.08 + (5-q)*0.02));
+  d.due = Date.now() + d.interval * 24*60*60*1000;
+  d.diff = rating;
+  saveSRSData();
+}
+
+function saveSRSData(){
+  try { localStorage.setItem('hrvatski_srs', JSON.stringify(srsData)); } catch(e){}
+}
+
+function loadSRSData(){
+  try {
+    const raw = localStorage.getItem('hrvatski_srs');
+    if(raw){ const d = JSON.parse(raw); Object.assign(srsData, d); }
+  } catch(e){}
+}
+
+function getDueWords(){
+  const all = allCats.flatMap(c => allWords[c]);
+  const now = Date.now();
+  const due = all.filter(w => getSRS(w.hr).due <= now);
+  const notSeen = all.filter(w => !srsData[w.hr]);
+  return [...due, ...notSeen.slice(0,5)];
+}
+
+// Difficulty rating on main flashcards
+function rateDifficulty(rating){
+  const w = currentDeck[cardIdx];
+  if(!w) return;
+  updateSRS(w.hr, rating);
+  document.getElementById('diff-row').style.display = 'none';
+  nextCard();
+}
+
+// Show diff buttons after reveal
+const origRevealCard = revealCard;
+function revealCard(){
+  origRevealCard();
+  document.getElementById('diff-row').style.display = 'flex';
+}
+
+// ── SMART REVIEW (SRS TAB) ──
+let srsQueue = [], srsIdx = 0, srsRevealed = false;
+
+function initSRS(){
+  const due = getDueWords();
+  srsQueue = [...due].sort(() => Math.random()-0.5);
+  srsIdx = 0; srsRevealed = false;
+  updateSRSCard();
+}
+
+function updateSRSCard(){
+  const dueCount = getDueWords().length;
+  document.getElementById('srs-due-badge').textContent = `${dueCount} due`;
+  if(!srsQueue.length){
+    document.getElementById('srs-word').textContent = 'All caught up! 🎉';
+    document.getElementById('srs-cat').textContent = '';
+    document.getElementById('srs-tap').style.opacity = '0';
+    document.getElementById('srs-diff-row').style.display = 'none';
+    document.getElementById('srs-counter').textContent = '0 cards';
+    return;
+  }
+  if(srsIdx >= srsQueue.length) srsIdx = 0;
+  const w = srsQueue[srsIdx];
+  srsRevealed = false;
+  document.getElementById('srs-word').textContent = w.hr;
+  document.getElementById('srs-cat').textContent = (allCats.find(c=>allWords[c].some(x=>x.hr===w.hr))||'').toUpperCase();
+  document.getElementById('srs-hint').textContent = w.hint;
+  document.getElementById('srs-hint').style.visibility = 'hidden';
+  document.getElementById('srs-hint').style.opacity = '0';
+  document.getElementById('srs-translation').textContent = w.en;
+  document.getElementById('srs-translation').style.visibility = 'hidden';
+  document.getElementById('srs-translation').style.opacity = '0';
+  document.getElementById('srs-tap').style.opacity = '1';
+  document.getElementById('srs-mastered-badge').style.visibility = isMastered(w) ? 'visible' : 'hidden';
+  document.getElementById('srs-diff-row').style.display = 'none';
+  document.getElementById('srs-counter').textContent = `Card ${srsIdx+1} of ${srsQueue.length}`;
+}
+
+function srsReveal(){
+  if(srsRevealed) return;
+  srsRevealed = true;
+  document.getElementById('srs-translation').style.visibility = 'visible';
+  document.getElementById('srs-translation').style.opacity = '1';
+  document.getElementById('srs-hint').style.visibility = 'visible';
+  document.getElementById('srs-hint').style.opacity = '1';
+  document.getElementById('srs-tap').style.opacity = '0';
+  document.getElementById('srs-diff-row').style.display = 'flex';
+}
+
+function srsRate(rating){
+  const w = srsQueue[srsIdx];
+  if(!w) return;
+  updateSRS(w.hr, rating);
+  if(rating === 'easy') srsQueue.splice(srsIdx, 1);
+  else srsIdx++;
+  updateSRSCard();
+}
+
+function srsNext(){ srsIdx++; srsRevealed = false; updateSRSCard(); }
+function srsSpeakCurrent(){ const w = srsQueue[srsIdx]; if(w) speak(w.hr); }
+
+// ── STREAKS ──
+const STREAK_KEY = 'hrvatski_streak';
+
+function getStreak(){
+  try { return JSON.parse(localStorage.getItem(STREAK_KEY) || '{"count":0,"last":""}'); } catch(e){ return {count:0,last:''}; }
+}
+
+function updateStreak(){
+  const today = getTodayKey();
+  const s = getStreak();
+  if(s.last === today) return s;
+  const yesterday = new Date(Date.now() - 86400000);
+  const yKey = `${yesterday.getFullYear()}-${String(yesterday.getMonth()+1).padStart(2,'0')}-${String(yesterday.getDate()).padStart(2,'0')}`;
+  if(s.last === yKey) s.count++;
+  else if(s.last !== today) s.count = 1;
+  s.last = today;
+  try { localStorage.setItem(STREAK_KEY, JSON.stringify(s)); } catch(e){}
+  return s;
+}
+
+function renderStreakBadge(el){
+  const s = getStreak();
+  if(!el) return;
+  el.innerHTML = s.count >= 2
+    ? `<div class="streak-badge">🔥 ${s.count} day streak</div>`
+    : s.count === 1 ? `<div class="streak-badge">🔥 Day 1!</div>` : '';
+}
+
+// ── SESSION MODE ──
+let sessionSize = 10, sessionPool = [], sessionIdx = 0;
+let sessionEasy = 0, sessionMedium = 0, sessionHard = 0;
+let sessionRevealed = false, sessionTimer = null, sessionSeconds = 0;
+
+function setSessionSize(n, el){
+  sessionSize = n;
+  document.querySelectorAll('.session-size-btn').forEach(b=>b.classList.remove('active'));
+  el.classList.add('active');
+}
+
+function startSession(){
+  const deck = document.getElementById('session-deck').value;
+  const pool = deck === 'all' ? allCats.flatMap(c=>allWords[c]) : (allWords[deck]||[]);
+  sessionPool = [...pool].sort(()=>Math.random()-0.5).slice(0, sessionSize);
+  sessionIdx = 0; sessionEasy = 0; sessionMedium = 0; sessionHard = 0;
+  sessionRevealed = false; sessionSeconds = 0;
+  updateStreak();
+  document.getElementById('session-setup-view').style.display = 'none';
+  document.getElementById('session-play-view').style.display = '';
+  document.getElementById('session-complete-view').style.display = 'none';
+  if(sessionTimer) clearInterval(sessionTimer);
+  sessionTimer = setInterval(()=>{
+    sessionSeconds++;
+    const m = Math.floor(sessionSeconds/60), s = sessionSeconds%60;
+    document.getElementById('session-timer').textContent = `${m}:${String(s).padStart(2,'0')}`;
+  }, 1000);
+  showSessionCard();
+}
+
+function showSessionCard(){
+  if(sessionIdx >= sessionPool.length){ endSession(); return; }
+  const w = sessionPool[sessionIdx];
+  sessionRevealed = false;
+  const pct = Math.round(sessionIdx/sessionPool.length*100);
+  document.getElementById('session-bar').style.width = pct+'%';
+  document.getElementById('session-count-label').textContent = `${sessionIdx}/${sessionPool.length}`;
+  document.getElementById('session-word').textContent = w.hr;
+  document.getElementById('session-cat').textContent = (allCats.find(c=>allWords[c].some(x=>x.hr===w.hr))||'').toUpperCase();
+  document.getElementById('session-hint').textContent = w.hint;
+  document.getElementById('session-hint').style.visibility = 'hidden';
+  document.getElementById('session-hint').style.opacity = '0';
+  document.getElementById('session-translation').textContent = w.en;
+  document.getElementById('session-translation').style.visibility = 'hidden';
+  document.getElementById('session-translation').style.opacity = '0';
+  document.getElementById('session-tap').style.opacity = '1';
+  document.getElementById('session-diff-row').style.display = 'none';
+}
+
+function sessionReveal(){
+  if(sessionRevealed) return;
+  sessionRevealed = true;
+  document.getElementById('session-translation').style.visibility = 'visible';
+  document.getElementById('session-translation').style.opacity = '1';
+  document.getElementById('session-hint').style.visibility = 'visible';
+  document.getElementById('session-hint').style.opacity = '1';
+  document.getElementById('session-tap').style.opacity = '0';
+  document.getElementById('session-diff-row').style.display = 'flex';
+}
+
+function sessionRate(rating){
+  const w = sessionPool[sessionIdx];
+  if(!w) return;
+  updateSRS(w.hr, rating);
+  if(rating==='easy') sessionEasy++;
+  else if(rating==='medium') sessionMedium++;
+  else sessionHard++;
+  sessionIdx++;
+  showSessionCard();
+}
+
+function sessionSpeak(){ const w = sessionPool[sessionIdx]; if(w) speak(w.hr); }
+
+function endSession(){
+  if(sessionTimer){ clearInterval(sessionTimer); sessionTimer = null; }
+  const done = sessionEasy + sessionMedium + sessionHard;
+  const m = Math.floor(sessionSeconds/60), s = sessionSeconds%60;
+  const streak = getStreak();
+  document.getElementById('session-play-view').style.display = 'none';
+  document.getElementById('session-complete-view').style.display = '';
+  document.getElementById('sc-easy').textContent = sessionEasy;
+  document.getElementById('sc-medium').textContent = sessionMedium;
+  document.getElementById('sc-hard').textContent = sessionHard;
+  document.getElementById('session-complete-title').textContent = sessionHard === 0 ? 'Savršeno! 🎉' : 'Odlično! ✓';
+  document.getElementById('session-complete-sub').textContent = `${done} words reviewed in ${m}:${String(s).padStart(2,'0')}`;
+  renderStreakBadge(document.getElementById('streak-complete'));
+  snapshotToday();
+}
+
+function resetSession(){
+  document.getElementById('session-setup-view').style.display = '';
+  document.getElementById('session-play-view').style.display = 'none';
+  document.getElementById('session-complete-view').style.display = 'none';
+  renderStreakBadge(document.getElementById('streak-display'));
+}
+
+// ── SPEAK MODE ──
+let speakPool = [], speakIdx = 0, speakScore = 0, speakAttempts = 0;
+let recognition = null, isListening = false;
+
+function initSpeakMode(){
+  speakPool = allCats.flatMap(c=>allWords[c]).sort(()=>Math.random()-0.5);
+  speakIdx = 0;
+  const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if(!SpeechRecognition){
+    document.getElementById('speak-unsupported').style.display = '';
+    document.getElementById('speak-main').style.display = 'none';
+    return;
+  }
+  recognition = new SpeechRecognition();
+  recognition.lang = 'hr-HR';
+  recognition.interimResults = false;
+  recognition.maxAlternatives = 5;
+  recognition.onresult = handleSpeakResult;
+  recognition.onend = ()=>{ isListening = false; document.getElementById('mic-btn').classList.remove('listening'); document.getElementById('speak-status').textContent = 'Tap mic to try again'; };
+  recognition.onerror = (e)=>{ isListening = false; document.getElementById('mic-btn').classList.remove('listening'); document.getElementById('speak-status').textContent = e.error === 'not-allowed' ? 'Mic access denied' : 'Try again'; };
+  showSpeakCard();
+}
+
+function showSpeakCard(){
+  if(!speakPool.length) return;
+  const w = speakPool[speakIdx % speakPool.length];
+  document.getElementById('speak-word').textContent = w.hr;
+  document.getElementById('speak-hint').textContent = w.hint;
+  document.getElementById('speak-cat').textContent = (allCats.find(c=>allWords[c].some(x=>x.hr===w.hr))||'').toUpperCase();
+  document.getElementById('speak-result').style.display = 'none';
+  document.getElementById('speak-status').textContent = 'Tap mic to speak';
+  document.getElementById('mic-btn').classList.remove('listening');
+  isListening = false;
+}
+
+function toggleListening(){
+  if(!recognition) return;
+  if(isListening){ recognition.stop(); return; }
+  isListening = true;
+  document.getElementById('mic-btn').classList.add('listening');
+  document.getElementById('speak-status').textContent = 'Listening...';
+  document.getElementById('speak-result').style.display = 'none';
+  recognition.start();
+}
+
+function handleSpeakResult(e){
+  const w = speakPool[speakIdx % speakPool.length];
+  const alternatives = Array.from(e.results[0]).map(r=>r.transcript.trim().toLowerCase());
+  const target = w.hr.toLowerCase().trim();
+  const correct = alternatives.some(a => a === target || a.includes(target) || target.includes(a));
+  speakAttempts++;
+  if(correct) speakScore++;
+  const res = document.getElementById('speak-result');
+  res.style.display = '';
+  if(correct){
+    res.className = 'speak-result correct';
+    res.textContent = `✓ Točno! You said: "${alternatives[0]}"`;
+    setTimeout(nextSpeak, 1500);
+  } else {
+    res.className = 'speak-result wrong';
+    res.textContent = `✗ You said: "${alternatives[0]}" — correct: "${w.hr}"`;
+    speak(w.hr);
+  }
+  const pct = speakAttempts > 0 ? Math.round(speakScore/speakAttempts*100)+'%' : '—';
+  document.getElementById('speak-score-label').textContent = `Score: ${speakScore} / ${speakAttempts}`;
+  document.getElementById('speak-pct').textContent = pct;
+}
+
+function speakCurrentSpeakMode(){ const w = speakPool[speakIdx % speakPool.length]; if(w) speak(w.hr); }
+function nextSpeak(){ speakIdx++; showSpeakCard(); }
+
+// ── FILL IN THE BLANK ──
+const fillInPhrases = [
+  {phrase:"___ jutro!", blank:"Dobro", hint_en:"Good morning!"},
+  {phrase:"Hvala ___!", blank:"lijepa", hint_en:"Thanks a lot!"},
+  {phrase:"___ mi je.", blank:"Drago", hint_en:"Nice to meet you."},
+  {phrase:"Kako ___?", blank:"si", hint_en:"How are you?"},
+  {phrase:"___ dan!", blank:"Dobar", hint_en:"Good day!"},
+  {phrase:"Ne ___.", blank:"razumijem", hint_en:"I don't understand."},
+  {phrase:"___ se!", blank:"Vidimo", hint_en:"See you!"},
+  {phrase:"Laku ___!", blank:"noć", hint_en:"Good night!"},
+  {phrase:"Gdje ___?", blank:"je", hint_en:"Where is?"},
+  {phrase:"Nema ___.", blank:"problema", hint_en:"No problem."},
+  {phrase:"___ veze.", blank:"Nema", hint_en:"It doesn't matter."},
+  {phrase:"Ma ___!", blank:"daj", hint_en:"No way! / Come on!"},
+  {phrase:"Sve ___!", blank:"okej", hint_en:"Everything okay!"},
+  {phrase:"___ sam.", blank:"Dobro", hint_en:"I'm fine."},
+  {phrase:"Žao mi ___.", blank:"je", hint_en:"I'm sorry."},
+  {phrase:"___ košta?", blank:"Koliko", hint_en:"How much?"},
+  {phrase:"Do ___!", blank:"sutra", hint_en:"See you tomorrow!"},
+  {phrase:"___ put!", blank:"Sretan", hint_en:"Safe travels!"},
+  {phrase:"Ja ___ iz...", blank:"sam", hint_en:"I'm from..."},
+  {phrase:"Odakle ___?", blank:"si", hint_en:"Where are you from?"},
+  {phrase:"___ Hrvatsku.", blank:"Volim", hint_en:"I love Croatia."},
+  {phrase:"Učim ___.", blank:"hrvatski", hint_en:"I'm learning Croatian."},
+  {phrase:"Nije ___.", blank:"loše", hint_en:"Not bad."},
+  {phrase:"___ mi je.", blank:"Žao", hint_en:"I'm sorry."},
+  {phrase:"___ noć!", blank:"Laku", hint_en:"Good night!"},
+];
+
+let fiIdx = 0, fiScore = 0, fiAttempts = 0, fiAnswered = false;
+
+function buildFillIn(){
+  const shuffled = [...fillInPhrases].sort(()=>Math.random()-0.5);
+  fiIdx = 0;
+  window._fiShuffled = shuffled;
+  showFillIn();
+}
+
+function showFillIn(){
+  fiAnswered = false;
+  const items = window._fiShuffled || fillInPhrases;
+  const q = items[fiIdx % items.length];
+  document.getElementById('fi-counter').textContent = `Question ${(fiIdx%items.length)+1} of ${items.length}`;
+  document.getElementById('fi-hint-en').textContent = q.hint_en;
+  document.getElementById('fi-feedback').style.display = 'none';
+
+  // Build phrase display with blank
+  document.getElementById('fi-phrase').innerHTML = q.phrase.replace('___', `<span class="blank-word" id="fi-blank">___</span>`);
+
+  // Build 4 options: correct + 3 wrong
+  const allBlanks = items.map(i=>i.blank).filter(b=>b!==q.blank);
+  const wrong = [...allBlanks].sort(()=>Math.random()-0.5).slice(0,3);
+  const opts = [...wrong, q.blank].sort(()=>Math.random()-0.5);
+  document.getElementById('fi-options').innerHTML = opts.map(o=>
+    `<button class="blank-opt" onclick="checkFillIn('${o.replace(/'/g,"\\'")}','${q.blank.replace(/'/g,"\\'")}')">${o}</button>`
+  ).join('');
+}
+
+function checkFillIn(chosen, correct){
+  if(fiAnswered) return;
+  fiAnswered = true; fiAttempts++;
+  const ok = chosen === correct;
+  if(ok) fiScore++;
+  document.querySelectorAll('.blank-opt').forEach(b=>{
+    if(b.textContent === correct) b.className = 'blank-opt correct-ans';
+    else if(b.textContent === chosen && !ok) b.className = 'blank-opt wrong-ans';
+  });
+  const blank = document.getElementById('fi-blank');
+  if(blank){ blank.textContent = correct; blank.classList.add('revealed'); }
+  const fb = document.getElementById('fi-feedback');
+  fb.style.display = ''; fb.className = 'feedback '+(ok?'correct':'wrong');
+  fb.textContent = ok ? 'Točno! ✓' : `The answer was "${correct}"`;
+  const pct = fiAttempts>0 ? Math.round(fiScore/fiAttempts*100)+'%' : '—';
+  document.getElementById('fi-score-label').textContent = `Score: ${fiScore} / ${fiAttempts}`;
+  document.getElementById('fi-pct').textContent = pct;
+  if(ok) setTimeout(nextFillIn, 1200);
+}
+
+function nextFillIn(){ fiIdx++; fiAnswered=false; showFillIn(); }
+
+// ── HEATMAP ──
+function buildHeatmap(){
+  const el = document.getElementById('prog-heatmap');
+  if(!el) return;
+  const log = loadLog();
+  const logMap = {};
+  log.forEach(e=>{ logMap[e.date] = e.mastered; });
+  const cells = [];
+  for(let i=89; i>=0; i--){
+    const d = new Date(Date.now() - i*86400000);
+    const key = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+    const val = logMap[key] || 0;
+    const lvl = val===0?'':val<5?'l1':val<15?'l2':val<30?'l3':'l4';
+    const date = `${d.toLocaleDateString('en',{month:'short',day:'numeric'})}${val?' — '+val+' mastered':''}`;
+    cells.push(`<div class="hm-cell ${lvl}" title="${date}"></div>`);
+  }
+  el.innerHTML = cells.join('');
+}
+
+function buildCatBreakdown(){
+  const el = document.getElementById('prog-cat-breakdown');
+  if(!el) return;
+  el.innerHTML = allCats.map(cat=>{
+    const words = allWords[cat];
+    const m = words.filter(w=>isMastered(w)).length;
+    const pct = words.length>0 ? Math.round(m/words.length*100) : 0;
+    return `<div class="cat-row">
+      <span class="cat-row-label">${cat.charAt(0).toUpperCase()+cat.slice(1)}</span>
+      <div class="cat-row-track"><div class="cat-row-fill" style="width:${pct}%"></div></div>
+      <span class="cat-row-pct">${pct}%</span>
+    </div>`;
+  }).join('');
+}
+
 // Init
 loadState();
+loadSRSData();
 currentDeck = allWords.greetings;
 updateCard();
 buildVocabFilters();
@@ -2514,6 +3269,8 @@ resetTypeIt();
 buildAlphabet();
 updateHeaderFavBtn();
 renderProgress();
+window._fiShuffled = [...fillInPhrases].sort(()=>Math.random()-0.5);
+renderStreakBadge(document.getElementById('streak-display'));
 </script>
 </body>
 </html>
