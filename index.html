@@ -1172,6 +1172,19 @@
     <div class="prog-log" id="prog-log">
       <div class="prog-empty" id="prog-empty">No sessions logged yet. Hit "Log today's progress" after a study session.</div>
     </div>
+
+    <div style="margin-top:1.5rem;padding-top:1.25rem;border-top:1px solid var(--sand-dark);">
+      <div class="prog-log-title" style="margin-bottom:10px;">Backup &amp; restore</div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;">
+        <button class="btn btn-ghost" onclick="exportData()">&#8659; Download backup</button>
+        <button class="btn btn-ghost" onclick="document.getElementById('import-file').click()">&#8657; Upload backup</button>
+        <input type="file" id="import-file" accept=".json" style="display:none" onchange="importData(event)" />
+      </div>
+      <div style="font-size:0.75rem;color:var(--stone-light);margin-top:8px;">
+        Saves your mastered words and daily log as a JSON file. Upload it on any device to restore your progress.
+      </div>
+      <div id="import-msg" style="font-size:0.8rem;margin-top:8px;display:none;"></div>
+    </div>
   </div>
 
 </main>
@@ -2172,6 +2185,60 @@ function renderProgress(){
     `;
     logEl.appendChild(row);
   });
+}
+
+function exportData(){
+  const data = {
+    version: 1,
+    exported: new Date().toISOString(),
+    mastered: [...mastered],
+    log: loadLog(),
+  };
+  const blob = new Blob([JSON.stringify(data, null, 2)], {type: 'application/json'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `hrvatski-backup-${getTodayKey()}.json`;
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+function importData(e){
+  const file = e.target.files[0];
+  if(!file) return;
+  const reader = new FileReader();
+  reader.onload = function(ev){
+    const msg = document.getElementById('import-msg');
+    try {
+      const data = JSON.parse(ev.target.result);
+      if(!data.mastered || !Array.isArray(data.mastered)) throw new Error('Invalid file');
+
+      // Restore mastered set
+      mastered.clear();
+      data.mastered.forEach(k => mastered.add(k));
+
+      // Restore log
+      if(Array.isArray(data.log)) saveLog(data.log);
+
+      // Refresh all UI
+      refreshAllCounts();
+      updateCard();
+      buildVocabList();
+      buildPhrasesList();
+      renderProgress();
+
+      msg.style.display = '';
+      msg.style.color = 'var(--olive)';
+      msg.textContent = `✓ Restored ${data.mastered.length} mastered words and ${(data.log||[]).length} log entries.`;
+    } catch(err) {
+      msg.style.display = '';
+      msg.style.color = 'var(--terracotta)';
+      msg.textContent = '✗ Could not read file — make sure it\'s a valid Hrvatski backup.';
+    }
+    // Reset input so same file can be re-uploaded
+    e.target.value = '';
+  };
+  reader.readAsText(file);
 }
 
 // Init
