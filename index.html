@@ -77,6 +77,19 @@
     text-transform: uppercase;
   }
 
+  @media (max-width: 500px) {
+    .logo {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0;
+      line-height: 1.1;
+    }
+    .logo span {
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+    }
+  }
+
   .score-badge {
     background: var(--terracotta);
     color: var(--white);
@@ -640,6 +653,9 @@
     font-style: italic;
     flex: 0.8;
   }
+
+  .flashcard > * { pointer-events: none; }
+  .flashcard { pointer-events: auto; }
 
   /* ── MASTERED ── */
   .btn-mastered { background: var(--olive-pale); color: var(--olive); border: 1px solid #B8D090; }
@@ -2061,6 +2077,7 @@ function revealCard(){
     document.getElementById('fc-hint').style.visibility = 'visible';
     document.getElementById('fc-hint').style.opacity = '1';
     document.getElementById('fc-tap').style.opacity = '0';
+    document.getElementById('diff-row').style.display = 'flex';
     revealed = true;
     addPoints(1);
   }
@@ -2872,13 +2889,6 @@ function rateDifficulty(rating){
   updateSRS(w.hr, rating);
   document.getElementById('diff-row').style.display = 'none';
   nextCard();
-}
-
-// Show diff buttons after reveal
-const origRevealCard = revealCard;
-function revealCard(){
-  origRevealCard();
-  document.getElementById('diff-row').style.display = 'flex';
 }
 
 // ── SMART REVIEW (SRS TAB) ──
