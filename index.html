@@ -219,11 +219,22 @@
 
   .fc-word {
     font-family: var(--font-display);
-    font-size: 1.44rem;
+    font-size: 1.8rem;
     font-weight: 600;
     color: var(--ink);
     line-height: 1.1;
     margin-bottom: 2px;
+    margin-top: 25px;
+  }
+
+  .fc-reveal-slot {
+    position: relative;
+    margin-top: 8px;
+    height: 2rem;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   .fc-tap {
@@ -232,18 +243,20 @@
     letter-spacing: 0.05em;
     text-transform: uppercase;
     transition: opacity 0.2s;
-    margin-top: 6px;
+    position: absolute;
+    white-space: nowrap;
   }
 
   .fc-translation {
     font-family: var(--font-display);
     font-size: 1.3rem;
     color: var(--stone);
-    margin-top: 6px;
     visibility: hidden;
     opacity: 0;
     transition: opacity 0.2s;
     line-height: 1.2;
+    position: absolute;
+    white-space: nowrap;
   }
 
   .fc-hint {
@@ -265,12 +278,17 @@
     top: 16px; right: 16px;
   }
 
+  .fc-actions .btn, .fc-actions .fav-btn { flex-shrink: 1; white-space: nowrap; }
+  .fc-actions .btn { min-width: 0; padding: 9px 14px; }
+
   .fc-actions {
     display: flex;
-    gap: 10px;
+    gap: 8px;
     justify-content: center;
     margin-top: 0.75rem;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
+    min-height: 38px;
+    align-items: center;
   }
 
   /* ── BUTTONS ── */
@@ -600,9 +618,9 @@
   /* ── MASTERED ── */
   .btn-mastered { background: var(--olive-pale); color: var(--olive); border: 1px solid #B8D090; }
   .btn-mastered:hover { background: #cce8a0; }
-  .fc-mastered-badge { display: none; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--olive); background: var(--olive-pale); border: 1px solid #B8D090; padding: 3px 10px; border-radius: 999px; margin-top: 10px; }
+  .fc-mastered-badge { visibility: hidden; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--olive); background: var(--olive-pale); border: 1px solid #B8D090; padding: 3px 10px; border-radius: 999px; margin-top: 14px; }
   .flashcard.is-mastered { border-color: #B8D090; }
-  .flashcard.is-mastered .fc-mastered-badge { display: inline-block; }
+  .flashcard.is-mastered .fc-mastered-badge { visibility: visible; }
   .mastered-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--olive); flex-shrink: 0; }
   .show-filter-btn { font-size: 0.78rem; padding: 5px 14px; border-radius: 3px; border: 1px solid var(--sand-dark); background: var(--white); color: var(--stone-light); cursor: pointer; font-family: var(--font-body); transition: all 0.15s; }
   .show-filter-btn.active { background: var(--ink); color: var(--white); border-color: var(--ink); font-weight: 500; }
@@ -875,6 +893,78 @@
     .prog-log-detail { display: none; }
   }
 
+  .header-prog-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: rgba(255,255,255,0.5);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 8px;
+    border-radius: var(--radius-sm);
+    transition: color 0.15s;
+    font-family: var(--font-body);
+  }
+  .header-prog-btn:hover { color: rgba(255,255,255,0.85); }
+  .header-prog-btn.has-progress { color: rgba(255,255,255,0.9); }
+
+  /* ── FAVOURITES ── */
+  .header-fav-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: rgba(255,255,255,0.5);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 8px;
+    border-radius: var(--radius-sm);
+    transition: color 0.15s;
+    font-size: 0.8rem;
+    font-family: var(--font-body);
+  }
+  .header-fav-btn:hover { color: rgba(255,255,255,0.85); }
+  .header-fav-btn.has-favs { color: #E8845C; }
+  .header-fav-btn .heart-fill { display: none; }
+  .header-fav-btn.has-favs .heart-outline { display: none; }
+  .header-fav-btn.has-favs .heart-fill { display: block; }
+
+  .fav-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px 5px;
+    line-height: 1;
+    transition: transform 0.15s;
+    flex-shrink: 0;
+    color: var(--stone-pale);
+    display: flex;
+    align-items: center;
+  }
+  .fav-btn:hover { transform: scale(1.2); }
+  .fav-btn .heart-fill { display: none; }
+  .fav-btn.is-fav { color: var(--terracotta); }
+  .fav-btn.is-fav .heart-outline { display: none; }
+  .fav-btn.is-fav .heart-fill { display: block; }
+
+  .fav-section-label {
+    font-size: 0.72rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--stone-light);
+    margin: 1.25rem 0 8px;
+  }
+  .fav-section-label:first-child { margin-top: 0; }
+  .fav-empty {
+    text-align: center;
+    padding: 3rem 1rem;
+    color: var(--stone-light);
+    font-size: 0.9rem;
+  }
+  .fav-empty-icon { font-size: 2rem; margin-bottom: 8px; }
+
 </style>
 </head>
 <body>
@@ -882,6 +972,24 @@
 <header>
   <div class="logo">
     Hrvatski <span>Learn Croatian</span>
+  </div>
+  <div style="display:flex;align-items:center;gap:4px;">
+    <button class="header-prog-btn" onclick="switchTabById('progress')" title="Progress" id="header-prog-btn">
+      <svg width="18" height="16" viewBox="0 0 18 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="0" y="10" width="3" height="6" rx="1" fill="currentColor" opacity="0.4"/>
+        <rect x="5" y="6" width="3" height="10" rx="1" fill="currentColor" opacity="0.6"/>
+        <rect x="10" y="3" width="3" height="13" rx="1" fill="currentColor" opacity="0.8"/>
+        <rect x="15" y="0" width="3" height="16" rx="1" fill="currentColor"/>
+      </svg>
+      <span id="header-prog-pct" style="font-size:0.78rem;font-weight:500;letter-spacing:0.02em;">0%</span>
+    </button>
+    <button class="header-fav-btn" onclick="switchTabById('favourites')" title="Favourites" id="header-fav-btn">
+      <svg width="22" height="20" viewBox="0 0 22 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path class="heart-outline" d="M11 18.5C11 18.5 1.5 12.5 1.5 6.5C1.5 4.0147 3.51472 2 6 2C8.00736 2 9.72922 3.21765 10.4635 4.96328C10.6554 5.41799 11.3446 5.41799 11.5365 4.96328C12.2708 3.21765 13.9926 2 16 2C18.4853 2 20.5 4.0147 20.5 6.5C20.5 12.5 11 18.5 11 18.5Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+        <path class="heart-fill" d="M11 18.5C11 18.5 1.5 12.5 1.5 6.5C1.5 4.0147 3.51472 2 6 2C8.00736 2 9.72922 3.21765 10.4635 4.96328C10.6554 5.41799 11.3446 5.41799 11.5365 4.96328C12.2708 3.21765 13.9926 2 16 2C18.4853 2 20.5 4.0147 20.5 6.5C20.5 12.5 11 18.5 11 18.5Z" fill="currentColor"/>
+      </svg>
+      <span id="header-fav-count"></span>
+    </button>
   </div>
 </header>
 
@@ -894,7 +1002,6 @@
   <button class="nav-btn" onclick="switchTab('listen',this)">Listening</button>
   <button class="nav-btn" onclick="switchTab('match',this)">Match</button>
   <button class="nav-btn" onclick="switchTab('typeit',this)">Type It</button>
-  <button class="nav-btn" onclick="switchTab('progress',this)">Progress</button>
 </nav>
 
 <main>
@@ -927,8 +1034,10 @@
       <span class="fc-cat" id="fc-cat">GREETINGS</span>
       <div class="fc-word" id="fc-word">Dobar dan</div>
       <div class="fc-hint" id="fc-hint">DOH-bar dan</div>
-      <div class="fc-translation" id="fc-translation">Good afternoon</div>
-      <div class="fc-tap" id="fc-tap">tap to reveal English</div>
+      <div class="fc-reveal-slot">
+        <div class="fc-translation" id="fc-translation">Good afternoon</div>
+        <div class="fc-tap" id="fc-tap">tap to reveal English</div>
+      </div>
       <div class="fc-mastered-badge" id="fc-mastered-badge">✓ Mastered</div>
     </div>
     <div class="fc-actions">
@@ -936,6 +1045,7 @@
       <button class="btn btn-ghost" onclick="prevCard()">&#8592; Back</button>
       <button class="btn btn-primary" onclick="nextCard()">Next &#8594;</button>
       <button class="btn btn-mastered" id="btn-know" onclick="toggleMastered()">✓ I know this</button>
+      <button class="fav-btn" id="btn-fav-fc" onclick="toggleFavFC()" title="Add to favourites"><svg width="16" height="15" viewBox="0 0 22 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path class="heart-outline" d="M11 18.5C11 18.5 1.5 12.5 1.5 6.5C1.5 4.0147 3.51472 2 6 2C8.00736 2 9.72922 3.21765 10.4635 4.96328C10.6554 5.41799 11.3446 5.41799 11.5365 4.96328C12.2708 3.21765 13.9926 2 16 2C18.4853 2 20.5 4.0147 20.5 6.5C20.5 12.5 11 18.5 11 18.5Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path class="heart-fill" d="M11 18.5C11 18.5 1.5 12.5 1.5 6.5C1.5 4.0147 3.51472 2 6 2C8.00736 2 9.72922 3.21765 10.4635 4.96328C10.6554 5.41799 11.3446 5.41799 11.5365 4.96328C12.2708 3.21765 13.9926 2 16 2C18.4853 2 20.5 4.0147 20.5 6.5C20.5 12.5 11 18.5 11 18.5Z" fill="currentColor"/></svg></button>
     </div>
     <div style="font-size:0.78rem;color:var(--stone-light);text-align:center;margin-top:8px;" id="fc-mastered-count"></div>
   </div>
@@ -1185,6 +1295,14 @@
       </div>
       <div id="import-msg" style="font-size:0.8rem;margin-top:8px;display:none;"></div>
     </div>
+  </div>
+  <!-- ── FAVOURITES ── -->
+  <div id="favourites" class="section">
+    <div class="section-header">
+      <div class="section-title">Favourites</div>
+      <div class="section-sub">Words and phrases you've starred — tap ♡ anywhere to save</div>
+    </div>
+    <div id="fav-list"></div>
   </div>
 
 </main>
@@ -1480,6 +1598,29 @@ function switchTab(id, el){
   document.getElementById(id).classList.add('active');
   el.classList.add('active');
   if(id === 'progress') renderProgress();
+  if(id === 'favourites') buildFavouritesList();
+}
+
+// ── PERSISTENCE ──
+const STATE_KEY = 'hrvatski_state';
+
+function saveState(){
+  try {
+    localStorage.setItem(STATE_KEY, JSON.stringify({
+      mastered: [...mastered],
+      favourites: [...favourites],
+    }));
+  } catch(e){}
+}
+
+function loadState(){
+  try {
+    const raw = localStorage.getItem(STATE_KEY);
+    if(!raw) return;
+    const data = JSON.parse(raw);
+    if(Array.isArray(data.mastered)) data.mastered.forEach(k => mastered.add(k));
+    if(Array.isArray(data.favourites)) data.favourites.forEach(k => favourites.add(k));
+  } catch(e){}
 }
 
 // ── MASTERED ──
@@ -1518,6 +1659,7 @@ function toggleMastered(){
   const key = wordKey(w);
   if(mastered.has(key)) mastered.delete(key);
   else mastered.add(key);
+  saveState();
   updateCard();
   buildVocabList();
   refreshAllCounts();
@@ -1526,6 +1668,7 @@ function toggleMastered(){
 function togglePhraseMastered(hr){
   if(mastered.has(hr)) mastered.delete(hr);
   else mastered.add(hr);
+  saveState();
   buildPhrasesList();
   refreshAllCounts();
 }
@@ -1565,7 +1708,7 @@ function updateCard(){
     document.getElementById('fc-cat').textContent = '';
     document.getElementById('fc-counter').textContent = '0 cards';
     document.getElementById('flashcard-el').className = 'flashcard';
-    document.getElementById('fc-mastered-badge').style.display = 'none';
+    document.getElementById('fc-mastered-badge').style.visibility = 'hidden';
     document.getElementById('btn-know').style.display = 'none';
     updateMasteredCount();
     return;
@@ -1585,12 +1728,13 @@ function updateCard(){
   document.getElementById('fc-cat').textContent = document.getElementById('deck-select').value.toUpperCase();
   document.getElementById('fc-counter').textContent = `Card ${cardIdx+1} of ${currentDeck.length}`;
   document.getElementById('flashcard-el').className = 'flashcard' + (m ? ' is-mastered' : '');
-  document.getElementById('fc-mastered-badge').style.display = m ? 'inline-block' : 'none';
+  document.getElementById('fc-mastered-badge').style.visibility = m ? 'visible' : 'hidden';
   document.getElementById('btn-know').textContent = m ? '✕ Unmark' : '✓ I know this';
   document.getElementById('btn-know').className = m ? 'btn btn-ghost' : 'btn btn-mastered';
   document.getElementById('btn-know').style.display = '';
   revealed = false;
   updateMasteredCount();
+  updateFavBtnFC();
 }
 
 function updateMasteredCount(){
@@ -1599,6 +1743,7 @@ function updateMasteredCount(){
   const m = base.filter(w => isMastered(w)).length;
   document.getElementById('fc-mastered-count').textContent = m > 0 ? `${m} of ${total} mastered in this deck` : '';
   refreshAllCounts();
+  renderProgress();
 }
 
 function revealCard(){
@@ -1658,6 +1803,7 @@ function buildVocabList(){
           <div style="font-size:.78rem;color:#8A8278">${w.en}</div>
         </div>
         ${isMastered(w)?'<span style="font-size:11px;color:var(--olive);margin-right:4px;">✓</span>':''}
+        <button class="fav-btn${isFav(w.hr)?' is-fav':''}" onclick="toggleFav('${w.hr.replace(/'/g,"\\'")}');buildVocabList();" title="Favourite">${heartSVG()}</button>
         <button class="btn btn-sea btn-sm btn-icon" onclick="speak('${w.hr.replace(/'/g,"\\'")}')">&#9654;</button>
       </div>`
     ).join('') + '</div>';
@@ -1668,6 +1814,7 @@ function buildVocabList(){
         <span class="vocab-en">${w.en}</span>
         <span class="vocab-pron">${w.hint}</span>
         ${isMastered(w)?'<span style="font-size:11px;color:var(--olive);padding:0 4px;">✓</span>':'<span></span>'}
+        <button class="fav-btn${isFav(w.hr)?' is-fav':''}" onclick="toggleFav('${w.hr.replace(/'/g,"\\'")}');buildVocabList();" title="Favourite">${heartSVG()}</button>
         <button class="btn btn-sea btn-sm btn-icon" onclick="speak('${w.hr.replace(/'/g,"\\'")}')">&#9654;</button>
       </div>`
     ).join('') + '</div>';
@@ -1836,6 +1983,7 @@ function buildPhrasesList(){
       <div class="phrase-hr"${m?' style="opacity:0.5"':''}>${p.hr}</div>
       <div class="phrase-en"${m?' style="opacity:0.5"':''}>${p.en}</div>
       <div class="phrase-hint"${m?' style="opacity:0.5"':''}>${p.hint}</div>
+      <button class="fav-btn${isFav(p.hr)?' is-fav':''}" onclick="toggleFav('${safeHr}');buildPhrasesList();" title="Favourite">${heartSVG()}</button>
       <button class="btn btn-sea btn-sm btn-icon" onclick="speak('${safeHr}')">&#9654;</button>
       <button class="btn btn-sm ${m?'btn-ghost':'btn-mastered'}" style="white-space:nowrap" onclick="togglePhraseMastered('${safeHr}')">${m?'✕ Unmark':'✓ Know it'}</button>
     </div>`;
@@ -2160,6 +2308,12 @@ function renderProgress(){
   document.getElementById('prog-bar-pct').textContent = pct + '%';
   document.getElementById('prog-bar-fill').style.width = pct + '%';
 
+  // Update header
+  const progPctEl = document.getElementById('header-prog-pct');
+  if(progPctEl) progPctEl.textContent = pct + '%';
+  const progBtn = document.getElementById('header-prog-btn');
+  if(progBtn) progBtn.classList.toggle('has-progress', m > 0);
+
   const log = loadLog();
   const logEl = document.getElementById('prog-log');
   const emptyEl = document.getElementById('prog-empty');
@@ -2192,6 +2346,7 @@ function exportData(){
     version: 1,
     exported: new Date().toISOString(),
     mastered: [...mastered],
+    favourites: [...favourites],
     log: loadLog(),
   };
   const blob = new Blob([JSON.stringify(data, null, 2)], {type: 'application/json'});
@@ -2213,35 +2368,137 @@ function importData(e){
       const data = JSON.parse(ev.target.result);
       if(!data.mastered || !Array.isArray(data.mastered)) throw new Error('Invalid file');
 
-      // Restore mastered set
       mastered.clear();
       data.mastered.forEach(k => mastered.add(k));
 
-      // Restore log
+      favourites.clear();
+      if(Array.isArray(data.favourites)) data.favourites.forEach(k => favourites.add(k));
+
       if(Array.isArray(data.log)) saveLog(data.log);
 
-      // Refresh all UI
       refreshAllCounts();
       updateCard();
       buildVocabList();
       buildPhrasesList();
       renderProgress();
+      updateHeaderFavBtn();
+      saveState();
 
       msg.style.display = '';
       msg.style.color = 'var(--olive)';
-      msg.textContent = `✓ Restored ${data.mastered.length} mastered words and ${(data.log||[]).length} log entries.`;
+      msg.textContent = `✓ Restored ${data.mastered.length} mastered words, ${(data.favourites||[]).length} favourites, and ${(data.log||[]).length} log entries.`;
     } catch(err) {
       msg.style.display = '';
       msg.style.color = 'var(--terracotta)';
       msg.textContent = '✗ Could not read file — make sure it\'s a valid Hrvatski backup.';
     }
-    // Reset input so same file can be re-uploaded
     e.target.value = '';
   };
   reader.readAsText(file);
 }
 
+// ── FAVOURITES ──
+const favourites = new Set();
+function isFav(key){ return favourites.has(key); }
+
+function heartSVG(){
+  return `<svg width="16" height="15" viewBox="0 0 22 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path class="heart-outline" d="M11 18.5C11 18.5 1.5 12.5 1.5 6.5C1.5 4.0147 3.51472 2 6 2C8.00736 2 9.72922 3.21765 10.4635 4.96328C10.6554 5.41799 11.3446 5.41799 11.5365 4.96328C12.2708 3.21765 13.9926 2 16 2C18.4853 2 20.5 4.0147 20.5 6.5C20.5 12.5 11 18.5 11 18.5Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+    <path class="heart-fill" d="M11 18.5C11 18.5 1.5 12.5 1.5 6.5C1.5 4.0147 3.51472 2 6 2C8.00736 2 9.72922 3.21765 10.4635 4.96328C10.6554 5.41799 11.3446 5.41799 11.5365 4.96328C12.2708 3.21765 13.9926 2 16 2C18.4853 2 20.5 4.0147 20.5 6.5C20.5 12.5 11 18.5 11 18.5Z" fill="currentColor"/>
+  </svg>`;
+}
+
+function updateHeaderFavBtn(){
+  const btn = document.getElementById('header-fav-btn');
+  const countEl = document.getElementById('header-fav-count');
+  const n = favourites.size;
+  btn.classList.toggle('has-favs', n > 0);
+  countEl.textContent = n > 0 ? n : '';
+}
+
+function switchTabById(id){
+  const el = document.querySelector(`[onclick="switchTab('${id}',this)"]`) || 
+             { classList: { add(){}, remove(){} } };
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  if(id === 'favourites') buildFavouritesList();
+  if(id === 'progress') renderProgress();
+}
+
+function toggleFav(key){
+  if(favourites.has(key)) favourites.delete(key);
+  else favourites.add(key);
+  saveState();
+  updateHeaderFavBtn();
+}
+
+function toggleFavFC(){
+  const w = currentDeck[cardIdx];
+  if(!w) return;
+  toggleFav(w.hr);
+  updateFavBtnFC();
+}
+
+function updateFavBtnFC(){
+  const w = currentDeck[cardIdx];
+  const btn = document.getElementById('btn-fav-fc');
+  if(!btn || !w) return;
+  btn.classList.toggle('is-fav', isFav(w.hr));
+}
+
+function buildFavouritesList(){
+  const container = document.getElementById('fav-list');
+  const allVocab = allCats.flatMap(c => allWords[c]);
+  const favWords = allVocab.filter(w => isFav(w.hr));
+  const favPhrases = phrases.filter(p => isFav(p.hr));
+
+  if(!favWords.length && !favPhrases.length){
+    container.innerHTML = `
+      <div class="fav-empty">
+        <div class="fav-empty-icon">♡</div>
+        <div>Nothing saved yet.</div>
+        <div style="margin-top:4px;font-size:0.8rem;">Tap the heart on any word or phrase to add it here.</div>
+      </div>`;
+    return;
+  }
+
+  let html = '';
+  if(favWords.length){
+    html += '<div class="fav-section-label">Words</div>';
+    html += '<div class="vocab-grid">';
+    html += favWords.map(w => {
+      const safeHr = w.hr.replace(/'/g,"\\'");
+      return `<div class="vocab-row">
+        <span class="vocab-hr">${w.hr}</span>
+        <span class="vocab-en">${w.en}</span>
+        <span class="vocab-pron">${w.hint}</span>
+        <button class="fav-btn is-fav" onclick="toggleFav('${safeHr}');buildFavouritesList();buildVocabList();updateFavBtnFC();">${heartSVG()}</button>
+        <button class="btn btn-sea btn-sm btn-icon" onclick="speak('${safeHr}')">&#9654;</button>
+      </div>`;
+    }).join('');
+    html += '</div>';
+  }
+
+  if(favPhrases.length){
+    html += '<div class="fav-section-label">Phrases</div>';
+    html += favPhrases.map(p => {
+      const safeHr = p.hr.replace(/'/g,"\\'");
+      return `<div class="phrase-card">
+        <div class="phrase-hr">${p.hr}</div>
+        <div class="phrase-en">${p.en}</div>
+        <div class="phrase-hint">${p.hint}</div>
+        <button class="fav-btn is-fav" onclick="toggleFav('${safeHr}');buildFavouritesList();buildPhrasesList();">${heartSVG()}</button>
+        <button class="btn btn-sea btn-sm btn-icon" onclick="speak('${safeHr}')">&#9654;</button>
+      </div>`;
+    }).join('');
+  }
+
+  container.innerHTML = html;
+}
+
 // Init
+loadState();
 currentDeck = allWords.greetings;
 updateCard();
 buildVocabFilters();
@@ -2255,6 +2512,8 @@ refreshAllCounts();
 startMatch();
 resetTypeIt();
 buildAlphabet();
+updateHeaderFavBtn();
+renderProgress();
 </script>
 </body>
 </html>
