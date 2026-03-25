@@ -1,0 +1,2193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Hrvatski — Learn Croatian</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --sand: #F5F0E8;
+    --sand-dark: #E8E0D0;
+    --terracotta: #C4623A;
+    --terracotta-light: #E8845C;
+    --terracotta-pale: #F5E0D8;
+    --sea: #2A6B8A;
+    --sea-light: #4A8FAA;
+    --sea-pale: #D8EBF2;
+    --stone: #5A5248;
+    --stone-light: #8A8278;
+    --stone-pale: #C8C0B8;
+    --olive: #6B7A3A;
+    --olive-pale: #E0E8C8;
+    --ink: #1E1A16;
+    --white: #FDFAF6;
+    --font-display: 'Playfair Display', Georgia, serif;
+    --font-body: 'DM Sans', sans-serif;
+    --radius: 12px;
+    --radius-sm: 8px;
+    --shadow: 0 4px 24px rgba(30,26,22,0.10);
+    --shadow-sm: 0 2px 10px rgba(30,26,22,0.07);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: var(--font-body);
+    background: var(--sand);
+    color: var(--ink);
+    min-height: 100vh;
+    font-size: 16px;
+    line-height: 1.6;
+  }
+
+  /* ── HEADER ── */
+  header {
+    background: var(--ink);
+    color: var(--white);
+    padding: 0 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 64px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    border-bottom: 3px solid var(--terracotta);
+  }
+
+  .logo {
+    font-family: var(--font-display);
+    font-size: 1.6rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    color: var(--white);
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+  }
+
+  .logo span {
+    font-size: 0.75rem;
+    font-family: var(--font-body);
+    font-weight: 300;
+    color: var(--stone-pale);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .score-badge {
+    background: var(--terracotta);
+    color: var(--white);
+    padding: 5px 14px;
+    border-radius: 999px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+  }
+
+  /* ── NAV ── */
+  nav {
+    background: var(--white);
+    border-bottom: 1px solid var(--sand-dark);
+    padding: 0 2rem;
+    display: flex;
+    gap: 4px;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  nav::-webkit-scrollbar { display: none; }
+
+  .nav-btn {
+    padding: 14px 20px;
+    border: none;
+    background: none;
+    font-family: var(--font-body);
+    font-size: 0.875rem;
+    font-weight: 400;
+    color: var(--stone-light);
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+    transition: all 0.2s;
+    white-space: nowrap;
+    letter-spacing: 0.01em;
+  }
+
+  .nav-btn:hover { color: var(--ink); }
+
+  .nav-btn.active {
+    color: var(--terracotta);
+    border-bottom-color: var(--terracotta);
+    font-weight: 500;
+  }
+
+  /* ── MAIN ── */
+  main {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem 4rem;
+  }
+
+  .section { display: none; animation: fadeIn 0.25s ease; }
+  .section.active { display: block; }
+
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* ── SECTION HEADER ── */
+  .section-header {
+    margin-bottom: 1.75rem;
+  }
+
+  .section-title {
+    font-family: var(--font-display);
+    font-size: 2rem;
+    font-weight: 600;
+    color: var(--ink);
+    line-height: 1.2;
+    margin-bottom: 4px;
+  }
+
+  .section-sub {
+    font-size: 0.875rem;
+    color: var(--stone-light);
+    font-weight: 300;
+  }
+
+  /* ── CARD ── */
+  .card {
+    background: var(--white);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-sm);
+    border: 1px solid rgba(90,82,72,0.1);
+  }
+
+  /* ── FLASHCARD ── */
+  .fc-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .fc-meta {
+    font-size: 0.8rem;
+    color: var(--stone-light);
+  }
+
+  .deck-select {
+    font-family: var(--font-body);
+    font-size: 0.85rem;
+    padding: 6px 12px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--sand-dark);
+    background: var(--white);
+    color: var(--ink);
+    cursor: pointer;
+    outline: none;
+  }
+
+  .flashcard {
+    background: var(--white);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    border: 1px solid rgba(90,82,72,0.08);
+    padding: 1.25rem 2rem;
+    text-align: center;
+    cursor: pointer;
+    transition: box-shadow 0.15s;
+    height: 182px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .flashcard::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--terracotta), var(--sea));
+  }
+
+  .flashcard:hover { box-shadow: 0 6px 28px rgba(30,26,22,0.13); }
+
+  .fc-word {
+    font-family: var(--font-display);
+    font-size: 1.44rem;
+    font-weight: 600;
+    color: var(--ink);
+    line-height: 1.1;
+    margin-bottom: 2px;
+  }
+
+  .fc-tap {
+    font-size: 0.75rem;
+    color: var(--stone-pale);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    transition: opacity 0.2s;
+    margin-top: 6px;
+  }
+
+  .fc-translation {
+    font-family: var(--font-display);
+    font-size: 1.3rem;
+    color: var(--stone);
+    margin-top: 6px;
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.2s;
+    line-height: 1.2;
+  }
+
+  .fc-hint {
+    font-size: 0.82rem;
+    color: var(--terracotta);
+    font-style: italic;
+    margin-top: 2px;
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+
+  .fc-cat {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--stone-pale);
+    position: absolute;
+    top: 16px; right: 16px;
+  }
+
+  .fc-actions {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    margin-top: 0.75rem;
+    flex-wrap: wrap;
+  }
+
+  /* ── BUTTONS ── */
+  .btn {
+    font-family: var(--font-body);
+    font-size: 0.875rem;
+    font-weight: 500;
+    padding: 9px 20px;
+    border-radius: var(--radius-sm);
+    border: none;
+    cursor: pointer;
+    transition: all 0.15s;
+    letter-spacing: 0.02em;
+  }
+
+  .btn:active { transform: scale(0.97); }
+
+  .btn-primary {
+    background: var(--terracotta);
+    color: var(--white);
+  }
+  .btn-primary:hover { background: var(--terracotta-light); }
+
+  .btn-sea {
+    background: var(--sea);
+    color: var(--white);
+  }
+  .btn-sea:hover { background: var(--sea-light); }
+
+  .btn-ghost {
+    background: var(--sand);
+    color: var(--stone);
+    border: 1px solid var(--sand-dark);
+  }
+  .btn-ghost:hover { background: var(--sand-dark); }
+
+  .btn-sm {
+    font-size: 0.78rem;
+    padding: 6px 14px;
+  }
+
+  .btn-icon {
+    width: 36px; height: 36px;
+    padding: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1rem;
+  }
+
+  /* ── VOCAB ── */
+  .filter-row {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    margin-bottom: 1.25rem;
+  }
+
+  .filter-chip {
+    font-family: var(--font-body);
+    font-size: 0.78rem;
+    padding: 5px 14px;
+    border-radius: 999px;
+    border: 1px solid var(--sand-dark);
+    background: var(--white);
+    color: var(--stone-light);
+    cursor: pointer;
+    transition: all 0.15s;
+    font-weight: 400;
+  }
+
+  .filter-chip:hover { border-color: var(--stone-pale); color: var(--ink); }
+  .filter-chip.active { background: var(--ink); color: var(--white); border-color: var(--ink); font-weight: 500; }
+
+  .vocab-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .vocab-row {
+    background: var(--white);
+    border: 1px solid rgba(90,82,72,0.08);
+    border-radius: var(--radius-sm);
+    padding: 12px 16px;
+    display: grid;
+    grid-template-columns: 1.2fr 1.2fr 1fr auto;
+    align-items: center;
+    gap: 12px;
+    transition: border-color 0.15s;
+  }
+
+  .vocab-row:hover { border-color: var(--sand-dark); }
+
+  .vocab-hr {
+    font-weight: 500;
+    font-size: 0.95rem;
+    color: var(--ink);
+  }
+
+  .vocab-en {
+    font-size: 0.875rem;
+    color: var(--stone);
+  }
+
+  .vocab-pron {
+    font-size: 0.78rem;
+    color: var(--terracotta);
+    font-style: italic;
+  }
+
+  .color-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 8px;
+  }
+
+  .color-card {
+    background: var(--white);
+    border: 1px solid rgba(90,82,72,0.08);
+    border-radius: var(--radius-sm);
+    padding: 12px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: border-color 0.15s;
+  }
+
+  .color-card:hover { border-color: var(--sand-dark); }
+
+  .swatch {
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    border: 1px solid rgba(90,82,72,0.15);
+  }
+
+  /* ── QUIZ ── */
+  .quiz-card {
+    background: var(--white);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-sm);
+    border: 1px solid rgba(90,82,72,0.08);
+    padding: 2.5rem 2rem;
+    text-align: center;
+  }
+
+  .quiz-label {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--stone-light);
+    margin-bottom: 10px;
+  }
+
+  .quiz-prompt {
+    font-family: var(--font-display);
+    font-size: 2.2rem;
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: 1.5rem;
+    line-height: 1.2;
+  }
+
+  .quiz-input {
+    width: 100%;
+    max-width: 360px;
+    padding: 12px 20px;
+    font-size: 1.1rem;
+    font-family: var(--font-display);
+    border: 2px solid var(--sand-dark);
+    border-radius: var(--radius-sm);
+    background: var(--sand);
+    color: var(--ink);
+    text-align: center;
+    outline: none;
+    transition: border-color 0.2s;
+    display: block;
+    margin: 0 auto 1.25rem;
+  }
+
+  .quiz-input:focus { border-color: var(--sea); background: var(--white); }
+
+  .quiz-actions {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .feedback {
+    padding: 12px 20px;
+    border-radius: var(--radius-sm);
+    font-size: 0.95rem;
+    margin: 1rem auto 0;
+    max-width: 400px;
+    display: none;
+    font-weight: 500;
+  }
+
+  .feedback.correct { background: var(--olive-pale); color: var(--olive); border: 1px solid #B8D090; }
+  .feedback.wrong { background: var(--terracotta-pale); color: var(--terracotta); border: 1px solid #E0A890; }
+
+  .score-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1rem;
+    padding: 10px 16px;
+    background: var(--sand);
+    border-radius: var(--radius-sm);
+    font-size: 0.8rem;
+    color: var(--stone-light);
+  }
+
+  .score-pct {
+    font-weight: 600;
+    color: var(--ink);
+    font-size: 1rem;
+  }
+
+  /* ── LISTENING ── */
+  .listen-hero {
+    background: var(--ink);
+    border-radius: var(--radius);
+    padding: 3rem 2rem;
+    text-align: center;
+    cursor: pointer;
+    transition: transform 0.15s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .listen-hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 30% 50%, rgba(42,107,138,0.4) 0%, transparent 60%),
+                radial-gradient(ellipse at 70% 50%, rgba(196,98,58,0.3) 0%, transparent 60%);
+  }
+
+  .listen-hero:hover { transform: scale(1.01); }
+  .listen-hero.playing { animation: listenPulse 1s infinite alternate; }
+
+  @keyframes listenPulse {
+    from { box-shadow: 0 0 0 0 rgba(42,107,138,0.4); }
+    to { box-shadow: 0 0 0 20px rgba(42,107,138,0); }
+  }
+
+  .listen-icon {
+    font-size: 4rem;
+    position: relative;
+    z-index: 1;
+    display: block;
+    margin-bottom: 10px;
+    line-height: 1;
+  }
+
+  .listen-cue {
+    font-size: 0.8rem;
+    color: rgba(255,255,255,0.5);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    position: relative;
+    z-index: 1;
+  }
+
+  .listen-options {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin: 1.25rem 0;
+  }
+
+  .listen-opt {
+    font-family: var(--font-body);
+    padding: 16px;
+    font-size: 1rem;
+    font-weight: 400;
+    border-radius: var(--radius-sm);
+    border: 1.5px solid var(--sand-dark);
+    background: var(--white);
+    color: var(--ink);
+    cursor: pointer;
+    transition: all 0.15s;
+    text-align: center;
+  }
+
+  .listen-opt:hover { border-color: var(--sea); background: var(--sea-pale); }
+  .listen-opt.correct-ans { background: var(--olive-pale); border-color: var(--olive); color: var(--olive); font-weight: 500; }
+  .listen-opt.wrong-ans { background: var(--terracotta-pale); border-color: var(--terracotta); color: var(--terracotta); }
+
+  /* ── PHRASES ── */
+  .phrase-card {
+    background: var(--white);
+    border: 1px solid rgba(90,82,72,0.08);
+    border-radius: var(--radius-sm);
+    padding: 16px 18px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    transition: border-color 0.15s;
+    margin-bottom: 8px;
+  }
+
+  .phrase-card:hover { border-color: var(--sand-dark); }
+
+  .phrase-hr {
+    font-family: var(--font-display);
+    font-size: 1.05rem;
+    color: var(--ink);
+    font-weight: 600;
+    flex: 1;
+  }
+
+  .phrase-en {
+    font-size: 0.875rem;
+    color: var(--stone);
+    flex: 1;
+  }
+
+  .phrase-hint {
+    font-size: 0.78rem;
+    color: var(--terracotta);
+    font-style: italic;
+    flex: 0.8;
+  }
+
+  /* ── MASTERED ── */
+  .btn-mastered { background: var(--olive-pale); color: var(--olive); border: 1px solid #B8D090; }
+  .btn-mastered:hover { background: #cce8a0; }
+  .fc-mastered-badge { display: none; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--olive); background: var(--olive-pale); border: 1px solid #B8D090; padding: 3px 10px; border-radius: 999px; margin-top: 10px; }
+  .flashcard.is-mastered { border-color: #B8D090; }
+  .flashcard.is-mastered .fc-mastered-badge { display: inline-block; }
+  .mastered-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--olive); flex-shrink: 0; }
+  .show-filter-btn { font-size: 0.78rem; padding: 5px 14px; border-radius: 3px; border: 1px solid var(--sand-dark); background: var(--white); color: var(--stone-light); cursor: pointer; font-family: var(--font-body); transition: all 0.15s; }
+  .show-filter-btn.active { background: var(--ink); color: var(--white); border-color: var(--ink); font-weight: 500; }
+  .show-filter-btn.active-olive { background: var(--olive); color: var(--white); border-color: var(--olive); font-weight: 500; }
+  .mastered-count { font-size: 0.78rem; color: var(--stone-light); margin-left: auto; }
+  .vocab-row.is-mastered { opacity: 0.5; }
+  .color-card.is-mastered { opacity: 0.5; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 600px) {
+    .vocab-row { grid-template-columns: 1fr 1fr auto; }
+    .vocab-pron { display: none; }
+    .fc-word { font-size: 2.2rem; }
+    .listen-options { grid-template-columns: 1fr; }
+    .phrase-hint { display: none; }
+    main { padding: 1.5rem 1rem 3rem; }
+  }
+  /* ── MATCH GAME ── */
+  .match-controls {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.25rem;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .match-stats {
+    display: flex;
+    gap: 16px;
+    font-size: 0.82rem;
+    color: var(--stone-light);
+  }
+  .match-stat-val {
+    font-weight: 600;
+    color: var(--ink);
+    font-size: 1rem;
+  }
+  .match-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-bottom: 1rem;
+  }
+  .match-col {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .match-tile {
+    background: var(--white);
+    border: 1.5px solid var(--sand-dark);
+    border-radius: var(--radius-sm);
+    padding: 12px 14px;
+    font-size: 0.92rem;
+    cursor: pointer;
+    transition: border-color 0.15s, background 0.15s, transform 0.1s;
+    text-align: center;
+    line-height: 1.3;
+    min-height: 52px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    user-select: none;
+  }
+  .match-tile:hover:not(.matched):not(.wrong) { border-color: var(--sea-light); background: var(--sea-pale); }
+  .match-tile.selected { border-color: var(--sea); background: var(--sea-pale); transform: scale(1.02); }
+  .match-tile.matched { border-color: #B8D090; background: var(--olive-pale); color: var(--olive); cursor: default; opacity: 0.6; }
+  .match-tile.wrong { border-color: var(--terracotta); background: var(--terracotta-pale); animation: shake 0.35s ease; }
+  .match-tile.hr-tile { font-family: var(--font-display); font-weight: 600; font-size: 1rem; }
+  @keyframes shake {
+    0%,100% { transform: translateX(0); }
+    20% { transform: translateX(-6px); }
+    60% { transform: translateX(6px); }
+  }
+  .match-complete {
+    display: none;
+    text-align: center;
+    padding: 2rem 1rem;
+    background: var(--white);
+    border-radius: var(--radius);
+    border: 1px solid rgba(90,82,72,0.08);
+    box-shadow: var(--shadow-sm);
+  }
+  .match-complete.show { display: block; }
+  .match-complete-title {
+    font-family: var(--font-display);
+    font-size: 2rem;
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: 6px;
+  }
+  .match-complete-sub {
+    font-size: 0.9rem;
+    color: var(--stone-light);
+    margin-bottom: 1.5rem;
+  }
+  .match-progress {
+    height: 6px;
+    background: var(--sand-dark);
+    border-radius: 999px;
+    overflow: hidden;
+    margin-bottom: 1.25rem;
+  }
+  .match-progress-bar {
+    height: 100%;
+    background: linear-gradient(90deg, var(--terracotta), var(--sea));
+    border-radius: 999px;
+    transition: width 0.4s ease;
+    width: 0%;
+  }
+  /* ── ALPHABET ── */
+  .alpha-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 8px;
+  }
+  .alpha-card {
+    background: var(--white);
+    border: 1px solid rgba(90,82,72,0.08);
+    border-radius: var(--radius-sm);
+    padding: 12px 14px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    transition: border-color 0.15s;
+  }
+  .alpha-card:hover { border-color: var(--sand-dark); }
+  .alpha-letter {
+    font-family: var(--font-display);
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--terracotta);
+    line-height: 1;
+    min-width: 36px;
+    text-align: center;
+  }
+  .alpha-info { flex: 1; min-width: 0; }
+  .alpha-sound {
+    font-size: 0.75rem;
+    color: var(--stone-light);
+    font-style: italic;
+    margin-bottom: 2px;
+  }
+  .alpha-example {
+    font-size: 0.92rem;
+    font-weight: 500;
+    color: var(--ink);
+  }
+  .alpha-meaning {
+    font-size: 0.78rem;
+    color: var(--stone-light);
+  }
+
+  /* ── PROGRESS ── */
+  .progress-summary {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-bottom: 1.5rem;
+  }
+  .prog-stat {
+    background: var(--white);
+    border: 1px solid rgba(90,82,72,0.08);
+    border-radius: var(--radius-sm);
+    padding: 1rem;
+    text-align: center;
+  }
+  .prog-stat-val {
+    font-family: var(--font-display);
+    font-size: 2rem;
+    font-weight: 600;
+    color: var(--terracotta);
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+  .prog-stat-label {
+    font-size: 0.75rem;
+    color: var(--stone-light);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+  .prog-bar-wrap {
+    background: var(--white);
+    border: 1px solid rgba(90,82,72,0.08);
+    border-radius: var(--radius-sm);
+    padding: 1.25rem 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+  .prog-bar-label {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.82rem;
+    color: var(--stone-light);
+    margin-bottom: 8px;
+  }
+  .prog-bar-label strong { color: var(--ink); }
+  .prog-bar-track {
+    height: 10px;
+    background: var(--sand-dark);
+    border-radius: 999px;
+    overflow: hidden;
+  }
+  .prog-bar-fill {
+    height: 100%;
+    border-radius: 999px;
+    background: linear-gradient(90deg, var(--terracotta), var(--sea));
+    transition: width 0.6s ease;
+  }
+  .prog-log-title {
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--stone-light);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 10px;
+  }
+  .prog-log {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .prog-log-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 14px;
+    background: var(--white);
+    border: 1px solid rgba(90,82,72,0.08);
+    border-radius: var(--radius-sm);
+    font-size: 0.875rem;
+  }
+  .prog-log-date {
+    color: var(--stone-light);
+    font-size: 0.8rem;
+    min-width: 70px;
+  }
+  .prog-log-pct {
+    font-family: var(--font-display);
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--terracotta);
+    min-width: 52px;
+  }
+  .prog-log-bar {
+    flex: 1;
+    height: 6px;
+    background: var(--sand-dark);
+    border-radius: 999px;
+    overflow: hidden;
+  }
+  .prog-log-bar-fill {
+    height: 100%;
+    border-radius: 999px;
+    background: linear-gradient(90deg, var(--terracotta), var(--sea));
+  }
+  .prog-log-detail {
+    font-size: 0.78rem;
+    color: var(--stone-light);
+    min-width: 90px;
+    text-align: right;
+  }
+  .prog-empty {
+    text-align: center;
+    padding: 2rem;
+    color: var(--stone-light);
+    font-size: 0.9rem;
+  }
+  @media (max-width: 500px) {
+    .progress-summary { grid-template-columns: 1fr 1fr; }
+    .prog-log-detail { display: none; }
+  }
+
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">
+    Hrvatski <span>Learn Croatian</span>
+  </div>
+</header>
+
+<nav>
+  <button class="nav-btn active" onclick="switchTab('flashcards',this)">Flashcards</button>
+  <button class="nav-btn" onclick="switchTab('alphabet',this)">Alphabet</button>
+  <button class="nav-btn" onclick="switchTab('vocab',this)">Vocabulary</button>
+  <button class="nav-btn" onclick="switchTab('phrases',this)">Phrases</button>
+  <button class="nav-btn" onclick="switchTab('quiz',this)">Quiz</button>
+  <button class="nav-btn" onclick="switchTab('listen',this)">Listening</button>
+  <button class="nav-btn" onclick="switchTab('match',this)">Match</button>
+  <button class="nav-btn" onclick="switchTab('typeit',this)">Type It</button>
+  <button class="nav-btn" onclick="switchTab('progress',this)">Progress</button>
+</nav>
+
+<main>
+
+  <!-- ── FLASHCARDS ── -->
+  <div id="flashcards" class="section active">
+    <div class="section-header">
+      <div class="section-title">Flashcards</div>
+      <div class="section-sub">Listen to the Croatian word, then tap to reveal the English meaning</div>
+    </div>
+    <div class="fc-controls">
+      <span class="fc-meta" id="fc-counter">Card 1 of 8</span>
+      <div style="display:flex;gap:8px;align-items:center;">
+        <div style="display:flex;gap:4px;">
+          <button class="show-filter-btn active" id="fc-filter-all" onclick="setFcFilter('all',this)">All <span id="fc-count-all"></span></button>
+          <button class="show-filter-btn" id="fc-filter-learning" onclick="setFcFilter('learning',this)">Still learning <span id="fc-count-learning"></span></button>
+          <button class="show-filter-btn" id="fc-filter-mastered" onclick="setFcFilter('mastered',this)">Mastered <span id="fc-count-mastered"></span></button>
+        </div>
+        <select class="deck-select" id="deck-select" onchange="changeDeck()">
+          <option value="greetings">Greetings</option>
+          <option value="numbers">Numbers</option>
+          <option value="colors">Colors</option>
+          <option value="days">Days of the week</option>
+          <option value="food">Food &amp; drink</option>
+          <option value="basics">Basics</option>
+        </select>
+      </div>
+    </div>
+    <div class="flashcard" onclick="revealCard()" id="flashcard-el">
+      <span class="fc-cat" id="fc-cat">GREETINGS</span>
+      <div class="fc-word" id="fc-word">Dobar dan</div>
+      <div class="fc-hint" id="fc-hint">DOH-bar dan</div>
+      <div class="fc-translation" id="fc-translation">Good afternoon</div>
+      <div class="fc-tap" id="fc-tap">tap to reveal English</div>
+      <div class="fc-mastered-badge" id="fc-mastered-badge">✓ Mastered</div>
+    </div>
+    <div class="fc-actions">
+      <button class="btn btn-sea" onclick="event.stopPropagation();speakCurrent()">&#9654; Hear it</button>
+      <button class="btn btn-ghost" onclick="prevCard()">&#8592; Back</button>
+      <button class="btn btn-primary" onclick="nextCard()">Next &#8594;</button>
+      <button class="btn btn-mastered" id="btn-know" onclick="toggleMastered()">✓ I know this</button>
+    </div>
+    <div style="font-size:0.78rem;color:var(--stone-light);text-align:center;margin-top:8px;" id="fc-mastered-count"></div>
+  </div>
+
+  <!-- ── VOCAB ── -->
+  <div id="vocab" class="section">
+    <div class="section-header">
+      <div class="section-title">Vocabulary</div>
+      <div class="section-sub">All words — filter by category</div>
+    </div>
+    <div style="display:flex;gap:6px;margin-bottom:10px;align-items:center;">
+      <button class="show-filter-btn active" id="vf-all" onclick="setVocabShowFilter('all',this)">All <span id="vf-count-all"></span></button>
+      <button class="show-filter-btn" id="vf-learning" onclick="setVocabShowFilter('learning',this)">Still learning <span id="vf-count-learning"></span></button>
+      <button class="show-filter-btn" id="vf-mastered" onclick="setVocabShowFilter('mastered',this)">Mastered <span id="vf-count-mastered"></span></button>
+    </div>
+    <div class="filter-row" id="vocab-filters"></div>
+    <div id="vocab-list"></div>
+  </div>
+
+  <!-- ── QUIZ ── -->
+  <div id="quiz" class="section">
+    <div class="section-header">
+      <div class="section-title">Quiz</div>
+      <div class="section-sub">See the English — type the Croatian translation</div>
+    </div>
+    <div class="fc-controls">
+      <span class="fc-meta" id="quiz-counter">Card 1 of 10</span>
+      <div style="display:flex;gap:8px;align-items:center;">
+        <select class="deck-select" id="quiz-deck" onchange="resetQuiz()">
+          <option value="all">All categories</option>
+          <option value="greetings">Greetings</option>
+          <option value="numbers">Numbers</option>
+          <option value="colors">Colors</option>
+          <option value="days">Days</option>
+          <option value="food">Food</option>
+          <option value="basics">Basics</option>
+        </select>
+        <button class="btn btn-ghost" onclick="resetQuiz()">&#8635; Shuffle</button>
+      </div>
+    </div>
+
+    <div class="flashcard" id="quiz-card" style="cursor:default;">
+      <span class="fc-cat" id="quiz-cat"></span>
+      <div class="fc-word" id="quiz-prompt" style="font-size:1.44rem;"></div>
+      <div id="quiz-result-badge" style="margin-top:6px;font-size:0.8rem;font-weight:500;min-height:1.2em;transition:opacity 0.2s;"></div>
+    </div>
+
+    <div style="margin-top:0.75rem;">
+      <input class="quiz-input" type="text" id="quiz-input"
+        placeholder="type the Croatian..."
+        autocomplete="off" autocorrect="off" spellcheck="false"
+        onkeydown="if(event.key==='Enter')checkAnswer()" />
+      <div class="fc-actions" style="margin-top:0.5rem;">
+        <button class="btn btn-sea" onclick="speakQuizAnswer()">&#9654; Hear answer</button>
+        <button class="btn btn-primary" onclick="checkAnswer()">Check</button>
+        <button class="btn btn-ghost" onclick="nextQuiz()">Skip &#8594;</button>
+        <button class="btn btn-ghost" onclick="quizReveal()">Reveal</button>
+      </div>
+    </div>
+
+    <div class="score-bar" style="margin-top:1rem;">
+      <span id="quiz-score-label">Score: 0 correct out of 0 attempts</span>
+      <span class="score-pct" id="quiz-pct">—</span>
+    </div>
+  </div>
+
+  <!-- ── LISTENING ── -->
+  <div id="listen" class="section">
+    <div class="section-header">
+      <div class="section-title">Listening</div>
+      <div class="section-sub">Hear the word — pick the correct meaning</div>
+    </div>
+    <div class="listen-hero" id="listen-hero" onclick="playListenWord()">
+      <span class="listen-icon" id="listen-icon">&#128266;</span>
+      <div class="listen-cue">tap to hear again</div>
+    </div>
+    <div class="listen-options" id="listen-options"></div>
+    <div class="feedback" id="listen-feedback"></div>
+    <div class="score-bar">
+      <span id="listen-score-label">Score: 0 correct out of 0 attempts</span>
+      <span class="score-pct" id="listen-pct">—</span>
+    </div>
+    <div style="text-align:center;margin-top:1rem;">
+      <button class="btn btn-ghost" onclick="nextListen()">Next word &#8594;</button>
+    </div>
+  </div>
+
+  <!-- ── PHRASES ── -->
+  <div id="phrases" class="section">
+    <div class="section-header">
+      <div class="section-title">Phrases</div>
+      <div class="section-sub">Practical sentences for everyday use</div>
+    </div>
+    <div style="display:flex;gap:6px;margin-bottom:1rem;">
+      <button class="show-filter-btn active" id="pf-all" onclick="setPhrasesFilter('all',this)">All <span id="pf-count-all"></span></button>
+      <button class="show-filter-btn" id="pf-learning" onclick="setPhrasesFilter('learning',this)">Still learning <span id="pf-count-learning"></span></button>
+      <button class="show-filter-btn" id="pf-mastered" onclick="setPhrasesFilter('mastered',this)">Mastered <span id="pf-count-mastered"></span></button>
+    </div>
+    <div id="phrases-list"></div>
+  </div>
+  <!-- ── MATCH ── -->
+  <div id="match" class="section">
+    <div class="section-header">
+      <div class="section-title">Match</div>
+      <div class="section-sub">Tap a Croatian word, then its English meaning</div>
+    </div>
+    <div class="match-controls">
+      <div class="match-stats">
+        <div><div class="match-stat-val" id="match-pairs">0/8</div>matched</div>
+        <div><div class="match-stat-val" id="match-mistakes">0</div>mistakes</div>
+        <div><div class="match-stat-val" id="match-streak">0</div>streak</div>
+      </div>
+      <div style="display:flex;gap:8px;align-items:center;">
+        <select class="deck-select" id="match-deck" onchange="startMatch()">
+          <option value="all">All categories</option>
+          <option value="greetings">Greetings</option>
+          <option value="numbers">Numbers</option>
+          <option value="colors">Colors</option>
+          <option value="days">Days</option>
+          <option value="food">Food</option>
+          <option value="basics">Basics</option>
+        </select>
+        <select class="deck-select" id="match-size">
+          <option value="6">6 pairs</option>
+          <option value="8" selected>8 pairs</option>
+          <option value="10">10 pairs</option>
+        </select>
+        <button class="btn btn-ghost" onclick="startMatch()">&#8635; New game</button>
+      </div>
+    </div>
+    <div class="match-progress"><div class="match-progress-bar" id="match-bar"></div></div>
+    <div id="match-board">
+      <div class="match-grid">
+        <div class="match-col" id="match-col-hr"></div>
+        <div class="match-col" id="match-col-en"></div>
+      </div>
+    </div>
+    <div class="match-complete" id="match-complete">
+      <div class="match-complete-title" id="match-complete-title">Odlično! 🎉</div>
+      <div class="match-complete-sub" id="match-complete-sub">All matched!</div>
+      <button class="btn btn-primary" onclick="startMatch()">Play again &#8635;</button>
+    </div>
+  </div>
+  <!-- ── TYPE IT ── -->
+  <div id="typeit" class="section">
+    <div class="section-header">
+      <div class="section-title">Type It</div>
+      <div class="section-sub">See the Croatian — type the English meaning</div>
+    </div>
+    <div class="fc-controls">
+      <span class="fc-meta" id="ti-counter">Card 1 of 10</span>
+      <div style="display:flex;gap:8px;align-items:center;">
+        <select class="deck-select" id="ti-deck" onchange="resetTypeIt()">
+          <option value="all">All categories</option>
+          <option value="greetings">Greetings</option>
+          <option value="numbers">Numbers</option>
+          <option value="colors">Colors</option>
+          <option value="days">Days</option>
+          <option value="food">Food</option>
+          <option value="basics">Basics</option>
+        </select>
+        <button class="btn btn-ghost" onclick="resetTypeIt()">&#8635; Shuffle</button>
+      </div>
+    </div>
+
+    <div class="flashcard" id="ti-card" style="cursor:default;">
+      <span class="fc-cat" id="ti-cat"></span>
+      <div class="fc-word" id="ti-word" style="font-size:1.44rem;"></div>
+      <div id="ti-result-badge" style="margin-top:6px;font-size:0.8rem;font-weight:500;min-height:1.2em;transition:opacity 0.2s;"></div>
+    </div>
+
+    <div style="margin-top:0.75rem;">
+      <input class="quiz-input" type="text" id="ti-input"
+        placeholder="type the English meaning..."
+        autocomplete="off" autocorrect="off" spellcheck="false"
+        onkeydown="if(event.key==='Enter')checkTypeIt()" />
+      <div class="fc-actions" style="margin-top:0.5rem;">
+        <button class="btn btn-sea" onclick="tiSpeak()">&#9654; Hear it</button>
+        <button class="btn btn-primary" onclick="checkTypeIt()">Check</button>
+        <button class="btn btn-ghost" onclick="tiSkip()">Skip &#8594;</button>
+        <button class="btn btn-ghost" onclick="tiReveal()">Reveal</button>
+      </div>
+    </div>
+
+    <div class="score-bar" style="margin-top:1rem;">
+      <span id="ti-score-label">Score: 0 correct out of 0 attempts</span>
+      <span class="score-pct" id="ti-pct">—</span>
+    </div>
+  </div>
+  <!-- ── ALPHABET ── -->
+  <div id="alphabet" class="section">
+    <div class="section-header">
+      <div class="section-title">Alphabet</div>
+      <div class="section-sub">The Croatian alphabet — every letter with pronunciation and an example word</div>
+    </div>
+    <div id="alphabet-list"></div>
+  </div>
+  <!-- ── PROGRESS ── -->
+  <div id="progress" class="section">
+    <div class="section-header">
+      <div class="section-title">Progress</div>
+      <div class="section-sub">Your mastery percentage logged each day you study</div>
+    </div>
+
+    <div class="progress-summary">
+      <div class="prog-stat">
+        <div class="prog-stat-val" id="prog-pct-today">0%</div>
+        <div class="prog-stat-label">Mastered today</div>
+      </div>
+      <div class="prog-stat">
+        <div class="prog-stat-val" id="prog-total-mastered">0</div>
+        <div class="prog-stat-label">Words mastered</div>
+      </div>
+      <div class="prog-stat">
+        <div class="prog-stat-val" id="prog-total-words">0</div>
+        <div class="prog-stat-label">Total words</div>
+      </div>
+    </div>
+
+    <div class="prog-bar-wrap">
+      <div class="prog-bar-label">
+        <span>Overall mastery</span>
+        <strong id="prog-bar-pct">0%</strong>
+      </div>
+      <div class="prog-bar-track">
+        <div class="prog-bar-fill" id="prog-bar-fill" style="width:0%"></div>
+      </div>
+    </div>
+
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+      <div class="prog-log-title">Daily log</div>
+      <button class="btn btn-ghost" style="font-size:0.75rem;padding:4px 12px;" onclick="snapshotToday()">Log today's progress</button>
+    </div>
+    <div class="prog-log" id="prog-log">
+      <div class="prog-empty" id="prog-empty">No sessions logged yet. Hit "Log today's progress" after a study session.</div>
+    </div>
+  </div>
+
+</main>
+
+<script>
+const allWords = {
+  greetings: [
+    {hr:"Bok", en:"Hi / Bye", hint:"boke"},
+    {hr:"Zdravo", en:"Hello", hint:"ZDRAH-voh"},
+    {hr:"Hej", en:"Hey", hint:"hey"},
+    {hr:"Dobro jutro", en:"Good morning", hint:"DOH-broh YOO-troh"},
+    {hr:"Dobar dan", en:"Good day", hint:"DOH-bar dan"},
+    {hr:"Dobra večer", en:"Good evening", hint:"DOH-bra VEH-cher"},
+    {hr:"Laku noć", en:"Good night", hint:"LAH-koo notch"},
+    {hr:"Doviđenja", en:"Goodbye (formal)", hint:"doh-vee-JEN-ya"},
+    {hr:"Kako si?", en:"How are you?", hint:"KAH-koh see"},
+    {hr:"Što ima?", en:"What's up?", hint:"shtoh EE-mah"},
+    {hr:"Sve okej?", en:"Everything okay?", hint:"sveh oh-KAY"},
+    {hr:"Super, hvala!", en:"Great, thanks!", hint:"SOO-per HVAH-lah"},
+    {hr:"I ti?", en:"And you?", hint:"ee tee"},
+    {hr:"Dobro sam", en:"I'm fine", hint:"DOH-broh sahm"},
+    {hr:"Nije loše", en:"Not bad", hint:"NEE-yeh LOH-sheh"},
+    {hr:"Vidimo se!", en:"See you!", hint:"VEE-dee-moh seh"},
+    {hr:"Vidimo se kasnije", en:"See you later", hint:"VEE-dee-moh seh KAS-nyeh"},
+    {hr:"Do sutra!", en:"See you tomorrow!", hint:"doh SOO-trah"},
+    {hr:"Sretan put!", en:"Safe travels!", hint:"SREH-tan poot"},
+    {hr:"Dobrodošao", en:"Welcome (to a male)", hint:"doh-broh-DOH-shao"},
+    {hr:"Dobrodošla", en:"Welcome (to a female)", hint:"doh-broh-DOH-shlah"},
+    {hr:"Drago mi je", en:"Nice to meet you", hint:"DRAH-goh mee yeh"},
+    {hr:"Odavno se nismo vidjeli!", en:"Long time no see!", hint:"oh-DAV-noh seh NEES-moh VEE-dyeh-lee"},
+    {hr:"Kako je kod tebe?", en:"How are things with you?", hint:"KAH-koh yeh kohd TEH-beh"},
+    {hr:"Što radiš?", en:"What are you up to?", hint:"shtoh RAH-deesh"},
+    {hr:"Puno posla", en:"Lots of work", hint:"POO-noh POHS-lah"},
+    {hr:"Umoran sam", en:"I'm tired (male)", hint:"oo-MOH-ran sahm"},
+    {hr:"Umorna sam", en:"I'm tired (female)", hint:"oo-MOH-rnah sahm"},
+    {hr:"Odlično!", en:"Excellent!", hint:"OHD-leech-noh"},
+    {hr:"Savršeno!", en:"Perfect!", hint:"sahv-RRSH-eh-noh"},
+    {hr:"Jako dobro", en:"Really good", hint:"YAH-koh DOH-broh"},
+    {hr:"Može", en:"It's okay / Sure", hint:"MOH-zheh"},
+    {hr:"Ajmo!", en:"Let's go!", hint:"AY-moh"},
+    {hr:"Čekaj!", en:"Wait!", hint:"CHEH-kai"},
+    {hr:"Nazdravlje!", en:"Cheers!", hint:"nahz-DRAV-lyeh"},
+    {hr:"Živjeli!", en:"Cheers! (toast)", hint:"ZHEE-vyeh-lee"},
+    {hr:"Sretan rođendan!", en:"Happy birthday!", hint:"SREH-tan rohj-EN-dan"},
+    {hr:"Sretna Nova godina!", en:"Happy New Year!", hint:"SREH-tnah NOH-vah goh-DEE-nah"},
+    {hr:"Sretan Božić!", en:"Merry Christmas!", hint:"SREH-tan BOH-zhich"},
+    {hr:"Koliko ima godina?", en:"How old are you?", hint:"KOH-lee-koh EE-mah goh-DEE-nah"},
+    {hr:"Imam ... godina", en:"I am ... years old", hint:"EE-mahm ... goh-DEE-nah"},
+    {hr:"Jesi li slobodan?", en:"Are you free? (to a male)", hint:"YEH-see lee SLOH-boh-dan"},
+    {hr:"Jesi li slobodna?", en:"Are you free? (to a female)", hint:"YEH-see lee SLOH-boh-dnah"},
+    {hr:"Idemo van?", en:"Shall we go out?", hint:"EE-deh-moh van"},
+    {hr:"Zovi me", en:"Call me", hint:"ZOH-vee meh"},
+    {hr:"Piši mi", en:"Text me", hint:"PEE-shee mee"},
+    {hr:"Gdje si?", en:"Where are you?", hint:"GD-yeh see"},
+    {hr:"Kasnim malo", en:"I'm a bit late", hint:"KAS-neem MAH-loh"},
+    {hr:"Odmah dolazim", en:"I'm coming right now", hint:"OHD-mah DOH-lah-zeem"},
+    {hr:"Hvala što si došao", en:"Thanks for coming (to male)", hint:"HVAH-lah shtoh see DOH-shao"},
+    {hr:"Hvala što si došla", en:"Thanks for coming (to female)", hint:"HVAH-lah shtoh see DOH-shlah"},
+    {hr:"Ugodan dan!", en:"Have a nice day!", hint:"oo-GOH-dan dan"},
+    {hr:"Sve najbolje!", en:"All the best!", hint:"sveh NAY-bol-yeh"},
+    {hr:"Čuvaj se!", en:"Take care!", hint:"CHOO-vai seh"},
+  ],
+  numbers: [
+    {hr:"Nula", en:"Zero", hint:"NOO-lah"},
+    {hr:"Jedan", en:"One", hint:"YEH-dan"},
+    {hr:"Dva", en:"Two", hint:"dvah"},
+    {hr:"Tri", en:"Three", hint:"tree"},
+    {hr:"Četiri", en:"Four", hint:"CHEH-tee-ree"},
+    {hr:"Pet", en:"Five", hint:"pet"},
+    {hr:"Šest", en:"Six", hint:"shest"},
+    {hr:"Sedam", en:"Seven", hint:"SEH-dam"},
+    {hr:"Osam", en:"Eight", hint:"OH-sam"},
+    {hr:"Devet", en:"Nine", hint:"DEH-vet"},
+    {hr:"Deset", en:"Ten", hint:"DEH-set"},
+    {hr:"Jedanaest", en:"Eleven", hint:"yeh-DAH-nah-est"},
+    {hr:"Dvanaest", en:"Twelve", hint:"DVAH-nah-est"},
+    {hr:"Dvadeset", en:"Twenty", hint:"dvah-DEH-set"},
+    {hr:"Trideset", en:"Thirty", hint:"TREE-deh-set"},
+    {hr:"Sto", en:"One hundred", hint:"stoh"},
+    {hr:"Tisuću", en:"One thousand", hint:"TEE-soo-choo"},
+    {hr:"Prvi", en:"First", hint:"PRRR-vee"},
+    {hr:"Drugi", en:"Second", hint:"DROO-gee"},
+    {hr:"Treći", en:"Third", hint:"TREH-chee"},
+  ],
+  colors: [
+    {hr:"Crvena", en:"Red", hint:"TSSR-veh-nah", color:"#C4623A"},
+    {hr:"Plava", en:"Blue", hint:"PLAH-vah", color:"#2A6B8A"},
+    {hr:"Zelena", en:"Green", hint:"ZEH-leh-nah", color:"#6B7A3A"},
+    {hr:"Žuta", en:"Yellow", hint:"ZHOO-tah", color:"#D4A820"},
+    {hr:"Narančasta", en:"Orange", hint:"nah-RAN-chas-tah", color:"#D87030"},
+    {hr:"Ljubičasta", en:"Purple", hint:"lyoo-bee-CHAS-tah", color:"#7060A8"},
+    {hr:"Ružičasta", en:"Pink", hint:"roo-zhee-CHAS-tah", color:"#D06080"},
+    {hr:"Crna", en:"Black", hint:"TSSR-nah", color:"#1E1A16"},
+    {hr:"Bijela", en:"White", hint:"BYEH-lah", color:"#F5F0E8"},
+    {hr:"Siva", en:"Grey", hint:"SEE-vah", color:"#8A8278"},
+    {hr:"Smeđa", en:"Brown", hint:"SMEH-ja", color:"#7A4A20"},
+    {hr:"Tirkizna", en:"Turquoise", hint:"teer-KEEZ-nah", color:"#1D9E8A"},
+  ],
+  days: [
+    {hr:"Ponedjeljak", en:"Monday", hint:"poh-ned-YEL-yak"},
+    {hr:"Utorak", en:"Tuesday", hint:"OO-toh-rak"},
+    {hr:"Srijeda", en:"Wednesday", hint:"SREE-yeh-dah"},
+    {hr:"Četvrtak", en:"Thursday", hint:"CHET-vrrr-tak"},
+    {hr:"Petak", en:"Friday", hint:"PEH-tak"},
+    {hr:"Subota", en:"Saturday", hint:"SOO-boh-tah"},
+    {hr:"Nedjelja", en:"Sunday", hint:"ned-YEL-yah"},
+    {hr:"Danas", en:"Today", hint:"DAH-nahs"},
+    {hr:"Sutra", en:"Tomorrow", hint:"SOO-trah"},
+    {hr:"Jučer", en:"Yesterday", hint:"YOO-cher"},
+    {hr:"Vikend", en:"Weekend", hint:"VEE-kend"},
+    {hr:"Tjedan", en:"Week", hint:"TYEH-dan"},
+    {hr:"Mjesec", en:"Month", hint:"MYEH-sets"},
+    {hr:"Godina", en:"Year", hint:"goh-DEE-nah"},
+    {hr:"Ujutro", en:"In the morning", hint:"oo-YOO-troh"},
+    {hr:"Popodne", en:"In the afternoon", hint:"poh-POH-dneh"},
+    {hr:"Navečer", en:"In the evening", hint:"nah-VEH-cher"},
+  ],
+  food: [
+    {hr:"Voda", en:"Water", hint:"VOH-dah"},
+    {hr:"Kruh", en:"Bread", hint:"krooh"},
+    {hr:"Kava", en:"Coffee", hint:"KAH-vah"},
+    {hr:"Čaj", en:"Tea", hint:"chai"},
+    {hr:"Mlijeko", en:"Milk", hint:"mlee-YEH-koh"},
+    {hr:"Sok", en:"Juice", hint:"sohk"},
+    {hr:"Pivo", en:"Beer", hint:"PEE-voh"},
+    {hr:"Vino", en:"Wine", hint:"VEE-noh"},
+    {hr:"Meso", en:"Meat", hint:"MEH-soh"},
+    {hr:"Piletina", en:"Chicken", hint:"pee-LEH-tee-nah"},
+    {hr:"Svinjetina", en:"Pork", hint:"sveen-YEH-tee-nah"},
+    {hr:"Riba", en:"Fish", hint:"REE-bah"},
+    {hr:"Povrće", en:"Vegetables", hint:"POV-rr-cheh"},
+    {hr:"Voće", en:"Fruit", hint:"VOH-cheh"},
+    {hr:"Sir", en:"Cheese", hint:"seer"},
+    {hr:"Jaje", en:"Egg", hint:"YAH-yeh"},
+    {hr:"Tjestenina", en:"Pasta", hint:"tyes-teh-NEE-nah"},
+    {hr:"Riža", en:"Rice", hint:"REE-zhah"},
+    {hr:"Juha", en:"Soup", hint:"YOO-hah"},
+    {hr:"Salata", en:"Salad", hint:"sah-LAH-tah"},
+    {hr:"Sladoled", en:"Ice cream", hint:"SLAH-doh-led"},
+    {hr:"Kolač", en:"Cake", hint:"KOH-lach"},
+    {hr:"Doručak", en:"Breakfast", hint:"DOH-roo-chak"},
+    {hr:"Ručak", en:"Lunch", hint:"ROO-chak"},
+    {hr:"Večera", en:"Dinner", hint:"VEH-cheh-rah"},
+  ],
+  basics: [
+    {hr:"Hvala", en:"Thanks", hint:"HVAH-lah"},
+    {hr:"Hvala lijepa", en:"Thanks a lot", hint:"HVAH-lah LYEH-pah"},
+    {hr:"Molim", en:"Please / You're welcome", hint:"MOH-leem"},
+    {hr:"Nema problema", en:"No problem", hint:"NEH-mah PROH-bleh-mah"},
+    {hr:"Izvoli", en:"Here you go", hint:"eez-VOH-lee"},
+    {hr:"Da", en:"Yes", hint:"dah"},
+    {hr:"Ne", en:"No", hint:"neh"},
+    {hr:"Možda", en:"Maybe", hint:"MOZH-dah"},
+    {hr:"Naravno", en:"Of course", hint:"nah-RAV-noh"},
+    {hr:"Oprostite", en:"Excuse me / Sorry", hint:"oh-PROH-stee-teh"},
+    {hr:"Žao mi je", en:"I'm sorry", hint:"ZHAH-oh mee yeh"},
+    {hr:"Gdje je?", en:"Where is?", hint:"GD-yeh yeh"},
+    {hr:"Kada?", en:"When?", hint:"KAH-dah"},
+    {hr:"Zašto?", en:"Why?", hint:"ZAHSH-toh"},
+    {hr:"Tko?", en:"Who?", hint:"tkoh"},
+    {hr:"Što?", en:"What?", hint:"shtoh"},
+    {hr:"Koliko košta?", en:"How much?", hint:"KOH-lee-koh KOSH-tah"},
+    {hr:"Pomoć!", en:"Help!", hint:"POH-motch"},
+    {hr:"Ne kužim", en:"I don't get it", hint:"neh KOO-zheem"},
+    {hr:"Ne razumijem", en:"I don't understand", hint:"neh rah-ZOO-mee-yem"},
+    {hr:"Stvarno?", en:"Really?", hint:"STVAHR-noh"},
+    {hr:"Ništa", en:"Nothing / Never mind", hint:"NEESH-tah"},
+    {hr:"Dobro", en:"Good / Okay", hint:"DOH-broh"},
+    {hr:"Loše", en:"Bad", hint:"LOH-sheh"},
+    {hr:"Brzo", en:"Fast / Quickly", hint:"BRRR-zoh"},
+    {hr:"Polako", en:"Slowly", hint:"poh-LAH-koh"},
+    {hr:"Malo", en:"A little", hint:"MAH-loh"},
+    {hr:"Puno", en:"A lot", hint:"POO-noh"},
+    {hr:"Ovdje", en:"Here", hint:"OHV-dyeh"},
+    {hr:"Tamo", en:"There", hint:"TAH-moh"},
+    {hr:"Gore", en:"Up", hint:"GOH-reh"},
+    {hr:"Dolje", en:"Down", hint:"DOH-lyeh"},
+    {hr:"Lijevo", en:"Left", hint:"lee-YEH-voh"},
+    {hr:"Desno", en:"Right", hint:"DES-noh"},
+    {hr:"Ravno", en:"Straight ahead", hint:"RAV-noh"},
+    {hr:"Blizu", en:"Close / Near", hint:"BLEE-zoo"},
+    {hr:"Daleko", en:"Far", hint:"dah-LEH-koh"},
+    {hr:"Otvori", en:"Open", hint:"oh-TVOH-ree"},
+    {hr:"Zatvori", en:"Close / Shut", hint:"zah-TVOH-ree"},
+    {hr:"Ulaz", en:"Entrance", hint:"OO-lahz"},
+    {hr:"Izlaz", en:"Exit", hint:"EEZ-lahz"},
+    {hr:"Besplatno", en:"Free / No charge", hint:"bes-PLAHT-noh"},
+    {hr:"Skupo", en:"Expensive", hint:"SKOO-poh"},
+    {hr:"Jeftino", en:"Cheap", hint:"YEF-tee-noh"},
+    {hr:"Novo", en:"New", hint:"NOH-voh"},
+    {hr:"Staro", en:"Old", hint:"STAH-roh"},
+    {hr:"Veliko", en:"Big / Large", hint:"veh-LEE-koh"},
+    {hr:"Malo", en:"Small", hint:"MAH-loh"},
+    {hr:"Vruće", en:"Hot", hint:"VROO-cheh"},
+    {hr:"Hladno", en:"Cold", hint:"HLAHD-noh"},
+    {hr:"Lijepo", en:"Beautiful / Nice", hint:"LYEH-poh"},
+    {hr:"Ružno", en:"Ugly", hint:"ROOZH-noh"},
+    {hr:"Glasno", en:"Loud", hint:"GLAHS-noh"},
+    {hr:"Tiho", en:"Quiet", hint:"TEE-hoh"},
+    {hr:"Važno", en:"Important", hint:"VAZH-noh"},
+    {hr:"Zanimljivo", en:"Interesting", hint:"zah-NEEM-lyee-voh"},
+    {hr:"Dosadno", en:"Boring", hint:"doh-SAHD-noh"},
+    {hr:"Lako", en:"Easy", hint:"LAH-koh"},
+    {hr:"Teško", en:"Difficult / Heavy", hint:"TESH-koh"},
+    {hr:"Opasno", en:"Dangerous", hint:"oh-PAHS-noh"},
+    {hr:"Sigurno", en:"Safe / Sure", hint:"SEE-goor-noh"},
+    {hr:"Odmah", en:"Right away / Immediately", hint:"OHD-mah"},
+    {hr:"Sada", en:"Now", hint:"SAH-dah"},
+    {hr:"Kasnije", en:"Later", hint:"KAS-nyeh"},
+    {hr:"Uvijek", en:"Always", hint:"OO-vyehk"},
+    {hr:"Nikad", en:"Never", hint:"NEE-kahd"},
+    {hr:"Ponekad", en:"Sometimes", hint:"poh-NEH-kahd"},
+    {hr:"Zajedno", en:"Together", hint:"zah-YED-noh"},
+    {hr:"Sama", en:"Alone (female)", hint:"SAH-mah"},
+    {hr:"Sam", en:"Alone (male)", hint:"sahm"},
+    {hr:"Svejedno", en:"It's all the same / I don't mind", hint:"sveh-YED-noh"},
+    {hr:"Nadam se", en:"I hope so", hint:"NAH-dahm seh"},
+    {hr:"Mislim da...", en:"I think that...", hint:"MEES-leem dah"},
+    {hr:"Znam", en:"I know", hint:"znahm"},
+    {hr:"Ne znam", en:"I don't know", hint:"neh znahm"},
+    {hr:"Trebam", en:"I need", hint:"TREH-bahm"},
+    {hr:"Hoću", en:"I want", hint:"HOH-choo"},
+    {hr:"Ne mogu", en:"I can't", hint:"neh MOH-goo"},
+    {hr:"Mogu", en:"I can", hint:"MOH-goo"},
+    {hr:"Volim", en:"I love", hint:"VOH-leem"},
+    {hr:"Ne volim", en:"I don't like", hint:"neh VOH-leem"},
+  ],
+};
+
+const phrases = [
+  {hr:"Ne razumijem.", en:"I don't understand.", hint:"neh rah-ZOO-mee-yem"},
+  {hr:"Ne kužim.", en:"I don't get it. (casual)", hint:"neh KOO-zheem"},
+  {hr:"Govoriš li engleski?", en:"Do you speak English?", hint:"goh-VOH-reesh lee en-GLES-kee"},
+  {hr:"Možeš li ponoviti?", en:"Can you repeat that?", hint:"MOH-zhesh lee poh-NOH-vee-tee"},
+  {hr:"Možeš li govoriti sporije?", en:"Can you speak slower?", hint:"MOH-zhesh lee goh-VOH-ree-tee SPOH-ree-yeh"},
+  {hr:"Kako se kaže...?", en:"How do you say...?", hint:"KAH-koh seh KAH-zheh"},
+  {hr:"Što znači...?", en:"What does ... mean?", hint:"shtoh ZNAH-chee"},
+  {hr:"Zovem se...", en:"My name is...", hint:"ZOH-vem seh"},
+  {hr:"Odakle si?", en:"Where are you from?", hint:"oh-DAH-kleh see"},
+  {hr:"Ja sam iz...", en:"I'm from...", hint:"yah sahm eez"},
+  {hr:"Koliko dugo si u Hrvatskoj?", en:"How long have you been in Croatia?", hint:"KOH-lee-koh DOO-goh see oo HRRR-vat-skoy"},
+  {hr:"Gdje ideš?", en:"Where are you going?", hint:"GD-yeh EE-desh"},
+  {hr:"Što radiš?", en:"What are you doing? / What do you do?", hint:"shtoh RAH-deesh"},
+  {hr:"Imaš li plan za večeras?", en:"Do you have plans tonight?", hint:"EE-mahsh lee plan zah VEH-cheh-rahs"},
+  {hr:"Idemo na piće?", en:"Shall we go for a drink?", hint:"EE-deh-moh nah PEE-cheh"},
+  {hr:"Gdje je dobro jesti?", en:"Where's good to eat?", hint:"GD-yeh yeh DOH-broh YES-tee"},
+  {hr:"Predivno je ovdje!", en:"It's gorgeous here!", hint:"preh-DEEV-noh yeh OHV-dyeh"},
+  {hr:"Super!", en:"Great! / Awesome!", hint:"SOO-per"},
+  {hr:"Baš super!", en:"Really great!", hint:"bahsh SOO-per"},
+  {hr:"Sviđa mi se.", en:"I like it.", hint:"SVEE-ja mee seh"},
+  {hr:"Ne sviđa mi se.", en:"I don't like it.", hint:"neh SVEE-ja mee seh"},
+  {hr:"Stvarno?", en:"Really?", hint:"STVAHR-noh"},
+  {hr:"Ma daj!", en:"No way! / Come on!", hint:"mah die"},
+  {hr:"Nema veze.", en:"It doesn't matter. / No worries.", hint:"NEH-mah VEH-zeh"},
+  {hr:"Sve je okej.", en:"Everything's fine.", hint:"sveh yeh oh-KAY"},
+  {hr:"Oprostite!", en:"Excuse me!", hint:"oh-PROH-stee-teh"},
+  {hr:"Gdje je toalet?", en:"Where's the toilet?", hint:"GD-yeh yeh toh-AH-let"},
+  {hr:"Koliko je sati?", en:"What time is it?", hint:"KOH-lee-koh yeh SAH-tee"},
+  {hr:"Račun, molim.", en:"The bill, please.", hint:"RAH-choon MOH-leem"},
+  {hr:"Još jedno pivo, molim.", en:"One more beer, please.", hint:"yosh YED-noh PEE-voh MOH-leem"},
+  {hr:"Je li uključen servis?", en:"Is service included?", hint:"yeh lee oo-KLYOO-chen SERR-vis"},
+  {hr:"Boli me glava.", en:"I have a headache.", hint:"BOH-lee meh GLAH-vah"},
+  {hr:"Nisam dobro.", en:"I'm not well.", hint:"NEE-sahm DOH-broh"},
+  {hr:"Treba mi pomoć.", en:"I need help.", hint:"TREH-bah mee POH-motch"},
+  {hr:"Izgubio sam se.", en:"I'm lost. (male speaker)", hint:"eez-GOO-bee-oh sahm seh"},
+  {hr:"Izgubila sam se.", en:"I'm lost. (female speaker)", hint:"eez-GOO-bee-lah sahm seh"},
+  {hr:"Volim Hrvatsku.", en:"I love Croatia.", hint:"VOH-leem HRR-vat-skoo"},
+  {hr:"Učim hrvatski.", en:"I'm learning Croatian.", hint:"OO-cheem HRRR-vaht-skee"},
+];
+
+// Speech
+let voices = [];
+function loadVoices(){ voices = window.speechSynthesis.getVoices(); }
+window.speechSynthesis.onvoiceschanged = loadVoices;
+loadVoices();
+
+function speak(text){
+  window.speechSynthesis.cancel();
+  const u = new SpeechSynthesisUtterance(text);
+  u.lang = 'hr-HR'; u.rate = 0.82;
+  const v = voices.find(x => x.lang && x.lang.startsWith('hr'));
+  if(v) u.voice = v;
+  window.speechSynthesis.speak(u);
+}
+
+// Points (removed display — kept as no-op so existing calls don't break)
+function addPoints(n){}
+
+// Tab switching
+function switchTab(id, el){
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  el.classList.add('active');
+  if(id === 'progress') renderProgress();
+}
+
+// ── MASTERED ──
+const mastered = new Set();
+function wordKey(w){ return w.hr; }
+function isMastered(w){ return mastered.has(wordKey(w)); }
+
+function refreshAllCounts(){
+  // Flashcard counts (current deck)
+  const base = allWords[document.getElementById('deck-select').value] || allWords.greetings;
+  const fcM = base.filter(w => isMastered(w)).length;
+  const fcL = base.length - fcM;
+  document.getElementById('fc-count-all').textContent = `(${base.length})`;
+  document.getElementById('fc-count-learning').textContent = `(${fcL})`;
+  document.getElementById('fc-count-mastered').textContent = `(${fcM})`;
+
+  // Vocab counts (current category filter)
+  const vBase = vocabFilter === 'all' ? allCats.flatMap(c => allWords[c]) : (allWords[vocabFilter]||[]);
+  const vM = vBase.filter(w => isMastered(w)).length;
+  const vL = vBase.length - vM;
+  document.getElementById('vf-count-all').textContent = `(${vBase.length})`;
+  document.getElementById('vf-count-learning').textContent = `(${vL})`;
+  document.getElementById('vf-count-mastered').textContent = `(${vM})`;
+
+  // Phrase counts
+  const pM = phrases.filter(p => mastered.has(p.hr)).length;
+  const pL = phrases.length - pM;
+  document.getElementById('pf-count-all').textContent = `(${phrases.length})`;
+  document.getElementById('pf-count-learning').textContent = `(${pL})`;
+  document.getElementById('pf-count-mastered').textContent = `(${pM})`;
+}
+
+function toggleMastered(){
+  const w = currentDeck[cardIdx];
+  if(!w) return;
+  const key = wordKey(w);
+  if(mastered.has(key)) mastered.delete(key);
+  else mastered.add(key);
+  updateCard();
+  buildVocabList();
+  refreshAllCounts();
+}
+
+function togglePhraseMastered(hr){
+  if(mastered.has(hr)) mastered.delete(hr);
+  else mastered.add(hr);
+  buildPhrasesList();
+  refreshAllCounts();
+}
+
+// ── FLASHCARDS ──
+const allCats = Object.keys(allWords);
+let cardIdx = 0, revealed = false, currentDeck = [];
+let fcFilter = 'all'; // 'all' | 'learning' | 'mastered'
+
+function getFlashDeck(){
+  const base = allWords[document.getElementById('deck-select').value] || allWords.greetings;
+  if(fcFilter === 'learning') return base.filter(w => !isMastered(w));
+  if(fcFilter === 'mastered') return base.filter(w => isMastered(w));
+  return base;
+}
+
+function setFcFilter(f, el){
+  fcFilter = f;
+  document.querySelectorAll('#fc-filter-all,#fc-filter-learning,#fc-filter-mastered').forEach(b => b.className = 'show-filter-btn');
+  el.className = 'show-filter-btn active';
+  currentDeck = getFlashDeck();
+  cardIdx = 0;
+  updateCard();
+}
+
+function changeDeck(){ currentDeck = getFlashDeck(); cardIdx = 0; updateCard(); }
+
+function updateCard(){
+  currentDeck = getFlashDeck();
+  if(!currentDeck.length){
+    document.getElementById('fc-word').textContent = fcFilter === 'learning' ? 'All mastered!' : 'No mastered words yet';
+    document.getElementById('fc-hint').style.visibility = 'hidden';
+    document.getElementById('fc-hint').style.opacity = '0';
+    document.getElementById('fc-translation').style.visibility = 'hidden';
+    document.getElementById('fc-translation').style.opacity = '0';
+    document.getElementById('fc-tap').style.display = 'none';
+    document.getElementById('fc-cat').textContent = '';
+    document.getElementById('fc-counter').textContent = '0 cards';
+    document.getElementById('flashcard-el').className = 'flashcard';
+    document.getElementById('fc-mastered-badge').style.display = 'none';
+    document.getElementById('btn-know').style.display = 'none';
+    updateMasteredCount();
+    return;
+  }
+  if(cardIdx >= currentDeck.length) cardIdx = 0;
+  const w = currentDeck[cardIdx];
+  const m = isMastered(w);
+  document.getElementById('fc-word').textContent = w.hr;
+  document.getElementById('fc-hint').textContent = w.hint;
+  document.getElementById('fc-hint').style.visibility = 'hidden';
+  document.getElementById('fc-hint').style.opacity = '0';
+  document.getElementById('fc-translation').textContent = w.en;
+  document.getElementById('fc-translation').style.visibility = 'hidden';
+  document.getElementById('fc-translation').style.opacity = '0';
+  document.getElementById('fc-tap').textContent = 'tap to reveal English';
+  document.getElementById('fc-tap').style.opacity = '1';
+  document.getElementById('fc-cat').textContent = document.getElementById('deck-select').value.toUpperCase();
+  document.getElementById('fc-counter').textContent = `Card ${cardIdx+1} of ${currentDeck.length}`;
+  document.getElementById('flashcard-el').className = 'flashcard' + (m ? ' is-mastered' : '');
+  document.getElementById('fc-mastered-badge').style.display = m ? 'inline-block' : 'none';
+  document.getElementById('btn-know').textContent = m ? '✕ Unmark' : '✓ I know this';
+  document.getElementById('btn-know').className = m ? 'btn btn-ghost' : 'btn btn-mastered';
+  document.getElementById('btn-know').style.display = '';
+  revealed = false;
+  updateMasteredCount();
+}
+
+function updateMasteredCount(){
+  const base = allWords[document.getElementById('deck-select').value] || allWords.greetings;
+  const total = base.length;
+  const m = base.filter(w => isMastered(w)).length;
+  document.getElementById('fc-mastered-count').textContent = m > 0 ? `${m} of ${total} mastered in this deck` : '';
+  refreshAllCounts();
+}
+
+function revealCard(){
+  if(!revealed){
+    document.getElementById('fc-translation').style.visibility = 'visible';
+    document.getElementById('fc-translation').style.opacity = '1';
+    document.getElementById('fc-hint').style.visibility = 'visible';
+    document.getElementById('fc-hint').style.opacity = '1';
+    document.getElementById('fc-tap').style.opacity = '0';
+    revealed = true;
+    addPoints(1);
+  }
+}
+
+function nextCard(){ cardIdx = (cardIdx+1) % (currentDeck.length||1); updateCard(); }
+function prevCard(){ cardIdx = (cardIdx-1+Math.max(currentDeck.length,1)) % Math.max(currentDeck.length,1); updateCard(); }
+function speakCurrent(){ if(currentDeck[cardIdx]) speak(currentDeck[cardIdx].hr); }
+
+// ── VOCAB ──
+let vocabFilter = 'all';
+let vocabShowFilter = 'all'; // 'all' | 'learning' | 'mastered'
+
+function setVocabShowFilter(f, el){
+  vocabShowFilter = f;
+  document.querySelectorAll('#vf-all,#vf-learning,#vf-mastered').forEach(b => b.className = 'show-filter-btn');
+  el.className = 'show-filter-btn active';
+  buildVocabList();
+}
+
+function buildVocabFilters(){
+  const row = document.getElementById('vocab-filters');
+  const btns = [{val:'all',label:'All'}, ...allCats.map(c=>({val:c,label:c.charAt(0).toUpperCase()+c.slice(1)}))];
+  row.innerHTML = btns.map(b =>
+    `<button class="filter-chip${b.val===vocabFilter?' active':''}" onclick="setVocabFilter('${b.val}')">${b.label}</button>`
+  ).join('');
+}
+
+function setVocabFilter(f){ vocabFilter = f; buildVocabFilters(); buildVocabList(); refreshAllCounts(); }
+
+function buildVocabList(){
+  const container = document.getElementById('vocab-list');
+  let items = vocabFilter === 'all' ? allCats.flatMap(c => allWords[c]) : (allWords[vocabFilter]||[]);
+  if(vocabShowFilter === 'learning') items = items.filter(w => !isMastered(w));
+  if(vocabShowFilter === 'mastered') items = items.filter(w => isMastered(w));
+
+  if(!items.length){
+    container.innerHTML = `<div style="text-align:center;padding:2rem;color:var(--stone-light);font-size:0.9rem;">${vocabShowFilter==='mastered'?'No mastered words yet — mark words you know on the Flashcards tab.':'Nothing here!'}</div>`;
+    return;
+  }
+
+  if(vocabFilter === 'colors'){
+    container.innerHTML = '<div class="color-grid">' + items.map(w =>
+      `<div class="color-card${isMastered(w)?' is-mastered':''}">
+        <div class="swatch" style="background:${w.color||'#888'}"></div>
+        <div style="flex:1;min-width:0">
+          <div style="font-weight:500;font-size:.9rem;color:#1E1A16">${w.hr}</div>
+          <div style="font-size:.78rem;color:#8A8278">${w.en}</div>
+        </div>
+        ${isMastered(w)?'<span style="font-size:11px;color:var(--olive);margin-right:4px;">✓</span>':''}
+        <button class="btn btn-sea btn-sm btn-icon" onclick="speak('${w.hr.replace(/'/g,"\\'")}')">&#9654;</button>
+      </div>`
+    ).join('') + '</div>';
+  } else {
+    container.innerHTML = '<div class="vocab-grid">' + items.map(w =>
+      `<div class="vocab-row${isMastered(w)?' is-mastered':''}">
+        <span class="vocab-hr">${w.hr}</span>
+        <span class="vocab-en">${w.en}</span>
+        <span class="vocab-pron">${w.hint}</span>
+        ${isMastered(w)?'<span style="font-size:11px;color:var(--olive);padding:0 4px;">✓</span>':'<span></span>'}
+        <button class="btn btn-sea btn-sm btn-icon" onclick="speak('${w.hr.replace(/'/g,"\\'")}')">&#9654;</button>
+      </div>`
+    ).join('') + '</div>';
+  }
+}
+
+// ── QUIZ ──
+let quizPool = [], quizIdx = 0, quizScore = 0, quizAttempts = 0, quizAnswered = false;
+
+function getQuizPool(){
+  const deck = document.getElementById('quiz-deck').value;
+  const all = deck === 'all' ? allCats.flatMap(c => allWords[c]) : (allWords[deck]||[]);
+  return [...all].sort(() => Math.random()-0.5);
+}
+
+function resetQuiz(){
+  quizPool = getQuizPool();
+  quizIdx = 0; quizScore = 0; quizAttempts = 0; quizAnswered = false;
+  updateQuizScore();
+  updateQuiz();
+}
+
+function updateQuiz(){
+  if(!quizPool.length) quizPool = getQuizPool();
+  const w = quizPool[quizIdx % quizPool.length];
+  quizAnswered = false;
+  document.getElementById('quiz-prompt').textContent = w.en;
+  const cat = allCats.find(c => allWords[c].some(x => x.hr === w.hr)) || '';
+  document.getElementById('quiz-cat').textContent = cat.toUpperCase();
+  document.getElementById('quiz-counter').textContent = `Card ${(quizIdx % quizPool.length) + 1} of ${quizPool.length}`;
+  document.getElementById('quiz-input').value = '';
+  document.getElementById('quiz-result-badge').textContent = '';
+  document.getElementById('quiz-result-badge').style.color = '';
+  document.getElementById('quiz-input').focus();
+}
+
+function updateQuizScore(){
+  const pct = quizAttempts > 0 ? Math.round(quizScore/quizAttempts*100)+'%' : '—';
+  document.getElementById('quiz-score-label').textContent = `Score: ${quizScore} correct out of ${quizAttempts} attempts`;
+  document.getElementById('quiz-pct').textContent = pct;
+}
+
+function checkAnswer(){
+  if(quizAnswered){ nextQuiz(); return; }
+  const inp = document.getElementById('quiz-input').value.trim();
+  if(!inp) return;
+  const w = quizPool[quizIdx % quizPool.length];
+  quizAttempts++;
+  quizAnswered = true;
+  const correct = inp.toLowerCase() === w.hr.toLowerCase();
+  if(correct){ quizScore++; addPoints(5); }
+  const badge = document.getElementById('quiz-result-badge');
+  if(correct){
+    badge.textContent = `✓ ${w.hr}`;
+    badge.style.color = 'var(--olive)';
+    setTimeout(nextQuiz, 1200);
+  } else {
+    badge.textContent = `✗  Answer: ${w.hr} — ${w.hint}`;
+    badge.style.color = 'var(--terracotta)';
+    speak(w.hr);
+  }
+  updateQuizScore();
+}
+
+function quizReveal(){
+  if(quizAnswered) return;
+  const w = quizPool[quizIdx % quizPool.length];
+  quizAnswered = true;
+  const badge = document.getElementById('quiz-result-badge');
+  badge.textContent = `→ ${w.hr} — ${w.hint}`;
+  badge.style.color = 'var(--stone-light)';
+}
+
+function speakQuizAnswer(){ speak(quizPool[quizIdx % quizPool.length].hr); }
+function nextQuiz(){ quizIdx++; quizAnswered = false; updateQuiz(); }
+
+// ── LISTENING ──
+let listenPool = [], listenIdx = 0, listenScore = 0, listenAttempts = 0, listenAnswered = false;
+
+function buildListenPool(){
+  listenPool = allCats.flatMap(c => allWords[c]).sort(() => Math.random()-0.5);
+}
+
+function getListenOptions(correct){
+  const pool = allCats.flatMap(c => allWords[c]);
+  const wrong = pool.filter(w => w.en !== correct.en).sort(() => Math.random()-0.5).slice(0,3);
+  return [...wrong, correct].sort(() => Math.random()-0.5);
+}
+
+function updateListen(){
+  if(!listenPool.length) buildListenPool();
+  const w = listenPool[listenIdx % listenPool.length];
+  listenAnswered = false;
+  document.getElementById('listen-hero').className = 'listen-hero';
+  document.getElementById('listen-icon').textContent = '🔊';
+  document.getElementById('listen-feedback').style.display = 'none';
+  const opts = getListenOptions(w);
+  document.getElementById('listen-options').innerHTML = opts.map(o =>
+    `<button class="listen-opt" onclick="checkListen('${o.en.replace(/'/g,"\\'")}','${w.en.replace(/'/g,"\\'")}','${w.hr.replace(/'/g,"\\'")}',this)">${o.en}</button>`
+  ).join('');
+  setTimeout(() => playListenWord(), 500);
+}
+
+function playListenWord(){
+  const w = listenPool[listenIdx % listenPool.length];
+  const hero = document.getElementById('listen-hero');
+  hero.className = 'listen-hero playing';
+  speak(w.hr);
+  setTimeout(() => hero.className = 'listen-hero', 2000);
+}
+
+function checkListen(chosen, correct, hrWord, el){
+  if(listenAnswered) return;
+  listenAnswered = true; listenAttempts++;
+  const ok = chosen === correct;
+  if(ok){ listenScore++; addPoints(3); }
+  document.querySelectorAll('.listen-opt').forEach(o => {
+    if(o.textContent === correct) o.className = 'listen-opt correct-ans';
+    else if(o === el && !ok) o.className = 'listen-opt wrong-ans';
+  });
+  const fb = document.getElementById('listen-feedback');
+  fb.style.display = ''; fb.className = 'feedback '+(ok?'correct':'wrong');
+  fb.textContent = ok ? `Točno! "${hrWord}" = ${correct}` : `It was "${hrWord}" — ${correct}`;
+  const pct = listenAttempts > 0 ? Math.round(listenScore/listenAttempts*100)+'%' : '—';
+  document.getElementById('listen-score-label').textContent = `Score: ${listenScore} correct out of ${listenAttempts} attempts`;
+  document.getElementById('listen-pct').textContent = pct;
+  if(!ok) speak(hrWord);
+}
+
+function nextListen(){ listenIdx++; updateListen(); }
+
+// ── PHRASES ──
+let phrasesFilter = 'all';
+
+function phraseKey(p){ return p.hr; }
+function isPhraseMastered(p){ return mastered.has(phraseKey(p)); }
+
+function togglePhraseMastered(hr){
+  if(mastered.has(hr)) mastered.delete(hr);
+  else mastered.add(hr);
+  buildPhrasesList();
+  refreshAllCounts();
+}
+
+function setPhrasesFilter(f, el){
+  phrasesFilter = f;
+  document.querySelectorAll('#pf-all,#pf-learning,#pf-mastered').forEach(b => b.className = 'show-filter-btn');
+  el.className = 'show-filter-btn active';
+  buildPhrasesList();
+}
+
+function buildPhrasesList(){
+  let items = phrases;
+  if(phrasesFilter === 'learning') items = phrases.filter(p => !isPhraseMastered(p));
+  if(phrasesFilter === 'mastered') items = phrases.filter(p => isPhraseMastered(p));
+
+  if(!items.length){
+    document.getElementById('phrases-list').innerHTML = `<div style="text-align:center;padding:2rem;color:var(--stone-light);font-size:0.9rem;">${phrasesFilter==='mastered'?'No mastered phrases yet.':'Nothing here!'}</div>`;
+    return;
+  }
+
+  document.getElementById('phrases-list').innerHTML = items.map(p => {
+    const m = isPhraseMastered(p);
+    const safeHr = p.hr.replace(/'/g,"\\'");
+    return `<div class="phrase-card${m?' is-mastered':''}">
+      <div class="phrase-hr"${m?' style="opacity:0.5"':''}>${p.hr}</div>
+      <div class="phrase-en"${m?' style="opacity:0.5"':''}>${p.en}</div>
+      <div class="phrase-hint"${m?' style="opacity:0.5"':''}>${p.hint}</div>
+      <button class="btn btn-sea btn-sm btn-icon" onclick="speak('${safeHr}')">&#9654;</button>
+      <button class="btn btn-sm ${m?'btn-ghost':'btn-mastered'}" style="white-space:nowrap" onclick="togglePhraseMastered('${safeHr}')">${m?'✕ Unmark':'✓ Know it'}</button>
+    </div>`;
+  }).join('');
+}
+
+// ── MATCH GAME ──
+let matchPairs = [], matchMatched = new Set(), matchSelected = null;
+let matchMistakes = 0, matchStreak = 0, matchTotal = 0;
+
+function getMatchPool(){
+  const deck = document.getElementById('match-deck').value;
+  const all = deck === 'all' ? allCats.flatMap(c => allWords[c]) : (allWords[deck]||[]);
+  return [...all].sort(() => Math.random()-0.5);
+}
+
+function startMatch(){
+  const size = parseInt(document.getElementById('match-size').value) || 8;
+  const pool = getMatchPool().slice(0, size);
+  matchPairs = pool;
+  matchTotal = pool.length;
+  matchMatched = new Set();
+  matchSelected = null;
+  matchMistakes = 0;
+  matchStreak = 0;
+  updateMatchStats();
+  document.getElementById('match-complete').classList.remove('show');
+  document.getElementById('match-board').style.display = '';
+
+  const hrShuffled = [...pool].sort(() => Math.random()-0.5);
+  const enShuffled = [...pool].sort(() => Math.random()-0.5);
+
+  document.getElementById('match-col-hr').innerHTML = hrShuffled.map(w =>
+    `<div class="match-tile hr-tile" id="mhr-${w.hr.replace(/\s/g,'_')}" data-key="${w.hr}" data-side="hr" onclick="selectMatchTile(this)">${w.hr}</div>`
+  ).join('');
+
+  document.getElementById('match-col-en').innerHTML = enShuffled.map(w =>
+    `<div class="match-tile" id="men-${w.hr.replace(/\s/g,'_')}" data-key="${w.hr}" data-side="en" onclick="selectMatchTile(this)">${w.en}</div>`
+  ).join('');
+
+  document.getElementById('match-bar').style.width = '0%';
+}
+
+function selectMatchTile(el){
+  if(el.classList.contains('matched') || el.classList.contains('wrong')) return;
+
+  if(!matchSelected){
+    // First selection
+    clearWrongTiles();
+    matchSelected = el;
+    el.classList.add('selected');
+    return;
+  }
+
+  if(matchSelected === el){
+    // Deselect
+    el.classList.remove('selected');
+    matchSelected = null;
+    return;
+  }
+
+  // Same side — switch selection
+  if(matchSelected.dataset.side === el.dataset.side){
+    matchSelected.classList.remove('selected');
+    matchSelected = el;
+    el.classList.add('selected');
+    return;
+  }
+
+  // Different sides — check match
+  const first = matchSelected;
+  const second = el;
+  matchSelected = null;
+  first.classList.remove('selected');
+
+  if(first.dataset.key === second.dataset.key){
+    // Correct!
+    first.classList.add('matched');
+    second.classList.add('matched');
+    matchMatched.add(first.dataset.key);
+    matchStreak++;
+    addPoints(matchStreak >= 3 ? 4 : 2);
+    speak(first.dataset.side === 'hr' ? first.dataset.key : second.dataset.key);
+    updateMatchStats();
+    if(matchMatched.size === matchTotal) setTimeout(showMatchComplete, 400);
+  } else {
+    // Wrong
+    first.classList.add('wrong');
+    second.classList.add('wrong');
+    matchMistakes++;
+    matchStreak = 0;
+    updateMatchStats();
+    setTimeout(() => {
+      first.classList.remove('wrong');
+      second.classList.remove('wrong');
+    }, 700);
+  }
+}
+
+function clearWrongTiles(){
+  document.querySelectorAll('.match-tile.wrong').forEach(t => t.classList.remove('wrong'));
+}
+
+function updateMatchStats(){
+  document.getElementById('match-pairs').textContent = `${matchMatched.size}/${matchTotal}`;
+  document.getElementById('match-mistakes').textContent = matchMistakes;
+  document.getElementById('match-streak').textContent = matchStreak;
+  const pct = matchTotal > 0 ? (matchMatched.size / matchTotal * 100) : 0;
+  document.getElementById('match-bar').style.width = pct + '%';
+}
+
+function showMatchComplete(){
+  document.getElementById('match-board').style.display = 'none';
+  const el = document.getElementById('match-complete');
+  el.classList.add('show');
+  const perfect = matchMistakes === 0;
+  document.getElementById('match-complete-title').textContent = perfect ? 'Savršeno! 🎉' : 'Odlično! ✓';
+  document.getElementById('match-complete-sub').textContent = perfect
+    ? `All ${matchTotal} pairs matched with no mistakes!`
+    : `All ${matchTotal} pairs matched — ${matchMistakes} mistake${matchMistakes !== 1 ? 's' : ''}`;
+}
+
+// ── TYPE IT ──
+let tiPool = [], tiIdx = 0, tiScore = 0, tiAttempts = 0, tiAnswered = false;
+
+function getTiPool(){
+  const deck = document.getElementById('ti-deck').value;
+  const all = deck === 'all' ? allCats.flatMap(c => allWords[c]) : (allWords[deck]||[]);
+  return [...all].sort(() => Math.random()-0.5);
+}
+
+function resetTypeIt(){
+  tiPool = getTiPool();
+  tiIdx = 0; tiScore = 0; tiAttempts = 0; tiAnswered = false;
+  updateTiScore();
+  showTiCard();
+}
+
+function showTiCard(){
+  if(!tiPool.length) tiPool = getTiPool();
+  const w = tiPool[tiIdx % tiPool.length];
+  tiAnswered = false;
+  document.getElementById('ti-word').textContent = w.hr;
+  const cat = Object.keys(allWords).find(c => allWords[c].some(x => x.hr === w.hr)) || '';
+  document.getElementById('ti-cat').textContent = cat.toUpperCase();
+  document.getElementById('ti-counter').textContent = `Card ${(tiIdx % tiPool.length) + 1} of ${tiPool.length}`;
+  document.getElementById('ti-input').value = '';
+  document.getElementById('ti-result-badge').textContent = '';
+  document.getElementById('ti-result-badge').style.color = '';
+  document.getElementById('ti-input').focus();
+}
+
+function checkTypeIt(){
+  if(tiAnswered) { tiNext(); return; }
+  const inp = document.getElementById('ti-input').value.trim();
+  if(!inp) return;
+  const w = tiPool[tiIdx % tiPool.length];
+  tiAttempts++;
+  tiAnswered = true;
+
+  // Flexible match: lowercase, strip punctuation, accept partial overlap
+  const normalize = s => s.toLowerCase().replace(/[^a-z0-9\s]/g,'').trim();
+  const inputN = normalize(inp);
+  const answerN = normalize(w.en);
+  // Accept if input matches any significant segment of the answer
+  const answerParts = answerN.split(/[\/\(\),]+/).map(s => s.trim()).filter(Boolean);
+  const correct = answerParts.some(part => inputN === part || answerN === inputN);
+
+  if(correct){
+    tiScore++;
+    addPoints(3);
+    document.getElementById('ti-result-badge').textContent = `✓ ${w.en}`;
+    document.getElementById('ti-result-badge').style.color = 'var(--olive)';
+    setTimeout(tiNext, 1200);
+  } else {
+    document.getElementById('ti-result-badge').textContent = `✗  Answer: ${w.en}`;
+    document.getElementById('ti-result-badge').style.color = 'var(--terracotta)';
+    speak(w.hr);
+  }
+  updateTiScore();
+}
+
+function tiReveal(){
+  if(tiAnswered) return;
+  const w = tiPool[tiIdx % tiPool.length];
+  tiAnswered = true;
+  document.getElementById('ti-result-badge').textContent = `→ ${w.en}`;
+  document.getElementById('ti-result-badge').style.color = 'var(--stone-light)';
+}
+
+function tiSkip(){
+  tiAnswered = false;
+  tiNext();
+}
+
+function tiNext(){
+  tiIdx++;
+  tiAnswered = false;
+  showTiCard();
+}
+
+function tiSpeak(){
+  const w = tiPool[tiIdx % tiPool.length];
+  if(w) speak(w.hr);
+}
+
+function updateTiScore(){
+  const pct = tiAttempts > 0 ? Math.round(tiScore/tiAttempts*100)+'%' : '—';
+  document.getElementById('ti-score-label').textContent = `Score: ${tiScore} correct out of ${tiAttempts} attempts`;
+  document.getElementById('ti-pct').textContent = pct;
+}
+
+// ── ALPHABET ──
+const croatianAlphabet = [
+  {letter:"A", name:"a", sound:"like 'a' in father", example:"auto", meaning:"car"},
+  {letter:"B", name:"be", sound:"like 'b' in boy", example:"brod", meaning:"ship"},
+  {letter:"C", name:"ce", sound:"like 'ts' in cats", example:"cijena", meaning:"price"},
+  {letter:"Č", name:"če", sound:"like 'ch' in church (hard)", example:"čaj", meaning:"tea"},
+  {letter:"Ć", name:"će", sound:"softer 'ch', like 'ch' in ciao (palatal)", example:"ćup", meaning:"jug"},
+  {letter:"D", name:"de", sound:"like 'd' in dog", example:"dan", meaning:"day"},
+  {letter:"Dž", name:"dže", sound:"like 'j' in jungle", example:"džep", meaning:"pocket"},
+  {letter:"Đ", name:"đe", sound:"like 'dj' in adjust", example:"đak", meaning:"pupil / student"},
+  {letter:"E", name:"e", sound:"like 'e' in bed", example:"evo", meaning:"here it is"},
+  {letter:"F", name:"ef", sound:"like 'f' in fish", example:"fala", meaning:"thanks (dialectal)"},
+  {letter:"G", name:"ge", sound:"like 'g' in go", example:"grad", meaning:"city"},
+  {letter:"H", name:"ha", sound:"like 'h' in hat (breathy)", example:"hvala", meaning:"thank you"},
+  {letter:"I", name:"i", sound:"like 'ee' in see", example:"ime", meaning:"name"},
+  {letter:"J", name:"je", sound:"like 'y' in yes", example:"jutro", meaning:"morning"},
+  {letter:"K", name:"ka", sound:"like 'k' in key", example:"kava", meaning:"coffee"},
+  {letter:"L", name:"el", sound:"like 'l' in love", example:"luka", meaning:"port / harbour"},
+  {letter:"Lj", name:"lje", sound:"like 'lli' in million", example:"ljubav", meaning:"love"},
+  {letter:"M", name:"em", sound:"like 'm' in map", example:"more", meaning:"sea"},
+  {letter:"N", name:"en", sound:"like 'n' in now", example:"noć", meaning:"night"},
+  {letter:"Nj", name:"nje", sound:"like 'ny' in canyon", example:"njiva", meaning:"field"},
+  {letter:"O", name:"o", sound:"like 'o' in more", example:"otok", meaning:"island"},
+  {letter:"P", name:"pe", sound:"like 'p' in pen", example:"piće", meaning:"drink"},
+  {letter:"R", name:"er", sound:"rolled 'r' (trilled)", example:"riba", meaning:"fish"},
+  {letter:"S", name:"es", sound:"like 's' in sun", example:"sunce", meaning:"sun"},
+  {letter:"Š", name:"še", sound:"like 'sh' in shop", example:"šuma", meaning:"forest"},
+  {letter:"T", name:"te", sound:"like 't' in top", example:"tata", meaning:"dad"},
+  {letter:"U", name:"u", sound:"like 'oo' in moon", example:"ulica", meaning:"street"},
+  {letter:"V", name:"ve", sound:"like 'v' in van", example:"voda", meaning:"water"},
+  {letter:"Z", name:"ze", sound:"like 'z' in zoo", example:"zemlja", meaning:"earth / land"},
+  {letter:"Ž", name:"že", sound:"like 's' in measure", example:"život", meaning:"life"},
+];
+
+function buildAlphabet(){
+  document.getElementById('alphabet-list').innerHTML =
+    '<div class="alpha-grid">' +
+    croatianAlphabet.map(a => `
+      <div class="alpha-card">
+        <div style="text-align:center;min-width:44px;">
+          <div class="alpha-letter">${a.letter}</div>
+          <div style="font-size:0.68rem;color:var(--stone-light);font-style:italic;margin-top:1px;">"${a.name}"</div>
+        </div>
+        <div class="alpha-info">
+          <div class="alpha-sound">${a.sound}</div>
+          <div class="alpha-example">${a.example}</div>
+          <div class="alpha-meaning">${a.meaning}</div>
+        </div>
+        <button class="btn btn-sea btn-sm btn-icon" onclick="speak('${a.example}')">&#9654;</button>
+      </div>`
+    ).join('') +
+    '</div>';
+}
+
+// ── PROGRESS ──
+const STORAGE_KEY = 'hrvatski_progress_log';
+
+function getAllWordCount(){
+  return allCats.flatMap(c => allWords[c]).length + phrases.length;
+}
+
+function getMasteredCount(){
+  return mastered.size;
+}
+
+function getTodayKey(){
+  const d = new Date();
+  return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+}
+
+function formatDateKey(key){
+  const [y,m,d] = key.split('-');
+  const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  return `${months[parseInt(m)-1]} ${parseInt(d)}, ${y}`;
+}
+
+function loadLog(){
+  try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]'); } catch(e){ return []; }
+}
+
+function saveLog(log){
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(log)); } catch(e){}
+}
+
+function snapshotToday(){
+  const log = loadLog();
+  const total = getAllWordCount();
+  const m = getMasteredCount();
+  const pct = total > 0 ? Math.round(m / total * 100) : 0;
+  const key = getTodayKey();
+  // Update or insert today
+  const idx = log.findIndex(e => e.date === key);
+  const entry = { date: key, mastered: m, total, pct };
+  if(idx >= 0) log[idx] = entry;
+  else log.push(entry);
+  // Sort descending
+  log.sort((a,b) => b.date.localeCompare(a.date));
+  saveLog(log);
+  renderProgress();
+}
+
+function renderProgress(){
+  const total = getAllWordCount();
+  const m = getMasteredCount();
+  const pct = total > 0 ? Math.round(m / total * 100) : 0;
+
+  document.getElementById('prog-pct-today').textContent = pct + '%';
+  document.getElementById('prog-total-mastered').textContent = m;
+  document.getElementById('prog-total-words').textContent = total;
+  document.getElementById('prog-bar-pct').textContent = pct + '%';
+  document.getElementById('prog-bar-fill').style.width = pct + '%';
+
+  const log = loadLog();
+  const logEl = document.getElementById('prog-log');
+  const emptyEl = document.getElementById('prog-empty');
+
+  if(!log.length){
+    emptyEl.style.display = '';
+    // Remove any existing rows
+    logEl.querySelectorAll('.prog-log-row').forEach(r => r.remove());
+    return;
+  }
+
+  emptyEl.style.display = 'none';
+  logEl.querySelectorAll('.prog-log-row').forEach(r => r.remove());
+
+  log.forEach(entry => {
+    const row = document.createElement('div');
+    row.className = 'prog-log-row';
+    row.innerHTML = `
+      <span class="prog-log-date">${formatDateKey(entry.date)}</span>
+      <span class="prog-log-pct">${entry.pct}%</span>
+      <div class="prog-log-bar"><div class="prog-log-bar-fill" style="width:${entry.pct}%"></div></div>
+      <span class="prog-log-detail">${entry.mastered} of ${entry.total} words</span>
+    `;
+    logEl.appendChild(row);
+  });
+}
+
+// Init
+currentDeck = allWords.greetings;
+updateCard();
+buildVocabFilters();
+buildVocabList();
+quizPool = getQuizPool();
+updateQuiz();
+buildListenPool();
+updateListen();
+buildPhrasesList();
+refreshAllCounts();
+startMatch();
+resetTypeIt();
+buildAlphabet();
+</script>
+</body>
+</html>
