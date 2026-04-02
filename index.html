@@ -1151,6 +1151,7 @@
           <option value="days">Days of the week</option>
           <option value="food">Food &amp; drink</option>
           <option value="basics">Basics</option>
+          <option value="sanja">Sanja phrases</option>
         </select>
       </div>
     </div>
@@ -1211,6 +1212,7 @@
           <option value="days">Days</option>
           <option value="food">Food</option>
           <option value="basics">Basics</option>
+          <option value="sanja">Sanja phrases</option>
         </select>
         <button class="btn btn-ghost" onclick="resetQuiz()">&#8635; Shuffle</button>
       </div>
@@ -1296,6 +1298,7 @@
           <option value="days">Days</option>
           <option value="food">Food</option>
           <option value="basics">Basics</option>
+          <option value="sanja">Sanja phrases</option>
         </select>
         <select class="deck-select" id="match-size">
           <option value="6">6 pairs</option>
@@ -1335,6 +1338,7 @@
           <option value="days">Days</option>
           <option value="food">Food</option>
           <option value="basics">Basics</option>
+          <option value="sanja">Sanja phrases</option>
         </select>
         <button class="btn btn-ghost" onclick="resetTypeIt()">&#8635; Shuffle</button>
       </div>
@@ -1507,6 +1511,7 @@
           <option value="days">Days</option>
           <option value="food">Food</option>
           <option value="basics">Basics</option>
+          <option value="sanja">Sanja phrases</option>
         </select>
         <br/>
         <div id="streak-display" style="margin-bottom:1.25rem;"></div>
@@ -1828,6 +1833,38 @@ const allWords = {
     {hr:"Volim", en:"I love", hint:"VOH-leem"},
     {hr:"Ne volim", en:"I don't like", hint:"neh VOH-leem"},
   ],
+  sanja: [
+    {hr:"Tako je.", en:"That's right. / Exactly.", hint:"TAH-koh yeh"},
+    {hr:"Nema na čemu.", en:"You're welcome. / Don't mention it.", hint:"NEH-mah nah CHEH-moo"},
+    {hr:"Što ima novo?", en:"What's new? / What's up?", hint:"shtoh EE-mah NOH-voh"},
+    {hr:"Bok!", en:"Hi! / Bye!", hint:"boke"},
+    {hr:"Može!", en:"Sure! / OK! / No problem!", hint:"MOH-zheh"},
+    {hr:"Kako se kaže...?", en:"How do you say...?", hint:"KAH-koh seh KAH-zheh"},
+    {hr:"Hvala.", en:"Thank you.", hint:"HVAH-lah"},
+    {hr:"Dobar dan!", en:"Good day!", hint:"DOH-bar dan"},
+    {hr:"Kako se zoveš? / Kako se zovete?", en:"What's your name? (informal / formal)", hint:"KAH-koh seh ZOH-vesh / ZOH-veh-teh"},
+    {hr:"Doviđenja!", en:"Goodbye!", hint:"doh-vee-JEN-ya"},
+    {hr:"Oprosti / oprostite", en:"Sorry / Excuse me (informal / formal)", hint:"oh-PROH-stee / oh-PROH-stee-teh"},
+    {hr:"Molim?", en:"Pardon? / What did you say?", hint:"MOH-leem"},
+    {hr:"Ajde!", en:"Come on! / Let's go! / Sure!", hint:"AY-deh"},
+    {hr:"Molim te.", en:"Please. (informal)", hint:"MOH-leem teh"},
+    {hr:"Odlično!", en:"Excellent! / Great!", hint:"OHD-leech-noh"},
+    {hr:"U redu.", en:"All right. / OK.", hint:"oo REH-doo"},
+    {hr:"Ja sam iz...", en:"I am from...", hint:"yah sahm eez"},
+    {hr:"Gdje živiš? / Gdje živite?", en:"Where do you live? (informal / formal)", hint:"GD-yeh ZHEE-veesh / ZHEE-vee-teh"},
+    {hr:"Moje ime je / Zovem se / Ja sam...", en:"My name is... (three ways)", hint:"MOH-yeh EE-meh yeh / ZOH-vem seh / yah sahm"},
+    {hr:"Izvoli. / Izvolite.", en:"Here you go. (informal / formal)", hint:"eez-VOH-lee / eez-VOH-lee-teh"},
+    {hr:"Dobro jutro!", en:"Good morning!", hint:"DOH-broh YOO-troh"},
+    {hr:"Odakle si? / Odakle ste?", en:"Where are you from? (informal / formal)", hint:"oh-DAH-kleh see / steh"},
+    {hr:"Vidimo se!", en:"See you!", hint:"VEE-dee-moh seh"},
+    {hr:"Da / Ne", en:"Yes / No", hint:"dah / neh"},
+    {hr:"Drago mi je.", en:"Nice to meet you.", hint:"DRAH-goh mee yeh"},
+    {hr:"Dobra večer!", en:"Good evening!", hint:"DOH-bra VEH-cher"},
+    {hr:"Također / isto", en:"Also / Same", hint:"TAH-koh-jer / EES-toh"},
+    {hr:"Ugodan dan!", en:"Have a nice day!", hint:"oo-GOH-dan dan"},
+    {hr:"Laku noć!", en:"Good night!", hint:"LAH-koo notch"},
+    {hr:"Kako si? / Kako ste?", en:"How are you? (informal / formal)", hint:"KAH-koh see / steh"},
+  ],
 };
 
 const phrases = [
@@ -1838,25 +1875,46 @@ const phrases = [
   {hr:"Možeš li govoriti sporije?", en:"Can you speak slower?", hint:"MOH-zhesh lee goh-VOH-ree-tee SPOH-ree-yeh"},
   {hr:"Kako se kaže...?", en:"How do you say...?", hint:"KAH-koh seh KAH-zheh"},
   {hr:"Što znači...?", en:"What does ... mean?", hint:"shtoh ZNAH-chee"},
-  {hr:"Zovem se...", en:"My name is...", hint:"ZOH-vem seh"},
-  {hr:"Odakle si?", en:"Where are you from?", hint:"oh-DAH-kleh see"},
+  {hr:"Zovem se...", en:"My name is... (I call myself)", hint:"ZOH-vem seh"},
+  {hr:"Moje ime je...", en:"My name is... (My name is)", hint:"MOH-yeh EE-meh yeh"},
+  {hr:"Ja sam...", en:"I am... (introducing yourself)", hint:"yah sahm"},
+  {hr:"Odakle si?", en:"Where are you from? (informal)", hint:"oh-DAH-kleh see"},
+  {hr:"Odakle ste?", en:"Where are you from? (formal)", hint:"oh-DAH-kleh steh"},
   {hr:"Ja sam iz...", en:"I'm from...", hint:"yah sahm eez"},
+  {hr:"Gdje živiš?", en:"Where do you live? (informal)", hint:"GD-yeh ZHEE-veesh"},
+  {hr:"Gdje živite?", en:"Where do you live? (formal)", hint:"GD-yeh ZHEE-vee-teh"},
+  {hr:"Kako se zoveš?", en:"What's your name? (informal)", hint:"KAH-koh seh ZOH-vesh"},
+  {hr:"Kako se zovete?", en:"What's your name? (formal)", hint:"KAH-koh seh ZOH-veh-teh"},
+  {hr:"Kako si?", en:"How are you? (informal)", hint:"KAH-koh see"},
+  {hr:"Kako ste?", en:"How are you? (formal)", hint:"KAH-koh steh"},
   {hr:"Koliko dugo si u Hrvatskoj?", en:"How long have you been in Croatia?", hint:"KOH-lee-koh DOO-goh see oo HRRR-vat-skoy"},
   {hr:"Gdje ideš?", en:"Where are you going?", hint:"GD-yeh EE-desh"},
   {hr:"Što radiš?", en:"What are you doing? / What do you do?", hint:"shtoh RAH-deesh"},
+  {hr:"Što ima novo?", en:"What's new? / What's up?", hint:"shtoh EE-mah NOH-voh"},
   {hr:"Imaš li plan za večeras?", en:"Do you have plans tonight?", hint:"EE-mahsh lee plan zah VEH-cheh-rahs"},
   {hr:"Idemo na piće?", en:"Shall we go for a drink?", hint:"EE-deh-moh nah PEE-cheh"},
   {hr:"Gdje je dobro jesti?", en:"Where's good to eat?", hint:"GD-yeh yeh DOH-broh YES-tee"},
   {hr:"Predivno je ovdje!", en:"It's gorgeous here!", hint:"preh-DEEV-noh yeh OHV-dyeh"},
   {hr:"Super!", en:"Great! / Awesome!", hint:"SOO-per"},
   {hr:"Baš super!", en:"Really great!", hint:"bahsh SOO-per"},
+  {hr:"Odlično!", en:"Excellent! / Great!", hint:"OHD-leech-noh"},
+  {hr:"Tako je.", en:"That's right. / Exactly.", hint:"TAH-koh yeh"},
+  {hr:"U redu.", en:"All right. / OK.", hint:"oo REH-doo"},
   {hr:"Sviđa mi se.", en:"I like it.", hint:"SVEE-ja mee seh"},
   {hr:"Ne sviđa mi se.", en:"I don't like it.", hint:"neh SVEE-ja mee seh"},
   {hr:"Stvarno?", en:"Really?", hint:"STVAHR-noh"},
   {hr:"Ma daj!", en:"No way! / Come on!", hint:"mah die"},
   {hr:"Nema veze.", en:"It doesn't matter. / No worries.", hint:"NEH-mah VEH-zeh"},
+  {hr:"Nema na čemu.", en:"You're welcome. / Don't mention it.", hint:"NEH-mah nah CHEH-moo"},
+  {hr:"Nema ništa.", en:"It's nothing. / Never mind.", hint:"NEH-mah NEESH-tah"},
+  {hr:"Molim te.", en:"Please. (informal)", hint:"MOH-leem teh"},
+  {hr:"Molim?", en:"Pardon? / What did you say?", hint:"MOH-leem"},
+  {hr:"Isto.", en:"Same. / Me too.", hint:"EES-toh"},
+  {hr:"Također.", en:"Also. / As well.", hint:"TAH-koh-jer"},
+  {hr:"I ja isto.", en:"Me too. / Same here.", hint:"ee yah EES-toh"},
   {hr:"Sve je okej.", en:"Everything's fine.", hint:"sveh yeh oh-KAY"},
-  {hr:"Oprostite!", en:"Excuse me!", hint:"oh-PROH-stee-teh"},
+  {hr:"Oprosti!", en:"Sorry! / Excuse me! (informal)", hint:"oh-PROH-stee"},
+  {hr:"Oprostite!", en:"Excuse me! / Sorry! (formal)", hint:"oh-PROH-stee-teh"},
   {hr:"Gdje je toalet?", en:"Where's the toilet?", hint:"GD-yeh yeh toh-AH-let"},
   {hr:"Koliko je sati?", en:"What time is it?", hint:"KOH-lee-koh yeh SAH-tee"},
   {hr:"Račun, molim.", en:"The bill, please.", hint:"RAH-choon MOH-leem"},
@@ -2100,7 +2158,8 @@ function setVocabShowFilter(f, el){
 
 function buildVocabFilters(){
   const row = document.getElementById('vocab-filters');
-  const btns = [{val:'all',label:'All'}, ...allCats.map(c=>({val:c,label:c.charAt(0).toUpperCase()+c.slice(1)}))];
+  const catLabels = {greetings:'Greetings',numbers:'Numbers',colors:'Colors',days:'Days',food:'Food',basics:'Basics',sanja:'Sanja phrases'};
+  const btns = [{val:'all',label:'All'}, ...allCats.map(c=>({val:c,label:catLabels[c]||c.charAt(0).toUpperCase()+c.slice(1)}))];
   row.innerHTML = btns.map(b =>
     `<button class="filter-chip${b.val===vocabFilter?' active':''}" onclick="setVocabFilter('${b.val}')">${b.label}</button>`
   ).join('');
@@ -3249,12 +3308,14 @@ function buildHeatmap(){
 function buildCatBreakdown(){
   const el = document.getElementById('prog-cat-breakdown');
   if(!el) return;
+  const catLabels2 = {greetings:'Greetings',numbers:'Numbers',colors:'Colors',days:'Days',food:'Food',basics:'Basics',sanja:'Sanja phrases'};
   el.innerHTML = allCats.map(cat=>{
     const words = allWords[cat];
     const m = words.filter(w=>isMastered(w)).length;
     const pct = words.length>0 ? Math.round(m/words.length*100) : 0;
+    const label = catLabels2[cat]||cat.charAt(0).toUpperCase()+cat.slice(1);
     return `<div class="cat-row">
-      <span class="cat-row-label">${cat.charAt(0).toUpperCase()+cat.slice(1)}</span>
+      <span class="cat-row-label">${label}</span>
       <div class="cat-row-track"><div class="cat-row-fill" style="width:${pct}%"></div></div>
       <span class="cat-row-pct">${pct}%</span>
     </div>`;
