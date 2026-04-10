@@ -1219,6 +1219,43 @@
   .shadow-rep-dot.done { background: var(--sea); }
   .shadow-rep-dot.active { background: var(--terracotta); }
 
+  /* ── LESSONS ── */
+  .lessons-week { margin-bottom: 2rem; }
+  .lessons-week-title {
+    font-family: var(--font-display);
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: 10px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--sand-dark);
+  }
+  .lessons-list { display: flex; flex-direction: column; gap: 8px; }
+  .lesson-link {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 16px;
+    background: var(--white);
+    border: 1px solid rgba(90,82,72,0.08);
+    border-radius: var(--radius-sm);
+    color: var(--ink);
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: all 0.15s;
+  }
+  .lesson-link::before {
+    content: '↗';
+    font-size: 0.85rem;
+    color: var(--terracotta);
+    flex-shrink: 0;
+  }
+  .lesson-link:hover {
+    border-color: var(--terracotta);
+    color: var(--terracotta);
+    transform: translateX(2px);
+  }
+
 </style>
 </head>
 <body>
@@ -1255,14 +1292,14 @@
   </div>
   <div class="nav-sub active" id="sub-learn">
     <button class="nav-btn active" onclick="switchTab('flashcards',this)">Flashcards</button>
-    <button class="nav-btn" onclick="switchTab('srs',this)">Smart Review</button>
-    <button class="nav-btn" onclick="switchTab('session',this)">Session</button>
+    <button class="nav-btn" onclick="switchTab('srs',this)" style="display:none">Smart Review</button>
+    <button class="nav-btn" onclick="switchTab('session',this)" style="display:none">Session</button>
     <button class="nav-btn" onclick="switchTab('shadow',this)">Shadow</button>
   </div>
   <div class="nav-sub" id="sub-practice">
-    <button class="nav-btn" onclick="switchTab('quiz',this)">Quiz</button>
-    <button class="nav-btn" onclick="switchTab('typeit',this)">Type It</button>
-    <button class="nav-btn" onclick="switchTab('listen',this)">Listening</button>
+    <button class="nav-btn" onclick="switchTab('quiz',this)" style="display:none">Quiz</button>
+    <button class="nav-btn" onclick="switchTab('typeit',this)" style="display:none">Type It</button>
+    <button class="nav-btn" onclick="switchTab('listen',this)" style="display:none">Listening</button>
     <button class="nav-btn" onclick="switchTab('match',this)">Match</button>
     <button class="nav-btn" onclick="switchTab('fillin',this)">Fill In</button>
   </div>
@@ -1271,6 +1308,7 @@
     <button class="nav-btn" onclick="switchTab('vocab',this)">Vocabulary</button>
     <button class="nav-btn" onclick="switchTab('phrases',this)">Phrases</button>
     <button class="nav-btn" onclick="switchTab('alphabet',this)">Alphabet</button>
+    <button class="nav-btn" onclick="switchTab('lessons',this)">Lessons</button>
   </div>
 </nav>
 
@@ -1291,13 +1329,11 @@
           <button class="show-filter-btn" id="fc-filter-mastered" onclick="setFcFilter('mastered',this)">Mastered <span id="fc-count-mastered"></span></button>
         </div>
         <select class="deck-select" id="deck-select" onchange="changeDeck()">
-          <option value="sanja" selected>Sanja 4/2</option>
-          <option value="greetings">Greetings</option>
+          <option value="sanja_april" selected>Sanja April</option>
           <option value="numbers">Numbers</option>
           <option value="colors">Colors</option>
           <option value="days">Days of the week</option>
           <option value="food">Food &amp; drink</option>
-          <option value="basics">Basics</option>
         </select>
       </div>
     </div>
@@ -1352,13 +1388,11 @@
       <div style="display:flex;gap:8px;align-items:center;">
         <select class="deck-select" id="quiz-deck" onchange="resetQuiz()">
           <option value="all">All categories</option>
-          <option value="sanja" selected>Sanja 4/2</option>
-          <option value="greetings">Greetings</option>
+          <option value="sanja_april" selected>Sanja April</option>
           <option value="numbers">Numbers</option>
           <option value="colors">Colors</option>
           <option value="days">Days</option>
           <option value="food">Food</option>
-          <option value="basics">Basics</option>
         </select>
         <button class="btn btn-ghost" onclick="resetQuiz()">&#8635; Shuffle</button>
       </div>
@@ -1438,13 +1472,11 @@
       <div style="display:flex;gap:8px;align-items:center;">
         <select class="deck-select" id="match-deck" onchange="startMatch()">
           <option value="all">All categories</option>
-          <option value="sanja" selected>Sanja 4/2</option>
-          <option value="greetings">Greetings</option>
+          <option value="sanja_april" selected>Sanja April</option>
           <option value="numbers">Numbers</option>
           <option value="colors">Colors</option>
           <option value="days">Days</option>
           <option value="food">Food</option>
-          <option value="basics">Basics</option>
         </select>
         <select class="deck-select" id="match-size">
           <option value="6">6 pairs</option>
@@ -1478,13 +1510,11 @@
       <div style="display:flex;gap:8px;align-items:center;">
         <select class="deck-select" id="ti-deck" onchange="resetTypeIt()">
           <option value="all">All categories</option>
-          <option value="sanja" selected>Sanja 4/2</option>
-          <option value="greetings">Greetings</option>
+          <option value="sanja_april" selected>Sanja April</option>
           <option value="numbers">Numbers</option>
           <option value="colors">Colors</option>
           <option value="days">Days</option>
           <option value="food">Food</option>
-          <option value="basics">Basics</option>
         </select>
         <button class="btn btn-ghost" onclick="resetTypeIt()">&#8635; Shuffle</button>
       </div>
@@ -1651,13 +1681,11 @@
         <div style="font-size:0.82rem;color:var(--stone-light);margin-bottom:10px;">Category</div>
         <select class="deck-select" id="session-deck" style="margin-bottom:1.5rem;">
           <option value="all">All categories</option>
-          <option value="sanja" selected>Sanja 4/2</option>
-          <option value="greetings">Greetings</option>
+          <option value="sanja_april" selected>Sanja April</option>
           <option value="numbers">Numbers</option>
           <option value="colors">Colors</option>
           <option value="days">Days</option>
           <option value="food">Food</option>
-          <option value="basics">Basics</option>
         </select>
         <br/>
         <div id="streak-display" style="margin-bottom:1.25rem;"></div>
@@ -1748,14 +1776,12 @@
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;flex-wrap:wrap;gap:8px;">
       <div style="display:flex;gap:6px;flex-wrap:wrap;">
         <select class="deck-select" id="shadow-deck" onchange="initShadow()">
-          <option value="sanja" selected>Sanja 4/2</option>
+          <option value="sanja_april" selected>Sanja April</option>
           <option value="all">All categories</option>
-          <option value="greetings">Greetings</option>
           <option value="numbers">Numbers</option>
           <option value="colors">Colors</option>
           <option value="days">Days</option>
           <option value="food">Food</option>
-          <option value="basics">Basics</option>
         </select>
         <select class="deck-select" id="shadow-repeats">
           <option value="2">2 repeats</option>
@@ -1782,6 +1808,37 @@
       <button class="btn btn-ghost" onclick="nextShadow()">Next word &#8594;</button>
     </div>
     <div style="font-size:0.78rem;color:var(--stone-light);text-align:center;margin-top:10px;" id="shadow-counter"></div>
+  </div>
+  <!-- ── LESSONS ── -->
+  <div id="lessons" class="section">
+    <div class="section-header">
+      <div class="section-title">Lessons</div>
+      <div class="section-sub">Wordwall activities from Sanja's classes</div>
+    </div>
+
+    <div class="lessons-week">
+      <div class="lessons-week-title">Week of April 6</div>
+      <div class="lessons-list">
+        <a class="lesson-link" href="https://wordwall.net/play/19206/797/9004" target="_blank" rel="noopener">Dialogue</a>
+        <a class="lesson-link" href="https://wordwall.net/play/53671/055/32434" target="_blank" rel="noopener">Multiple choice</a>
+        <a class="lesson-link" href="https://wordwall.net/play/53671/055/77476" target="_blank" rel="noopener">Vocabulary</a>
+        <a class="lesson-link" href="https://wordwall.net/play/53671/055/38995" target="_blank" rel="noopener">Flip tiles</a>
+        <a class="lesson-link" href="https://wordwall.net/play/19278/176/2910" target="_blank" rel="noopener">Dialogue</a>
+        <a class="lesson-link" href="https://wordwall.net/play/66482/569/4599" target="_blank" rel="noopener">Vocabulary</a>
+        <a class="lesson-link" href="https://wordwall.net/play/66482/569/3791" target="_blank" rel="noopener">Vocabulary type</a>
+        <a class="lesson-link" href="https://wordwall.net/play/66482/569/9364" target="_blank" rel="noopener">Start with this vocab</a>
+        <a class="lesson-link" href="https://wordwall.net/play/36926/053/4511" target="_blank" rel="noopener">Practice nouns in singular</a>
+        <a class="lesson-link" href="https://wordwall.net/play/74589/486/1392" target="_blank" rel="noopener">Practice nouns in plural</a>
+      </div>
+    </div>
+
+    <div class="lessons-week">
+      <div class="lessons-week-title">Week of March 30</div>
+      <div class="lessons-list">
+        <a class="lesson-link" href="https://wordwall.net/play/53783/710/11525" target="_blank" rel="noopener">Basic phrases 2</a>
+        <a class="lesson-link" href="https://wordwall.net/play/18692/136/6144" target="_blank" rel="noopener">Practice reading</a>
+      </div>
+    </div>
   </div>
 
 </main>
@@ -2009,7 +2066,7 @@ const allWords = {
     {hr:"Volim", en:"I love", hint:"VOH-leem"},
     {hr:"Ne volim", en:"I don't like", hint:"neh VOH-leem"},
   ],
-  sanja: [
+  sanja_april: [
     {hr:"Tako je.", en:"That's right. / Exactly.", hint:"TAH-koh yeh"},
     {hr:"Nema na čemu.", en:"You're welcome. / Don't mention it.", hint:"NEH-mah nah CHEH-moo"},
     {hr:"Što ima novo?", en:"What's new? / What's up?", hint:"shtoh EE-mah NOH-voh"},
@@ -2053,6 +2110,23 @@ const allWords = {
     {hr:"Medicina", en:"Medicine", hint:"meh-dee-TSEE-nah"},
     {hr:"Lijepo!", en:"That's nice! / Beautiful!", hint:"LYEH-poh"},
     {hr:"Iz", en:"From", hint:"eez"},
+    {hr:"Vi", en:"You (formal)", hint:"vee"},
+    {hr:"Na", en:"On", hint:"nah"},
+    {hr:"Ali", en:"But / However", hint:"AH-lee"},
+    {hr:"Također", en:"Also / But also / Same", hint:"TAH-koh-jer"},
+    {hr:"Putujete", en:"You travel (formal)", hint:"poo-TOO-yeh-teh"},
+    {hr:"Često", en:"Often", hint:"CHEH-stoh"},
+    {hr:"Pravo", en:"Right / Correct / Straight ahead", hint:"PRAH-voh"},
+    {hr:"Odmor", en:"Holiday / Break / Rest", hint:"OHD-mor"},
+    {hr:"Je li?", en:"Is it? / Question marker", hint:"yeh lee"},
+    {hr:"Ni ja", en:"Me neither / Nor me", hint:"nee yah"},
+    {hr:"Kući", en:"At home / Home (direction)", hint:"KOO-chee"},
+    {hr:"Idem", en:"I go / I'm going", hint:"EE-dem"},
+    {hr:"Jest", en:"Yes it is / Indeed", hint:"yest"},
+    {hr:"Teško", en:"Difficult / Hard", hint:"TESH-koh"},
+    {hr:"Učim", en:"I study / I'm learning", hint:"OO-cheem"},
+    {hr:"Stresno", en:"Stressful", hint:"STRESS-noh"},
+    {hr:"Radite", en:"You work (formal)", hint:"RAH-dee-teh"},
   ],
 };
 
@@ -2134,7 +2208,7 @@ function addPoints(n){}
 const tabGroups = {
   flashcards:'learn', srs:'learn', session:'learn', shadow:'learn',
   quiz:'practice', typeit:'practice', listen:'practice', match:'practice', fillin:'practice',
-  vocab:'reference', phrases:'reference', alphabet:'reference', visual:'reference',
+  vocab:'reference', phrases:'reference', alphabet:'reference', visual:'reference', lessons:'reference',
 };
 
 function switchGroup(group, el){
@@ -2344,7 +2418,7 @@ function setVocabShowFilter(f, el){
 
 function buildVocabFilters(){
   const row = document.getElementById('vocab-filters');
-  const catLabels = {greetings:'Greetings',numbers:'Numbers',colors:'Colors',days:'Days',food:'Food',basics:'Basics',sanja:'Sanja 4/2'};
+  const catLabels = {numbers:'Numbers',colors:'Colors',days:'Days',food:'Food',sanja_april:'Sanja April'};
   const btns = [{val:'all',label:'All'}, ...allCats.map(c=>({val:c,label:catLabels[c]||c.charAt(0).toUpperCase()+c.slice(1)}))];
   row.innerHTML = btns.map(b =>
     `<button class="filter-chip${b.val===vocabFilter?' active':''}" onclick="setVocabFilter('${b.val}')">${b.label}</button>`
@@ -3430,7 +3504,7 @@ function buildHeatmap(){
 function buildCatBreakdown(){
   const el = document.getElementById('prog-cat-breakdown');
   if(!el) return;
-  const catLabels2 = {greetings:'Greetings',numbers:'Numbers',colors:'Colors',days:'Days',food:'Food',basics:'Basics',sanja:'Sanja 4/2'};
+  const catLabels2 = {numbers:'Numbers',colors:'Colors',days:'Days',food:'Food',sanja_april:'Sanja April'};
   el.innerHTML = allCats.map(cat=>{
     const words = allWords[cat];
     const m = words.filter(w=>isMastered(w)).length;
@@ -3827,7 +3901,7 @@ function prevShadow(){ shadowIdx = Math.max(0, shadowIdx-1); showShadowCard(); }
 // Init
 loadState();
 loadSRSData();
-document.getElementById('deck-select').value = 'sanja';
+document.getElementById('deck-select').value = 'sanja_april';
 currentDeck = allWords.sanja;
 updateCard();
 buildVocabFilters();
