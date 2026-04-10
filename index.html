@@ -1219,7 +1219,7 @@
   .shadow-rep-dot.done { background: var(--sea); }
   .shadow-rep-dot.active { background: var(--terracotta); }
 
-  /* ── LESSONS ── */
+  /* ── LESSONS & GRAMMAR ── */
   .lessons-week { margin-bottom: 2rem; }
   .lessons-week-title {
     font-family: var(--font-display);
@@ -1254,6 +1254,78 @@
     border-color: var(--terracotta);
     color: var(--terracotta);
     transform: translateX(2px);
+  }
+  .grammar-body { font-size: 0.9rem; line-height: 1.7; color: var(--stone); }
+  .grammar-body p { margin: 0 0 1rem 0; }
+  .grammar-body strong { color: var(--ink); }
+  .grammar-examples {
+    display: block;
+    margin-top: 4px;
+    font-family: var(--font-display);
+    font-size: 0.92rem;
+    color: var(--sea);
+    font-style: italic;
+  }
+  .grammar-note {
+    background: var(--sand);
+    border-left: 3px solid var(--terracotta);
+    padding: 10px 14px;
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    font-size: 0.85rem;
+    color: var(--stone);
+  }
+  .prep-list { display: flex; flex-direction: column; gap: 2px; }
+  .prep-row {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    padding: 7px 0;
+    border-bottom: 1px solid var(--sand-dark);
+  }
+  .prep-row:last-child { border-bottom: none; }
+  .prep-hr {
+    font-family: var(--font-display);
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--ink);
+    min-width: 90px;
+  }
+  .prep-en {
+    font-size: 0.88rem;
+    color: var(--stone);
+  }
+  .verb-block { margin-bottom: 1.25rem; }
+  .verb-title {
+    font-family: var(--font-display);
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: 6px;
+  }
+  .verb-table { display: flex; flex-direction: column; gap: 2px; }
+  .verb-row {
+    display: flex;
+    align-items: baseline;
+    padding: 6px 0;
+    border-bottom: 1px solid var(--sand-dark);
+    gap: 0;
+  }
+  .verb-row:last-child { border-bottom: none; }
+  .verb-pronoun {
+    font-size: 0.85rem;
+    color: var(--stone-light);
+    min-width: 90px;
+  }
+  .verb-form {
+    font-family: var(--font-display);
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--sea);
+    min-width: 110px;
+  }
+  .verb-en {
+    font-size: 0.88rem;
+    color: var(--stone);
   }
 
 </style>
@@ -1308,6 +1380,7 @@
     <button class="nav-btn" onclick="switchTab('vocab',this)">Vocabulary</button>
     <button class="nav-btn" onclick="switchTab('phrases',this)">Phrases</button>
     <button class="nav-btn" onclick="switchTab('alphabet',this)">Alphabet</button>
+    <button class="nav-btn" onclick="switchTab('grammar',this)">Grammar</button>
     <button class="nav-btn" onclick="switchTab('lessons',this)">Lessons</button>
   </div>
 </nav>
@@ -1809,6 +1882,181 @@
     </div>
     <div style="font-size:0.78rem;color:var(--stone-light);text-align:center;margin-top:10px;" id="shadow-counter"></div>
   </div>
+  <!-- ── GRAMMAR ── -->
+  <div id="grammar" class="section">
+    <div class="section-header">
+      <div class="section-title">Grammar</div>
+      <div class="section-sub">Key rules to help you understand how Croatian works</div>
+    </div>
+
+    <div class="lessons-week">
+      <div class="lessons-week-title">Singular Nouns</div>
+      <div class="grammar-body">
+        <p>Croatian nouns have three genders: masculine, feminine, and neuter. You can usually tell the gender from the ending of the word.</p>
+
+        <p><strong>Masculine</strong> — most nouns ending in a consonant<br>
+        <span class="grammar-examples">grad (city), brod (boat), stol (table), pas (dog)</span></p>
+
+        <p><strong>Feminine</strong> — most nouns ending in -a<br>
+        <span class="grammar-examples">žena (woman), kuća (house), rijeka (river), knjiga (book)</span></p>
+
+        <p><strong>Neuter</strong> — most nouns ending in -o or -e<br>
+        <span class="grammar-examples">more (sea), dijete (child), selo (village), ime (name)</span></p>
+
+        <p class="grammar-note">⚠ Some nouns break the pattern — tata (dad) ends in -a but is masculine. When in doubt, learn the gender with the word.</p>
+      </div>
+    </div>
+
+    <div class="lessons-week">
+      <div class="lessons-week-title">Plural Nouns</div>
+      <div class="grammar-body">
+        <p>Plurals change based on gender.</p>
+
+        <p><strong>Masculine</strong> — add -i<br>
+        <span class="grammar-examples">grad → gradovi (cities), stol → stolovi (tables), brod → brodovi (boats)</span></p>
+
+        <p><strong>Feminine</strong> — drop -a, add -e<br>
+        <span class="grammar-examples">žena → žene (women), kuća → kuće (houses), knjiga → knjige (books)</span></p>
+
+        <p><strong>Neuter</strong> — drop -o/-e, add -a<br>
+        <span class="grammar-examples">more → mora (seas), selo → sela (villages), ime → imena (names)</span></p>
+
+        <p class="grammar-note">⚠ There are irregular plurals you just have to learn — dijete (child) → djeca (children) is a common one Sanja will cover.</p>
+      </div>
+    </div>
+    <div class="lessons-week">
+      <div class="lessons-week-title">Prepositions</div>
+      <div class="grammar-body">
+        <div class="prep-list">
+          <div class="prep-row"><span class="prep-hr">bez</span><span class="prep-en">without</span></div>
+          <div class="prep-row"><span class="prep-hr">do</span><span class="prep-en">to, until</span></div>
+          <div class="prep-row"><span class="prep-hr">iz</span><span class="prep-en">from, out of</span></div>
+          <div class="prep-row"><span class="prep-hr">iza</span><span class="prep-en">behind</span></div>
+          <div class="prep-row"><span class="prep-hr">između</span><span class="prep-en">between</span></div>
+          <div class="prep-row"><span class="prep-hr">ispod</span><span class="prep-en">below, under</span></div>
+          <div class="prep-row"><span class="prep-hr">ispred</span><span class="prep-en">in front of</span></div>
+          <div class="prep-row"><span class="prep-hr">iznad</span><span class="prep-en">above</span></div>
+          <div class="prep-row"><span class="prep-hr">kod</span><span class="prep-en">at (someone's place), by</span></div>
+          <div class="prep-row"><span class="prep-hr">kroz</span><span class="prep-en">through</span></div>
+          <div class="prep-row"><span class="prep-hr">na</span><span class="prep-en">on, at</span></div>
+          <div class="prep-row"><span class="prep-hr">nakon</span><span class="prep-en">after</span></div>
+          <div class="prep-row"><span class="prep-hr">o</span><span class="prep-en">about</span></div>
+          <div class="prep-row"><span class="prep-hr">od</span><span class="prep-en">from, of</span></div>
+          <div class="prep-row"><span class="prep-hr">oko</span><span class="prep-en">around, about</span></div>
+          <div class="prep-row"><span class="prep-hr">osim</span><span class="prep-en">except, apart from</span></div>
+          <div class="prep-row"><span class="prep-hr">po</span><span class="prep-en">around, along, per</span></div>
+          <div class="prep-row"><span class="prep-hr">pored</span><span class="prep-en">next to, beside</span></div>
+          <div class="prep-row"><span class="prep-hr">prema</span><span class="prep-en">towards, according to</span></div>
+          <div class="prep-row"><span class="prep-hr">prije</span><span class="prep-en">before</span></div>
+          <div class="prep-row"><span class="prep-hr">protiv</span><span class="prep-en">against</span></div>
+          <div class="prep-row"><span class="prep-hr">s / sa</span><span class="prep-en">with</span></div>
+          <div class="prep-row"><span class="prep-hr">u</span><span class="prep-en">in, into</span></div>
+          <div class="prep-row"><span class="prep-hr">umjesto</span><span class="prep-en">instead of</span></div>
+          <div class="prep-row"><span class="prep-hr">za</span><span class="prep-en">for</span></div>
+          <div class="prep-row"><span class="prep-hr">zbog</span><span class="prep-en">because of</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="lessons-week">
+      <div class="lessons-week-title">Pronouns</div>
+      <div class="grammar-body">
+        <p>Croatian pronouns change based on their role in the sentence. Here are the basic subject pronouns — the ones you use when saying who is doing something.</p>
+        <div class="prep-list">
+          <div class="prep-row"><span class="prep-hr">ja</span><span class="prep-en">I</span></div>
+          <div class="prep-row"><span class="prep-hr">ti</span><span class="prep-en">you (informal)</span></div>
+          <div class="prep-row"><span class="prep-hr">on</span><span class="prep-en">he</span></div>
+          <div class="prep-row"><span class="prep-hr">ona</span><span class="prep-en">she</span></div>
+          <div class="prep-row"><span class="prep-hr">ono</span><span class="prep-en">it</span></div>
+          <div class="prep-row"><span class="prep-hr">mi</span><span class="prep-en">we</span></div>
+          <div class="prep-row"><span class="prep-hr">vi</span><span class="prep-en">you (plural or formal)</span></div>
+          <div class="prep-row"><span class="prep-hr">oni</span><span class="prep-en">they (mixed or male group)</span></div>
+          <div class="prep-row"><span class="prep-hr">one</span><span class="prep-en">they (female group)</span></div>
+        </div>
+        <p style="margin-top:1rem;" class="grammar-note">⚠ Croatian often drops the pronoun entirely because the verb ending tells you who the subject is — so just <em>radim</em> means "I work" without needing <em>ja</em>. You'll still hear and use them for emphasis.</p>
+      </div>
+    </div>
+
+    <div class="lessons-week">
+      <div class="lessons-week-title">Question Words</div>
+      <div class="grammar-body">
+        <div class="prep-list">
+          <div class="prep-row"><span class="prep-hr">što</span><span class="prep-en">what</span></div>
+          <div class="prep-row"><span class="prep-hr">tko</span><span class="prep-en">who</span></div>
+          <div class="prep-row"><span class="prep-hr">gdje</span><span class="prep-en">where</span></div>
+          <div class="prep-row"><span class="prep-hr">kada / kad</span><span class="prep-en">when</span></div>
+          <div class="prep-row"><span class="prep-hr">zašto</span><span class="prep-en">why</span></div>
+          <div class="prep-row"><span class="prep-hr">kako</span><span class="prep-en">how</span></div>
+          <div class="prep-row"><span class="prep-hr">koliko</span><span class="prep-en">how much / how many</span></div>
+          <div class="prep-row"><span class="prep-hr">koji / koja / koje</span><span class="prep-en">which (m / f / n)</span></div>
+          <div class="prep-row"><span class="prep-hr">čiji / čija / čije</span><span class="prep-en">whose (m / f / n)</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="lessons-week">
+      <div class="lessons-week-title">Common Verbs — Present Tense</div>
+      <div class="grammar-body">
+        <p>The forms you'll use most in conversation: ja (I), ti (you), on/ona (he/she).</p>
+
+        <div class="verb-block">
+          <div class="verb-title">biti — to be</div>
+          <div class="verb-table">
+            <div class="verb-row"><span class="verb-pronoun">ja</span><span class="verb-form">sam</span><span class="verb-en">I am</span></div>
+            <div class="verb-row"><span class="verb-pronoun">ti</span><span class="verb-form">si</span><span class="verb-en">you are</span></div>
+            <div class="verb-row"><span class="verb-pronoun">on / ona</span><span class="verb-form">je</span><span class="verb-en">he / she is</span></div>
+          </div>
+        </div>
+
+        <div class="verb-block">
+          <div class="verb-title">imati — to have</div>
+          <div class="verb-table">
+            <div class="verb-row"><span class="verb-pronoun">ja</span><span class="verb-form">imam</span><span class="verb-en">I have</span></div>
+            <div class="verb-row"><span class="verb-pronoun">ti</span><span class="verb-form">imaš</span><span class="verb-en">you have</span></div>
+            <div class="verb-row"><span class="verb-pronoun">on / ona</span><span class="verb-form">ima</span><span class="verb-en">he / she has</span></div>
+          </div>
+        </div>
+
+        <div class="verb-block">
+          <div class="verb-title">ići — to go</div>
+          <div class="verb-table">
+            <div class="verb-row"><span class="verb-pronoun">ja</span><span class="verb-form">idem</span><span class="verb-en">I go</span></div>
+            <div class="verb-row"><span class="verb-pronoun">ti</span><span class="verb-form">ideš</span><span class="verb-en">you go</span></div>
+            <div class="verb-row"><span class="verb-pronoun">on / ona</span><span class="verb-form">ide</span><span class="verb-en">he / she goes</span></div>
+          </div>
+        </div>
+
+        <div class="verb-block">
+          <div class="verb-title">raditi — to work</div>
+          <div class="verb-table">
+            <div class="verb-row"><span class="verb-pronoun">ja</span><span class="verb-form">radim</span><span class="verb-en">I work</span></div>
+            <div class="verb-row"><span class="verb-pronoun">ti</span><span class="verb-form">radiš</span><span class="verb-en">you work</span></div>
+            <div class="verb-row"><span class="verb-pronoun">on / ona</span><span class="verb-form">radi</span><span class="verb-en">he / she works</span></div>
+          </div>
+        </div>
+
+        <div class="verb-block">
+          <div class="verb-title">živjeti — to live</div>
+          <div class="verb-table">
+            <div class="verb-row"><span class="verb-pronoun">ja</span><span class="verb-form">živim</span><span class="verb-en">I live</span></div>
+            <div class="verb-row"><span class="verb-pronoun">ti</span><span class="verb-form">živiš</span><span class="verb-en">you live</span></div>
+            <div class="verb-row"><span class="verb-pronoun">on / ona</span><span class="verb-form">živi</span><span class="verb-en">he / she lives</span></div>
+          </div>
+        </div>
+
+        <div class="verb-block">
+          <div class="verb-title">studirati — to study</div>
+          <div class="verb-table">
+            <div class="verb-row"><span class="verb-pronoun">ja</span><span class="verb-form">studiram</span><span class="verb-en">I study</span></div>
+            <div class="verb-row"><span class="verb-pronoun">ti</span><span class="verb-form">studiraš</span><span class="verb-en">you study</span></div>
+            <div class="verb-row"><span class="verb-pronoun">on / ona</span><span class="verb-form">studira</span><span class="verb-en">he / she studies</span></div>
+          </div>
+        </div>
+
+        <p class="grammar-note">⚠ Notice the pattern: <strong>-m</strong> for ja, <strong>-š</strong> for ti, no ending for on/ona. Once you see it, it clicks.</p>
+      </div>
+    </div>
+  </div>
+
   <!-- ── LESSONS ── -->
   <div id="lessons" class="section">
     <div class="section-header">
@@ -2208,7 +2456,7 @@ function addPoints(n){}
 const tabGroups = {
   flashcards:'learn', srs:'learn', session:'learn', shadow:'learn',
   quiz:'practice', typeit:'practice', listen:'practice', match:'practice', fillin:'practice',
-  vocab:'reference', phrases:'reference', alphabet:'reference', visual:'reference', lessons:'reference',
+  vocab:'reference', phrases:'reference', alphabet:'reference', visual:'reference', lessons:'reference', grammar:'reference',
 };
 
 function switchGroup(group, el){
