@@ -107,12 +107,13 @@
   }
   .nav-groups {
     display: flex;
-    gap: 0;
-    padding: 0 1.5rem;
+    gap: 4px;
+    padding: 8px 1.5rem;
     border-bottom: 1px solid var(--sand-dark);
+    justify-content: flex-start;
   }
   .nav-group-btn {
-    padding: 10px 18px;
+    padding: 6px 14px;
     border: none;
     background: none;
     font-family: var(--font-body);
@@ -120,15 +121,17 @@
     font-weight: 500;
     color: var(--stone-light);
     cursor: pointer;
-    border-bottom: 2px solid transparent;
+    border-radius: var(--radius-sm);
     transition: all 0.15s;
     white-space: nowrap;
     letter-spacing: 0.04em;
     text-transform: uppercase;
-    margin-bottom: -1px;
   }
-  .nav-group-btn:hover { color: var(--ink); }
-  .nav-group-btn.active { color: var(--ink); border-bottom-color: var(--ink); }
+  .nav-group-btn:hover { color: var(--ink); background: var(--sand); }
+  .nav-group-btn.active {
+    color: var(--white);
+    background: var(--sea);
+  }
 
   .nav-sub {
     display: none;
@@ -136,6 +139,7 @@
     padding: 0 1rem;
     overflow-x: auto;
     scrollbar-width: none;
+    justify-content: flex-start;
   }
   .nav-sub::-webkit-scrollbar { display: none; }
   .nav-sub.active { display: flex; }
@@ -1047,7 +1051,7 @@
   .blank-phrase { font-family:var(--font-display); font-size:1.4rem; color:var(--ink); line-height:1.5; margin:1rem 0; text-align:center; }
   .blank-word { display:inline-block; border-bottom:2px solid var(--terracotta); min-width:80px; color:transparent; background:var(--terracotta-pale); border-radius:3px; padding:0 8px; vertical-align:bottom; }
   .blank-word.revealed { color:var(--terracotta); background:var(--terracotta-pale); }
-  .blank-options { display:grid; grid-template-columns:1fr 1fr; gap:8px; margin:1rem 0; }
+  .blank-options { display:grid; grid-template-columns:1fr 1fr 1fr; gap:8px; margin:1rem 0; }
   .blank-opt { padding:12px 16px; border-radius:var(--radius-sm); border:1.5px solid var(--sand-dark); background:var(--white); color:var(--ink); font-size:0.95rem; cursor:pointer; transition:all 0.15s; text-align:center; font-family:var(--font-body); }
   .blank-opt:hover:not(.correct-ans):not(.wrong-ans) { border-color:var(--sea); background:var(--sea-pale); }
   .blank-opt.correct-ans { background:var(--olive-pale); border-color:var(--olive); color:var(--olive); font-weight:500; }
@@ -1328,6 +1332,29 @@
     color: var(--stone);
   }
 
+  /* ── VOCAB SEARCH ── */
+  .vocab-search {
+    width: 100%;
+    padding: 9px 36px 9px 14px;
+    border: 1px solid var(--sand-dark);
+    border-radius: var(--radius-sm);
+    font-family: var(--font-body);
+    font-size: 0.875rem;
+    background: var(--white);
+    color: var(--ink);
+    box-sizing: border-box;
+    transition: border-color 0.15s;
+  }
+  .vocab-search:focus { outline: none; border-color: var(--sea); }
+  .vocab-search::placeholder { color: var(--stone-pale); }
+  .vocab-month {
+    font-size: 0.68rem;
+    color: var(--stone-pale);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
 </style>
 </head>
 <body>
@@ -1376,9 +1403,9 @@
     <button class="nav-btn" onclick="switchTab('fillin',this)">Fill In</button>
   </div>
   <div class="nav-sub" id="sub-reference">
-    <button class="nav-btn" onclick="switchTab('visual',this)">Visual</button>
+    <button class="nav-btn" onclick="switchTab('visual',this)" style="display:none">Visual</button>
     <button class="nav-btn" onclick="switchTab('vocab',this)">Vocabulary</button>
-    <button class="nav-btn" onclick="switchTab('phrases',this)">Phrases</button>
+    <button class="nav-btn" onclick="switchTab('phrases',this)" style="display:none">Phrases</button>
     <button class="nav-btn" onclick="switchTab('alphabet',this)">Alphabet</button>
     <button class="nav-btn" onclick="switchTab('grammar',this)">Grammar</button>
     <button class="nav-btn" onclick="switchTab('lessons',this)">Lessons</button>
@@ -1440,6 +1467,10 @@
     <div class="section-header">
       <div class="section-title">Vocabulary</div>
       <div class="section-sub">All words — filter by category</div>
+    </div>
+    <div style="position:relative;margin-bottom:10px;">
+      <input class="vocab-search" id="vocab-search" type="text" placeholder="Search Croatian or English..." oninput="buildVocabList()" autocomplete="off" autocorrect="off" spellcheck="false" />
+      <span id="vocab-search-clear" onclick="clearVocabSearch()" style="display:none;position:absolute;right:10px;top:50%;transform:translateY(-50%);cursor:pointer;color:var(--stone-light);font-size:1rem;">✕</span>
     </div>
     <div style="display:flex;gap:6px;margin-bottom:10px;align-items:center;">
       <button class="show-filter-btn active" id="vf-all" onclick="setVocabShowFilter('all',this)">All <span id="vf-count-all"></span></button>
@@ -1551,7 +1582,7 @@
           <option value="days">Days</option>
           <option value="food">Food</option>
         </select>
-        <select class="deck-select" id="match-size">
+        <select class="deck-select" id="match-size" onchange="startMatch()">
           <option value="6">6 pairs</option>
           <option value="8" selected>8 pairs</option>
           <option value="10">10 pairs</option>
@@ -1682,6 +1713,11 @@
     <div style="margin-top:1.5rem;padding-top:1.25rem;border-top:1px solid var(--sand-dark);">
       <div class="prog-log-title" style="margin-bottom:12px;">Mastery by category</div>
       <div class="cat-breakdown" id="prog-cat-breakdown"></div>
+    </div>
+
+    <div style="margin-top:1.5rem;padding-top:1.25rem;border-top:1px solid var(--sand-dark);">
+      <div class="prog-log-title" style="margin-bottom:12px;">Practice games</div>
+      <div id="prog-practice-stats"></div>
     </div>
 
     <div style="margin-top:1.5rem;padding-top:1.25rem;border-top:1px solid var(--sand-dark);">
@@ -2615,7 +2651,16 @@ function updateCard(){
   document.getElementById('fc-translation').style.opacity = '0';
   document.getElementById('fc-tap').textContent = 'tap to reveal English';
   document.getElementById('fc-tap').style.opacity = '1';
-  document.getElementById('fc-cat').textContent = document.getElementById('deck-select').value.toUpperCase();
+  const fcCatLabels = {sanja_april:'April',sanja_may:'May',sanja_june:'June',sanja_july:'July',sanja_august:'August',sanja_september:'September',sanja_october:'October'};
+  const deckKey = document.getElementById('deck-select').value;
+  const fcCatEl = document.getElementById('fc-cat');
+  if(fcCatLabels[deckKey]){
+    fcCatEl.textContent = fcCatLabels[deckKey].toUpperCase();
+    fcCatEl.style.visibility = 'visible';
+  } else {
+    fcCatEl.textContent = '';
+    fcCatEl.style.visibility = 'hidden';
+  }
   document.getElementById('fc-counter').textContent = `Card ${cardIdx+1} of ${currentDeck.length}`;
   document.getElementById('flashcard-el').className = 'flashcard' + (m ? ' is-mastered' : '');
   document.getElementById('fc-mastered-badge').style.visibility = m ? 'visible' : 'hidden';
@@ -2654,7 +2699,7 @@ function prevCard(){ cardIdx = (cardIdx-1+Math.max(currentDeck.length,1)) % Math
 function speakCurrent(){ if(currentDeck[cardIdx]) speak(currentDeck[cardIdx].hr); }
 
 // ── VOCAB ──
-let vocabFilter = 'all';
+let vocabFilter = 'sanja_april';
 let vocabShowFilter = 'all'; // 'all' | 'learning' | 'mastered'
 
 function setVocabShowFilter(f, el){
@@ -2667,7 +2712,9 @@ function setVocabShowFilter(f, el){
 function buildVocabFilters(){
   const row = document.getElementById('vocab-filters');
   const catLabels = {numbers:'Numbers',colors:'Colors',days:'Days',food:'Food',sanja_april:'Sanja April'};
-  const btns = [{val:'all',label:'All'}, ...allCats.map(c=>({val:c,label:catLabels[c]||c.charAt(0).toUpperCase()+c.slice(1)}))];
+  const sanja = {val:'sanja_april', label:'Sanja April'};
+  const rest = allCats.filter(c=>c!=='sanja_april').map(c=>({val:c,label:catLabels[c]||c.charAt(0).toUpperCase()+c.slice(1)}));
+  const btns = [sanja, {val:'all',label:'All'}, ...rest];
   row.innerHTML = btns.map(b =>
     `<button class="filter-chip${b.val===vocabFilter?' active':''}" onclick="setVocabFilter('${b.val}')">${b.label}</button>`
   ).join('');
@@ -2675,18 +2722,41 @@ function buildVocabFilters(){
 
 function setVocabFilter(f){ vocabFilter = f; buildVocabFilters(); buildVocabList(); refreshAllCounts(); }
 
+const lessonMonths = {sanja_april:'April', sanja_may:'May', sanja_june:'June', sanja_july:'July', sanja_august:'August', sanja_september:'September', sanja_october:'October'};
+
+function clearVocabSearch(){
+  document.getElementById('vocab-search').value = '';
+  document.getElementById('vocab-search-clear').style.display = 'none';
+  buildVocabList();
+}
+
 function buildVocabList(){
   const container = document.getElementById('vocab-list');
-  let items = vocabFilter === 'all' ? allCats.flatMap(c => allWords[c]) : (allWords[vocabFilter]||[]);
+  const searchEl = document.getElementById('vocab-search');
+  const query = searchEl ? searchEl.value.trim().toLowerCase() : '';
+  const clearBtn = document.getElementById('vocab-search-clear');
+  if(clearBtn) clearBtn.style.display = query ? '' : 'none';
+
+  // If searching, scan all words regardless of filter
+  let items;
+  let searchMode = false;
+  if(query){
+    searchMode = true;
+    items = allCats.flatMap(c => allWords[c].map(w => ({...w, _cat:c})));
+    items = items.filter(w => w.hr.toLowerCase().includes(query) || w.en.toLowerCase().includes(query));
+  } else {
+    items = vocabFilter === 'all' ? allCats.flatMap(c => allWords[c].map(w=>({...w,_cat:c}))) : (allWords[vocabFilter]||[]).map(w=>({...w,_cat:vocabFilter}));
+    if(vocabFilter === 'sanja_april') items = [...items].sort((a,b) => a.hr.localeCompare(b.hr, 'hr'));
+  }
   if(vocabShowFilter === 'learning') items = items.filter(w => !isMastered(w));
   if(vocabShowFilter === 'mastered') items = items.filter(w => isMastered(w));
 
   if(!items.length){
-    container.innerHTML = `<div style="text-align:center;padding:2rem;color:var(--stone-light);font-size:0.9rem;">${vocabShowFilter==='mastered'?'No mastered words yet — mark words you know on the Flashcards tab.':'Nothing here!'}</div>`;
+    container.innerHTML = `<div style="text-align:center;padding:2rem;color:var(--stone-light);font-size:0.9rem;">${query ? 'No words found for "'+query+'"' : vocabShowFilter==='mastered'?'No mastered words yet — mark words you know on the Flashcards tab.':'Nothing here!'}</div>`;
     return;
   }
 
-  if(vocabFilter === 'colors'){
+  if(vocabFilter === 'colors' && !searchMode){
     container.innerHTML = '<div class="color-grid">' + items.map(w =>
       `<div class="color-card${isMastered(w)?' is-mastered':''}">
         <div class="swatch" style="background:${w.color||'#888'}"></div>
@@ -2700,16 +2770,19 @@ function buildVocabList(){
       </div>`
     ).join('') + '</div>';
   } else {
-    container.innerHTML = '<div class="vocab-grid">' + items.map(w =>
-      `<div class="vocab-row${isMastered(w)?' is-mastered':''}">
+    container.innerHTML = '<div class="vocab-grid">' + items.map(w => {
+      const month = lessonMonths[w._cat];
+      const monthTag = month ? `<span class="vocab-month">${month}</span>` : '<span></span>';
+      return `<div class="vocab-row${isMastered(w)?' is-mastered':''}">
         <span class="vocab-hr">${w.hr}</span>
         <span class="vocab-en">${w.en}</span>
         <span class="vocab-pron">${w.hint}</span>
+        ${monthTag}
         ${isMastered(w)?'<span style="font-size:11px;color:var(--olive);padding:0 4px;">✓</span>':'<span></span>'}
         <button class="fav-btn${isFav(w.hr)?' is-fav':''}" onclick="toggleFav('${w.hr.replace(/'/g,"\\'")}');buildVocabList();" title="Favourite">${heartSVG()}</button>
         <button class="btn btn-sea btn-sm btn-icon" onclick="speak('${w.hr.replace(/'/g,"\\'")}')"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg></button>
-      </div>`
-    ).join('') + '</div>';
+      </div>`;
+    }).join('') + '</div>';
   }
 }
 
@@ -2962,6 +3035,7 @@ function selectMatchTile(el){
     matchStreak++;
     addPoints(matchStreak >= 3 ? 4 : 2);
     speak(first.dataset.side === 'hr' ? first.dataset.key : second.dataset.key);
+    recordPracticeStat('match', true);
     updateMatchStats();
     if(matchMatched.size === matchTotal) setTimeout(showMatchComplete, 400);
   } else {
@@ -2970,6 +3044,7 @@ function selectMatchTile(el){
     second.classList.add('wrong');
     matchMistakes++;
     matchStreak = 0;
+    recordPracticeStat('match', false);
     updateMatchStats();
     setTimeout(() => {
       first.classList.remove('wrong');
@@ -3210,6 +3285,7 @@ function renderProgress(){
   if(progBtn) progBtn.classList.toggle('has-progress', m > 0);
   buildHeatmap();
   buildCatBreakdown();
+  buildPracticeStats();
 
   const log = loadLog();
   const logEl = document.getElementById('prog-log');
@@ -3697,11 +3773,12 @@ function showFillIn(){
   document.getElementById('fi-feedback').style.display = 'none';
 
   // Build phrase display with blank
+  window._fiCurrent = q;
   document.getElementById('fi-phrase').innerHTML = q.phrase.replace('___', `<span class="blank-word" id="fi-blank">___</span>`);
 
-  // Build 4 options: correct + 3 wrong
+  // Build 6 options: correct + 5 wrong
   const allBlanks = items.map(i=>i.blank).filter(b=>b!==q.blank);
-  const wrong = [...allBlanks].sort(()=>Math.random()-0.5).slice(0,3);
+  const wrong = [...allBlanks].sort(()=>Math.random()-0.5).slice(0,5);
   const opts = [...wrong, q.blank].sort(()=>Math.random()-0.5);
   document.getElementById('fi-options').innerHTML = opts.map(o=>
     `<button class="blank-opt" onclick="checkFillIn('${o.replace(/'/g,"\\'")}','${q.blank.replace(/'/g,"\\'")}')">${o}</button>`
@@ -3712,7 +3789,8 @@ function checkFillIn(chosen, correct){
   if(fiAnswered) return;
   fiAnswered = true; fiAttempts++;
   const ok = chosen === correct;
-  if(ok) fiScore++;
+  if(ok){ fiScore++; const q = window._fiCurrent; if(q) speak(q.phrase.replace('___', correct)); }
+  recordPracticeStat('fillin', ok);
   document.querySelectorAll('.blank-opt').forEach(b=>{
     if(b.textContent === correct) b.className = 'blank-opt correct-ans';
     else if(b.textContent === chosen && !ok) b.className = 'blank-opt wrong-ans';
@@ -3749,11 +3827,51 @@ function buildHeatmap(){
   el.innerHTML = cells.join('');
 }
 
+const PRACTICE_KEY = 'hrvatski_practice_stats';
+
+function loadPracticeStats(){
+  try { return JSON.parse(localStorage.getItem(PRACTICE_KEY)) || {match:{attempts:0,correct:0},fillin:{attempts:0,correct:0}}; }
+  catch(e){ return {match:{attempts:0,correct:0},fillin:{attempts:0,correct:0}}; }
+}
+
+function savePracticeStats(stats){
+  try { localStorage.setItem(PRACTICE_KEY, JSON.stringify(stats)); } catch(e){}
+}
+
+function recordPracticeStat(game, correct){
+  const stats = loadPracticeStats();
+  stats[game].attempts++;
+  if(correct) stats[game].correct++;
+  savePracticeStats(stats);
+}
+
+function buildPracticeStats(){
+  const el = document.getElementById('prog-practice-stats');
+  if(!el) return;
+  const stats = loadPracticeStats();
+  const games = [
+    {key:'match', label:'Match'},
+    {key:'fillin', label:'Fill In'},
+  ];
+  el.innerHTML = games.map(g => {
+    const s = stats[g.key];
+    const pct = s.attempts > 0 ? Math.round(s.correct / s.attempts * 100) : null;
+    const pctStr = pct !== null ? `${pct}%` : '—';
+    return `<div class="cat-row" style="margin-bottom:6px;">
+      <span class="cat-row-label">${g.label}</span>
+      <div style="flex:1;font-size:0.82rem;color:var(--stone);">${s.attempts > 0 ? `${s.attempts} cards, ${s.correct} correct` : 'No cards yet'}</div>
+      <span class="cat-row-pct" style="font-weight:600;color:${pct>=80?'var(--olive)':pct>=60?'var(--sea)':'var(--stone)'}">${pctStr}</span>
+    </div>`;
+  }).join('');
+}
+
 function buildCatBreakdown(){
   const el = document.getElementById('prog-cat-breakdown');
   if(!el) return;
   const catLabels2 = {numbers:'Numbers',colors:'Colors',days:'Days',food:'Food',sanja_april:'Sanja April'};
-  el.innerHTML = allCats.map(cat=>{
+  const hidden = ['greetings','basics'];
+  const cats = ['sanja_april', ...allCats.filter(c => c !== 'sanja_april' && !hidden.includes(c))];
+  el.innerHTML = cats.map(cat=>{
     const words = allWords[cat];
     const m = words.filter(w=>isMastered(w)).length;
     const pct = words.length>0 ? Math.round(m/words.length*100) : 0;
