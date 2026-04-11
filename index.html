@@ -3921,8 +3921,11 @@ function buildHeatmap(){
 const PRACTICE_KEY = 'hrvatski_practice_stats';
 
 function loadPracticeStats(){
-  try { return JSON.parse(localStorage.getItem(PRACTICE_KEY)) || {match:{attempts:0,correct:0},fillin:{attempts:0,correct:0},nouns:{attempts:0,correct:0}}; }
-  catch(e){ return {match:{attempts:0,correct:0},fillin:{attempts:0,correct:0},nouns:{attempts:0,correct:0}}; }
+  try {
+    const defaults = {match:{attempts:0,correct:0},fillin:{attempts:0,correct:0},nouns:{attempts:0,correct:0}};
+    const saved = JSON.parse(localStorage.getItem(PRACTICE_KEY)) || {};
+    return Object.assign(defaults, saved);
+  } catch(e){ return {match:{attempts:0,correct:0},fillin:{attempts:0,correct:0},nouns:{attempts:0,correct:0}}; }
 }
 
 function savePracticeStats(stats){
@@ -4630,10 +4633,33 @@ function showNounCard(){
   } else {
     document.getElementById('noun-question').textContent = 'What is the plural?';
     optsEl.className = 'noun-plural-opts';
-    const wrong = nounPool.filter(x => x.pl !== n.pl).sort(() => Math.random()-0.5).slice(0,2).map(x => x.pl);
-    const opts = [...wrong, n.pl].sort(() => Math.random()-0.5);
+
+    // Generate plausible decoys based on the correct plural's stem
+    const correct = n.pl;
+    const endings = ['i','e','a','ovi','evi','ici','ice','evi','ima','ima','je'];
+    // Strip likely ending from correct plural to get stem
+    const stemMatch = correct.match(/^(.+?)(ovi|evi|aci|ici|ice|nje|lja|nja|je|ve|ke|ge|ze|še|če|te|de|ne|me|le|re|i|e|a)$/);
+    const stem = stemMatch ? stemMatch[1] : correct.slice(0,-1);
+    // Generate wrong forms from same stem with different endings
+    const usedEnding = stemMatch ? stemMatch[2] : correct.slice(-1);
+    const decoyEndings = endings.filter(e => e !== usedEnding && (stem+e) !== correct);
+    const shuffledDecoys = decoyEndings.sort(()=>Math.random()-0.5);
+    let wrong = [];
+    for(const e of shuffledDecoys){
+      const candidate = stem + e;
+      if(candidate !== correct && !wrong.includes(candidate)){
+        wrong.push(candidate);
+        if(wrong.length === 2) break;
+      }
+    }
+    // Fallback to pool if not enough decoys
+    if(wrong.length < 2){
+      const poolWrong = nounPool.filter(x => x.pl !== correct).sort(()=>Math.random()-0.5).map(x=>x.pl);
+      while(wrong.length < 2 && poolWrong.length) wrong.push(poolWrong.shift());
+    }
+    const opts = [...wrong, correct].sort(() => Math.random()-0.5);
     optsEl.innerHTML = opts.map(o =>
-      `<button class="blank-opt" onclick="checkNounPlural('${o.replace(/'/g,"\\'")}','${n.pl.replace(/'/g,"\\'")}')">${o}</button>`
+      `<button class="blank-opt" onclick="checkNounPlural('${o.replace(/'/g,"\\'")}','${correct.replace(/'/g,"\\'")}')">${o}</button>`
     ).join('');
   }
 }
@@ -4643,9 +4669,10 @@ function checkNounGender(chosen){
   nounAnswered = true; nounAttempts++;
   const n = window._nounCurrent;
   const ok = chosen === n.g;
-  if(ok) nounScore++;
+  if(ok){ nounScore++; speak(n.hr); }
   recordPracticeStat('nouns', ok);
   document.querySelectorAll('.noun-gender-btn').forEach(b => {
+    const bg = b.textContent.includes('Masc') ? 'm' : b.textContent.includes('Fem') ? 'f' : 'n';
     if(bg === n.g) b.classList.add('correct');
     else if(bg === chosen && !ok) b.classList.add('wrong');
   });
