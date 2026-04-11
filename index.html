@@ -1355,6 +1355,25 @@
     white-space: nowrap;
   }
 
+  /* ── NOUNS ── */
+  .noun-gender-opts { display:grid; grid-template-columns:1fr 1fr 1fr; gap:8px; }
+  .noun-gender-btn {
+    padding: 14px 8px;
+    border-radius: var(--radius-sm);
+    border: 2px solid var(--sand-dark);
+    background: var(--white);
+    font-family: var(--font-body);
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.15s;
+    text-align: center;
+  }
+  .noun-gender-btn:hover { border-color: var(--sea); color: var(--sea); }
+  .noun-gender-btn.correct { background: var(--olive-pale); border-color: var(--olive); color: var(--olive); }
+  .noun-gender-btn.wrong { background: var(--terracotta-pale); border-color: var(--terracotta); color: var(--terracotta); }
+  .noun-plural-opts { display:grid; grid-template-columns:1fr 1fr 1fr; gap:8px; }
+
 </style>
 </head>
 <body>
@@ -1401,6 +1420,7 @@
     <button class="nav-btn" onclick="switchTab('listen',this)" style="display:none">Listening</button>
     <button class="nav-btn" onclick="switchTab('match',this)">Match</button>
     <button class="nav-btn" onclick="switchTab('fillin',this)">Fill In</button>
+    <button class="nav-btn" onclick="switchTab('nouns',this)">Nouns</button>
   </div>
   <div class="nav-sub" id="sub-reference">
     <button class="nav-btn" onclick="switchTab('visual',this)" style="display:none">Visual</button>
@@ -2091,6 +2111,45 @@
         <p class="grammar-note">⚠ Notice the pattern: <strong>-m</strong> for ja, <strong>-š</strong> for ti, no ending for on/ona. Once you see it, it clicks.</p>
       </div>
     </div>
+
+    <div class="lessons-week">
+      <div class="lessons-week-title">Days of the Week</div>
+      <div class="grammar-body">
+        <p>Croatian days are not capitalised unless they start a sentence.</p>
+        <div class="prep-list">
+          <div class="prep-row"><span class="prep-hr">ponedjeljak</span><span class="prep-en">Monday</span></div>
+          <div class="prep-row"><span class="prep-hr">utorak</span><span class="prep-en">Tuesday</span></div>
+          <div class="prep-row"><span class="prep-hr">srijeda</span><span class="prep-en">Wednesday</span></div>
+          <div class="prep-row"><span class="prep-hr">četvrtak</span><span class="prep-en">Thursday</span></div>
+          <div class="prep-row"><span class="prep-hr">petak</span><span class="prep-en">Friday</span></div>
+          <div class="prep-row"><span class="prep-hr">subota</span><span class="prep-en">Saturday</span></div>
+          <div class="prep-row"><span class="prep-hr">nedjelja</span><span class="prep-en">Sunday</span></div>
+        </div>
+        <p style="margin-top:1rem;" class="grammar-note">💡 To say "on Monday" use <strong>u ponedjeljak</strong>. To say "on Mondays" (regularly) use <strong>ponedjeljkom</strong>.</p>
+      </div>
+    </div>
+
+    <div class="lessons-week">
+      <div class="lessons-week-title">Months of the Year</div>
+      <div class="grammar-body">
+        <p>Months are also lowercase in Croatian.</p>
+        <div class="prep-list">
+          <div class="prep-row"><span class="prep-hr">siječanj</span><span class="prep-en">January</span></div>
+          <div class="prep-row"><span class="prep-hr">veljača</span><span class="prep-en">February</span></div>
+          <div class="prep-row"><span class="prep-hr">ožujak</span><span class="prep-en">March</span></div>
+          <div class="prep-row"><span class="prep-hr">travanj</span><span class="prep-en">April</span></div>
+          <div class="prep-row"><span class="prep-hr">svibanj</span><span class="prep-en">May</span></div>
+          <div class="prep-row"><span class="prep-hr">lipanj</span><span class="prep-en">June</span></div>
+          <div class="prep-row"><span class="prep-hr">srpanj</span><span class="prep-en">July</span></div>
+          <div class="prep-row"><span class="prep-hr">kolovoz</span><span class="prep-en">August</span></div>
+          <div class="prep-row"><span class="prep-hr">rujan</span><span class="prep-en">September</span></div>
+          <div class="prep-row"><span class="prep-hr">listopad</span><span class="prep-en">October</span></div>
+          <div class="prep-row"><span class="prep-hr">studeni</span><span class="prep-en">November</span></div>
+          <div class="prep-row"><span class="prep-hr">prosinac</span><span class="prep-en">December</span></div>
+        </div>
+        <p style="margin-top:1rem;" class="grammar-note">💡 To say "in April" use <strong>u travnju</strong> — months take the locative case with u.</p>
+      </div>
+    </div>
   </div>
 
   <!-- ── LESSONS ── -->
@@ -2123,6 +2182,36 @@
         <a class="lesson-link" href="https://wordwall.net/play/18692/136/6144" target="_blank" rel="noopener">Practice reading</a>
       </div>
     </div>
+  </div>
+  <!-- ── NOUNS ── -->
+  <div id="nouns" class="section">
+    <div class="section-header">
+      <div class="section-title">Nouns</div>
+      <div class="section-sub">Practice gender and plural forms</div>
+    </div>
+    <div style="display:flex;gap:6px;margin-bottom:1rem;flex-wrap:wrap;">
+      <button class="show-filter-btn active" id="noun-mode-both" onclick="setNounMode('both',this)">Both</button>
+      <button class="show-filter-btn" id="noun-mode-gender" onclick="setNounMode('gender',this)">Gender only</button>
+      <button class="show-filter-btn" id="noun-mode-plural" onclick="setNounMode('plural',this)">Plural only</button>
+    </div>
+    <div class="flashcard" id="noun-card" style="cursor:default;min-height:180px;">
+      <div class="fc-word" id="noun-word" style="font-size:2rem;"></div>
+      <div style="font-size:0.82rem;color:var(--terracotta);font-style:italic;margin-top:4px;" id="noun-hint"></div>
+      <div style="font-size:0.9rem;color:var(--stone-light);margin-top:6px;" id="noun-en"></div>
+      <div style="font-size:0.75rem;color:var(--stone-light);text-transform:uppercase;letter-spacing:0.08em;margin-top:12px;" id="noun-question"></div>
+    </div>
+    <div id="noun-options" style="display:grid;gap:8px;margin:0.75rem 0;"></div>
+    <div class="feedback" id="noun-feedback" style="display:none;"></div>
+    <div class="score-bar" style="margin-top:1rem;">
+      <span id="noun-score-label">Score: 0 / 0</span>
+      <span class="score-pct" id="noun-pct">—</span>
+    </div>
+    <div style="display:flex;gap:8px;margin-top:0.75rem;justify-content:center;">
+      <button class="btn btn-sea btn-icon" onclick="speakNoun()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg></button>
+      <button class="btn btn-ghost" onclick="nextNoun()">Skip &#8594;</button>
+      <button class="btn btn-ghost" onclick="shuffleNouns()">&#8635; Shuffle</button>
+    </div>
+    <div style="font-size:0.78rem;color:var(--stone-light);text-align:center;margin-top:8px;" id="noun-counter"></div>
   </div>
 
 </main>
@@ -2491,7 +2580,7 @@ function addPoints(n){}
 // Nav group mapping
 const tabGroups = {
   flashcards:'learn', srs:'learn', session:'learn', shadow:'learn',
-  quiz:'practice', typeit:'practice', listen:'practice', match:'practice', fillin:'practice',
+  quiz:'practice', typeit:'practice', listen:'practice', match:'practice', fillin:'practice', nouns:'practice',
   vocab:'reference', phrases:'reference', alphabet:'reference', visual:'reference', lessons:'reference', grammar:'reference',
 };
 
@@ -2522,6 +2611,7 @@ function switchTab(id, el){
   if(id === 'session') resetSession();
   if(id === 'visual') initVisual();
   if(id === 'shadow') initShadow();
+  if(id === 'nouns') shuffleNouns();
 }
 
 // ── PERSISTENCE ──
@@ -3411,6 +3501,7 @@ function switchTabById(id){
   if(id === 'session') resetSession();
   if(id === 'visual') initVisual();
   if(id === 'shadow') initShadow();
+  if(id === 'nouns') shuffleNouns();
 }
 
 function toggleFav(key){
@@ -3830,8 +3921,8 @@ function buildHeatmap(){
 const PRACTICE_KEY = 'hrvatski_practice_stats';
 
 function loadPracticeStats(){
-  try { return JSON.parse(localStorage.getItem(PRACTICE_KEY)) || {match:{attempts:0,correct:0},fillin:{attempts:0,correct:0}}; }
-  catch(e){ return {match:{attempts:0,correct:0},fillin:{attempts:0,correct:0}}; }
+  try { return JSON.parse(localStorage.getItem(PRACTICE_KEY)) || {match:{attempts:0,correct:0},fillin:{attempts:0,correct:0},nouns:{attempts:0,correct:0}}; }
+  catch(e){ return {match:{attempts:0,correct:0},fillin:{attempts:0,correct:0},nouns:{attempts:0,correct:0}}; }
 }
 
 function savePracticeStats(stats){
@@ -3852,9 +3943,10 @@ function buildPracticeStats(){
   const games = [
     {key:'match', label:'Match'},
     {key:'fillin', label:'Fill In'},
+    {key:'nouns', label:'Nouns'},
   ];
   el.innerHTML = games.map(g => {
-    const s = stats[g.key];
+    const s = stats[g.key] || {attempts:0, correct:0};
     const pct = s.attempts > 0 ? Math.round(s.correct / s.attempts * 100) : null;
     const pctStr = pct !== null ? `${pct}%` : '—';
     return `<div class="cat-row" style="margin-bottom:6px;">
@@ -4264,27 +4356,347 @@ function startShadowRound(){
 function nextShadow(){ shadowIdx++; showShadowCard(); }
 function prevShadow(){ shadowIdx = Math.max(0, shadowIdx-1); showShadowCard(); }
 
+// ── NOUNS ──
+const nounData = [
+  // People & relationships
+  {hr:"čovjek", pl:"ljudi", g:"m", en:"person / man"},
+  {hr:"žena", pl:"žene", g:"f", en:"woman"},
+  {hr:"dijete", pl:"djeca", g:"n", en:"child"},
+  {hr:"dječak", pl:"dječaci", g:"m", en:"boy"},
+  {hr:"djevojka", pl:"djevojke", g:"f", en:"girl"},
+  {hr:"majka", pl:"majke", g:"f", en:"mother"},
+  {hr:"otac", pl:"očevi", g:"m", en:"father"},
+  {hr:"brat", pl:"braća", g:"m", en:"brother"},
+  {hr:"sestra", pl:"sestre", g:"f", en:"sister"},
+  {hr:"sin", pl:"sinovi", g:"m", en:"son"},
+  {hr:"kći", pl:"kćeri", g:"f", en:"daughter"},
+  {hr:"prijatelj", pl:"prijatelji", g:"m", en:"friend (male)"},
+  {hr:"prijateljica", pl:"prijateljice", g:"f", en:"friend (female)"},
+  {hr:"muž", pl:"muževi", g:"m", en:"husband"},
+  {hr:"supruga", pl:"supruge", g:"f", en:"wife"},
+  {hr:"djed", pl:"djedovi", g:"m", en:"grandfather"},
+  {hr:"baka", pl:"bake", g:"f", en:"grandmother"},
+  {hr:"stric", pl:"stričevi", g:"m", en:"uncle"},
+  {hr:"teta", pl:"tete", g:"f", en:"aunt"},
+  {hr:"student", pl:"studenti", g:"m", en:"student (male)"},
+  {hr:"studentica", pl:"studentice", g:"f", en:"student (female)"},
+  {hr:"učitelj", pl:"učitelji", g:"m", en:"teacher (male)"},
+  {hr:"učiteljica", pl:"učiteljice", g:"f", en:"teacher (female)"},
+  {hr:"doktor", pl:"doktori", g:"m", en:"doctor"},
+  {hr:"liječnik", pl:"liječnici", g:"m", en:"physician"},
+  {hr:"kuhar", pl:"kuhari", g:"m", en:"chef / cook"},
+  {hr:"vozač", pl:"vozači", g:"m", en:"driver"},
+  {hr:"novinar", pl:"novinari", g:"m", en:"journalist"},
+  // Places
+  {hr:"grad", pl:"gradovi", g:"m", en:"city"},
+  {hr:"selo", pl:"sela", g:"n", en:"village"},
+  {hr:"kuća", pl:"kuće", g:"f", en:"house"},
+  {hr:"stan", pl:"stanovi", g:"m", en:"apartment"},
+  {hr:"soba", pl:"sobe", g:"f", en:"room"},
+  {hr:"kuhinja", pl:"kuhinje", g:"f", en:"kitchen"},
+  {hr:"kupaonica", pl:"kupaonice", g:"f", en:"bathroom"},
+  {hr:"ulica", pl:"ulice", g:"f", en:"street"},
+  {hr:"trg", pl:"trgovi", g:"m", en:"square / plaza"},
+  {hr:"park", pl:"parkovi", g:"m", en:"park"},
+  {hr:"plaža", pl:"plaže", g:"f", en:"beach"},
+  {hr:"otok", pl:"otoci", g:"m", en:"island"},
+  {hr:"država", pl:"države", g:"f", en:"country / state"},
+  {hr:"zemlja", pl:"zemlje", g:"f", en:"country / earth"},
+  {hr:"škola", pl:"škole", g:"f", en:"school"},
+  {hr:"bolnica", pl:"bolnice", g:"f", en:"hospital"},
+  {hr:"crkva", pl:"crkve", g:"f", en:"church"},
+  {hr:"knjižnica", pl:"knjižnice", g:"f", en:"library"},
+  {hr:"restoran", pl:"restorani", g:"m", en:"restaurant"},
+  {hr:"kavana", pl:"kavane", g:"f", en:"café"},
+  {hr:"hotel", pl:"hoteli", g:"m", en:"hotel"},
+  {hr:"muzej", pl:"muzeji", g:"m", en:"museum"},
+  {hr:"kazalište", pl:"kazališta", g:"n", en:"theatre"},
+  {hr:"kino", pl:"kina", g:"n", en:"cinema"},
+  {hr:"luka", pl:"luke", g:"f", en:"harbour / port"},
+  {hr:"most", pl:"mostovi", g:"m", en:"bridge"},
+  {hr:"tržnica", pl:"tržnice", g:"f", en:"market"},
+  {hr:"banka", pl:"banke", g:"f", en:"bank"},
+  {hr:"pošta", pl:"pošte", g:"f", en:"post office"},
+  // Nature
+  {hr:"more", pl:"mora", g:"n", en:"sea"},
+  {hr:"rijeka", pl:"rijeke", g:"f", en:"river"},
+  {hr:"jezero", pl:"jezera", g:"n", en:"lake"},
+  {hr:"planina", pl:"planine", g:"f", en:"mountain"},
+  {hr:"šuma", pl:"šume", g:"f", en:"forest"},
+  {hr:"polje", pl:"polja", g:"n", en:"field"},
+  {hr:"nebo", pl:"nebesa", g:"n", en:"sky"},
+  {hr:"sunce", pl:"sunca", g:"n", en:"sun"},
+  {hr:"oblak", pl:"oblaci", g:"m", en:"cloud"},
+  {hr:"kiša", pl:"kiše", g:"f", en:"rain"},
+  {hr:"snijeg", pl:"snijegovi", g:"m", en:"snow"},
+  {hr:"vjetar", pl:"vjetrovi", g:"m", en:"wind"},
+  {hr:"voda", pl:"vode", g:"f", en:"water"},
+  {hr:"vatra", pl:"vatre", g:"f", en:"fire"},
+  {hr:"zemlja", pl:"zemlje", g:"f", en:"earth / ground"},
+  {hr:"drvo", pl:"drva", g:"n", en:"tree / wood"},
+  {hr:"cvijet", pl:"cvjetovi", g:"m", en:"flower"},
+  {hr:"trava", pl:"trave", g:"f", en:"grass"},
+  {hr:"kamen", pl:"kameni", g:"m", en:"stone / rock"},
+  {hr:"pijesak", pl:"pijeskovi", g:"m", en:"sand"},
+  // Animals
+  {hr:"pas", pl:"psi", g:"m", en:"dog"},
+  {hr:"mačka", pl:"mačke", g:"f", en:"cat"},
+  {hr:"konj", pl:"konji", g:"m", en:"horse"},
+  {hr:"krava", pl:"krave", g:"f", en:"cow"},
+  {hr:"svinja", pl:"svinje", g:"f", en:"pig"},
+  {hr:"ovca", pl:"ovce", g:"f", en:"sheep"},
+  {hr:"kokoš", pl:"kokoši", g:"f", en:"hen"},
+  {hr:"ptica", pl:"ptice", g:"f", en:"bird"},
+  {hr:"riba", pl:"ribe", g:"f", en:"fish"},
+  {hr:"miš", pl:"miševi", g:"m", en:"mouse"},
+  {hr:"zec", pl:"zečevi", g:"m", en:"rabbit"},
+  {hr:"medvjed", pl:"medvjedi", g:"m", en:"bear"},
+  {hr:"lav", pl:"lavovi", g:"m", en:"lion"},
+  {hr:"slon", pl:"slonovi", g:"m", en:"elephant"},
+  {hr:"majmun", pl:"majmuni", g:"m", en:"monkey"},
+  {hr:"zmija", pl:"zmije", g:"f", en:"snake"},
+  {hr:"žaba", pl:"žabe", g:"f", en:"frog"},
+  {hr:"leptir", pl:"leptiri", g:"m", en:"butterfly"},
+  {hr:"pčela", pl:"pčele", g:"f", en:"bee"},
+  // Food & drink
+  {hr:"kruh", pl:"kruhovi", g:"m", en:"bread"},
+  {hr:"sir", pl:"sirevi", g:"m", en:"cheese"},
+  {hr:"jaje", pl:"jaja", g:"n", en:"egg"},
+  {hr:"meso", pl:"mesa", g:"n", en:"meat"},
+  {hr:"riba", pl:"ribe", g:"f", en:"fish"},
+  {hr:"salata", pl:"salate", g:"f", en:"salad"},
+  {hr:"juha", pl:"juhe", g:"f", en:"soup"},
+  {hr:"torta", pl:"torte", g:"f", en:"cake"},
+  {hr:"jabuka", pl:"jabuke", g:"f", en:"apple"},
+  {hr:"kruška", pl:"kruške", g:"f", en:"pear"},
+  {hr:"naranča", pl:"naranče", g:"f", en:"orange"},
+  {hr:"banana", pl:"banane", g:"f", en:"banana"},
+  {hr:"jagoda", pl:"jagode", g:"f", en:"strawberry"},
+  {hr:"mrkva", pl:"mrkve", g:"f", en:"carrot"},
+  {hr:"krumpir", pl:"krumpiri", g:"m", en:"potato"},
+  {hr:"rajčica", pl:"rajčice", g:"f", en:"tomato"},
+  {hr:"luk", pl:"lukovi", g:"m", en:"onion"},
+  {hr:"gljiva", pl:"gljive", g:"f", en:"mushroom"},
+  {hr:"kava", pl:"kave", g:"f", en:"coffee"},
+  {hr:"čaj", pl:"čajevi", g:"m", en:"tea"},
+  {hr:"pivo", pl:"piva", g:"n", en:"beer"},
+  {hr:"vino", pl:"vina", g:"n", en:"wine"},
+  {hr:"sok", pl:"sokovi", g:"m", en:"juice"},
+  {hr:"čaša", pl:"čaše", g:"f", en:"glass / cup"},
+  {hr:"tanjur", pl:"tanjuri", g:"m", en:"plate"},
+  {hr:"žlica", pl:"žlice", g:"f", en:"spoon"},
+  {hr:"vilica", pl:"vilice", g:"f", en:"fork"},
+  {hr:"nož", pl:"noževi", g:"m", en:"knife"},
+  // Body
+  {hr:"glava", pl:"glave", g:"f", en:"head"},
+  {hr:"lice", pl:"lica", g:"n", en:"face"},
+  {hr:"oko", pl:"oči", g:"n", en:"eye"},
+  {hr:"uho", pl:"uši", g:"n", en:"ear"},
+  {hr:"nos", pl:"nosovi", g:"m", en:"nose"},
+  {hr:"usta", pl:"usta", g:"n", en:"mouth"},
+  {hr:"zub", pl:"zubi", g:"m", en:"tooth"},
+  {hr:"jezik", pl:"jezici", g:"m", en:"tongue / language"},
+  {hr:"vrat", pl:"vratovi", g:"m", en:"neck"},
+  {hr:"ruka", pl:"ruke", g:"f", en:"hand / arm"},
+  {hr:"noga", pl:"noge", g:"f", en:"leg / foot"},
+  {hr:"leđa", pl:"leđa", g:"n", en:"back"},
+  {hr:"srce", pl:"srca", g:"n", en:"heart"},
+  {hr:"trbuh", pl:"trbusi", g:"m", en:"stomach / belly"},
+  {hr:"koža", pl:"kože", g:"f", en:"skin"},
+  {hr:"kosa", pl:"kose", g:"f", en:"hair"},
+  // Clothing
+  {hr:"majica", pl:"majice", g:"f", en:"t-shirt"},
+  {hr:"hlače", pl:"hlače", g:"f", en:"trousers"},
+  {hr:"haljina", pl:"haljine", g:"f", en:"dress"},
+  {hr:"kaput", pl:"kaputi", g:"m", en:"coat"},
+  {hr:"jakna", pl:"jakne", g:"f", en:"jacket"},
+  {hr:"cipele", pl:"cipele", g:"f", en:"shoes"},
+  {hr:"čarape", pl:"čarape", g:"f", en:"socks"},
+  {hr:"šešir", pl:"šeširi", g:"m", en:"hat"},
+  {hr:"torba", pl:"torbe", g:"f", en:"bag"},
+  {hr:"džep", pl:"džepovi", g:"m", en:"pocket"},
+  {hr:"kaput", pl:"kaputi", g:"m", en:"coat"},
+  {hr:"rukavice", pl:"rukavice", g:"f", en:"gloves"},
+  // Objects & things
+  {hr:"knjiga", pl:"knjige", g:"f", en:"book"},
+  {hr:"stol", pl:"stolovi", g:"m", en:"table"},
+  {hr:"stolica", pl:"stolice", g:"f", en:"chair"},
+  {hr:"krevet", pl:"kreveti", g:"m", en:"bed"},
+  {hr:"prozor", pl:"prozori", g:"m", en:"window"},
+  {hr:"vrata", pl:"vrata", g:"n", en:"door"},
+  {hr:"ključ", pl:"ključevi", g:"m", en:"key"},
+  {hr:"novčanik", pl:"novčanici", g:"m", en:"wallet"},
+  {hr:"telefon", pl:"telefoni", g:"m", en:"phone"},
+  {hr:"računalo", pl:"računala", g:"n", en:"computer"},
+  {hr:"sat", pl:"satovi", g:"m", en:"clock / watch"},
+  {hr:"lampa", pl:"lampe", g:"f", en:"lamp"},
+  {hr:"ogledalo", pl:"ogledala", g:"n", en:"mirror"},
+  {hr:"tepih", pl:"tepisi", g:"m", en:"carpet"},
+  {hr:"sofa", pl:"sofe", g:"f", en:"sofa"},
+  {hr:"auto", pl:"auti", g:"m", en:"car"},
+  {hr:"brod", pl:"brodovi", g:"m", en:"boat / ship"},
+  {hr:"avion", pl:"avioni", g:"m", en:"airplane"},
+  {hr:"vlak", pl:"vlakovi", g:"m", en:"train"},
+  {hr:"bicikl", pl:"bicikli", g:"m", en:"bicycle"},
+  {hr:"novac", pl:"novci", g:"m", en:"money"},
+  {hr:"papir", pl:"papiri", g:"m", en:"paper"},
+  {hr:"olovka", pl:"olovke", g:"f", en:"pencil"},
+  {hr:"pero", pl:"pera", g:"n", en:"pen"},
+  {hr:"bilježnica", pl:"bilježnice", g:"f", en:"notebook"},
+  {hr:"karta", pl:"karte", g:"f", en:"map / card"},
+  {hr:"pismo", pl:"pisma", g:"n", en:"letter"},
+  {hr:"poruka", pl:"poruke", g:"f", en:"message"},
+  {hr:"slika", pl:"slike", g:"f", en:"picture / painting"},
+  {hr:"glazba", pl:"glazbe", g:"f", en:"music"},
+  {hr:"pjesma", pl:"pjesme", g:"f", en:"song"},
+  {hr:"film", pl:"filmovi", g:"m", en:"film / movie"},
+  {hr:"igra", pl:"igre", g:"f", en:"game"},
+  {hr:"sport", pl:"sportovi", g:"m", en:"sport"},
+  {hr:"lopta", pl:"lopte", g:"f", en:"ball"},
+  // Time & abstract
+  {hr:"dan", pl:"dani", g:"m", en:"day"},
+  {hr:"noć", pl:"noći", g:"f", en:"night"},
+  {hr:"jutro", pl:"jutra", g:"n", en:"morning"},
+  {hr:"večer", pl:"večeri", g:"f", en:"evening"},
+  {hr:"tjedan", pl:"tjedni", g:"m", en:"week"},
+  {hr:"mjesec", pl:"mjeseci", g:"m", en:"month"},
+  {hr:"godina", pl:"godine", g:"f", en:"year"},
+  {hr:"sat", pl:"sati", g:"m", en:"hour"},
+  {hr:"minuta", pl:"minute", g:"f", en:"minute"},
+  {hr:"problem", pl:"problemi", g:"m", en:"problem"},
+  {hr:"pitanje", pl:"pitanja", g:"n", en:"question"},
+  {hr:"odgovor", pl:"odgovori", g:"m", en:"answer"},
+  {hr:"razgovor", pl:"razgovori", g:"m", en:"conversation"},
+  {hr:"jezik", pl:"jezici", g:"m", en:"language"},
+  {hr:"posao", pl:"poslovi", g:"m", en:"job / work"},
+  {hr:"odmor", pl:"odmori", g:"m", en:"holiday / rest"},
+  {hr:"put", pl:"putovi", g:"m", en:"road / journey"},
+  {hr:"ime", pl:"imena", g:"n", en:"name"},
+  {hr:"broj", pl:"brojevi", g:"m", en:"number"},
+  {hr:"boja", pl:"boje", g:"f", en:"colour"},
+  {hr:"priča", pl:"priče", g:"f", en:"story"},
+  {hr:"vijest", pl:"vijesti", g:"f", en:"news"},
+  {hr:"ideja", pl:"ideje", g:"f", en:"idea"},
+  {hr:"život", pl:"životi", g:"m", en:"life"},
+  {hr:"ljubav", pl:"ljubavi", g:"f", en:"love"},
+  {hr:"sreća", pl:"sreće", g:"f", en:"happiness / luck"},
+  {hr:"mir", pl:"mirovi", g:"m", en:"peace"},
+  {hr:"svijet", pl:"svjetovi", g:"m", en:"world"},
+];
+
+let nounPool = [], nounIdx = 0, nounScore = 0, nounAttempts = 0, nounAnswered = false, nounMode = 'both';
+
+function setNounMode(mode, el){
+  nounMode = mode;
+  document.querySelectorAll('#noun-mode-both,#noun-mode-gender,#noun-mode-plural').forEach(b => b.className = 'show-filter-btn');
+  el.className = 'show-filter-btn active';
+  shuffleNouns();
+}
+
+function shuffleNouns(){
+  nounPool = [...nounData].sort(() => Math.random() - 0.5);
+  nounIdx = 0; nounScore = 0; nounAttempts = 0; nounAnswered = false;
+  document.getElementById('noun-score-label').textContent = 'Score: 0 / 0';
+  document.getElementById('noun-pct').textContent = '—';
+  document.getElementById('noun-feedback').style.display = 'none';
+  showNounCard();
+}
+
+function getCurrentNounQuestion(){
+  if(nounMode === 'gender') return 'gender';
+  if(nounMode === 'plural') return 'plural';
+  return Math.random() < 0.5 ? 'gender' : 'plural';
+}
+
+function showNounCard(){
+  if(!nounPool.length) return;
+  nounAnswered = false;
+  const n = nounPool[nounIdx % nounPool.length];
+  window._nounCurrent = n;
+  window._nounQuestion = getCurrentNounQuestion();
+  document.getElementById('noun-word').textContent = n.hr;
+  document.getElementById('noun-hint').textContent = n.en;
+  document.getElementById('noun-en').textContent = '';
+  document.getElementById('noun-counter').textContent = `${(nounIdx % nounPool.length) + 1} of ${nounPool.length}`;
+  document.getElementById('noun-feedback').style.display = 'none';
+
+  const optsEl = document.getElementById('noun-options');
+  if(window._nounQuestion === 'gender'){
+    document.getElementById('noun-question').textContent = 'What gender is this noun?';
+    optsEl.className = 'noun-gender-opts';
+    optsEl.innerHTML = ['m','f','n'].map(g =>
+      `<button class="noun-gender-btn" onclick="checkNounGender('${g}')">${g === 'm' ? '♂ Masculine' : g === 'f' ? '♀ Feminine' : '○ Neuter'}</button>`
+    ).join('');
+  } else {
+    document.getElementById('noun-question').textContent = 'What is the plural?';
+    optsEl.className = 'noun-plural-opts';
+    const wrong = nounPool.filter(x => x.pl !== n.pl).sort(() => Math.random()-0.5).slice(0,2).map(x => x.pl);
+    const opts = [...wrong, n.pl].sort(() => Math.random()-0.5);
+    optsEl.innerHTML = opts.map(o =>
+      `<button class="blank-opt" onclick="checkNounPlural('${o.replace(/'/g,"\\'")}','${n.pl.replace(/'/g,"\\'")}')">${o}</button>`
+    ).join('');
+  }
+}
+
+function checkNounGender(chosen){
+  if(nounAnswered) return;
+  nounAnswered = true; nounAttempts++;
+  const n = window._nounCurrent;
+  const ok = chosen === n.g;
+  if(ok) nounScore++;
+  recordPracticeStat('nouns', ok);
+  document.querySelectorAll('.noun-gender-btn').forEach(b => {
+    if(bg === n.g) b.classList.add('correct');
+    else if(bg === chosen && !ok) b.classList.add('wrong');
+  });
+  const gLabel = n.g === 'm' ? 'Masculine' : n.g === 'f' ? 'Feminine' : 'Neuter';
+  showNounFeedback(ok, `${n.hr} is ${gLabel} — plural: ${n.pl}`);
+}
+
+function checkNounPlural(chosen, correct){
+  if(nounAnswered) return;
+  nounAnswered = true; nounAttempts++;
+  const ok = chosen === correct;
+  if(ok){ nounScore++; speak(correct); }
+  recordPracticeStat('nouns', ok);
+  document.querySelectorAll('#noun-options .blank-opt').forEach(b => {
+    if(b.textContent === correct) b.className = 'blank-opt correct-ans';
+    else if(b.textContent === chosen && !ok) b.className = 'blank-opt wrong-ans';
+  });
+  const n = window._nounCurrent;
+  const gLabel = n.g === 'm' ? 'masculine' : n.g === 'f' ? 'feminine' : 'neuter';
+  showNounFeedback(ok, `${n.hr} → ${n.pl} (${gLabel})`);
+}
+
+function showNounFeedback(ok, detail){
+  const fb = document.getElementById('noun-feedback');
+  fb.style.display = '';
+  fb.className = 'feedback ' + (ok ? 'correct' : 'wrong');
+  fb.textContent = ok ? `Točno! ✓  ${detail}` : `✗  ${detail}`;
+  const pct = nounAttempts > 0 ? Math.round(nounScore/nounAttempts*100)+'%' : '—';
+  document.getElementById('noun-score-label').textContent = `Score: ${nounScore} / ${nounAttempts}`;
+  document.getElementById('noun-pct').textContent = pct;
+  if(ok) setTimeout(nextNoun, 1400);
+}
+
+function nextNoun(){ nounIdx++; showNounCard(); }
+function speakNoun(){ const n = window._nounCurrent; if(n) speak(n.hr); }
+
 // Init
 loadState();
-loadSRSData();
 document.getElementById('deck-select').value = 'sanja_april';
-currentDeck = allWords.sanja;
+currentDeck = allWords.sanja_april;
 updateCard();
 buildVocabFilters();
 buildVocabList();
-quizPool = getQuizPool();
-updateQuiz();
-buildListenPool();
-updateListen();
 buildPhrasesList();
 refreshAllCounts();
 startMatch();
-resetTypeIt();
 buildAlphabet();
 updateHeaderFavBtn();
 renderProgress();
 window._fiShuffled = [...fillInPhrases].sort(()=>Math.random()-0.5);
-renderStreakBadge(document.getElementById('streak-display'));
+shuffleNouns();
 </script>
 </body>
 </html>
