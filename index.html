@@ -208,16 +208,15 @@
   /* ── FLASHCARD ── */
   .fc-controls {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+    flex-direction: column;
+    gap: 8px;
     margin-bottom: 1rem;
-    flex-wrap: wrap;
-    gap: 10px;
   }
 
   .fc-meta {
     font-size: 0.8rem;
     color: var(--stone-light);
+    white-space: nowrap;
   }
 
   .deck-select {
@@ -230,6 +229,8 @@
     color: var(--ink);
     cursor: pointer;
     outline: none;
+    flex: 1;
+    min-width: 0;
   }
 
   .flashcard {
@@ -1441,13 +1442,13 @@
       <div class="section-sub">Listen to the Croatian word, then tap to reveal the English meaning</div>
     </div>
     <div class="fc-controls">
-      <span class="fc-meta" id="fc-counter">Card 1 of 8</span>
-      <div style="display:flex;gap:8px;align-items:center;">
-        <div style="display:flex;gap:4px;">
-          <button class="show-filter-btn active" id="fc-filter-all" onclick="setFcFilter('all',this)">All <span id="fc-count-all"></span></button>
-          <button class="show-filter-btn" id="fc-filter-learning" onclick="setFcFilter('learning',this)">Learning <span id="fc-count-learning"></span></button>
-          <button class="show-filter-btn" id="fc-filter-mastered" onclick="setFcFilter('mastered',this)">Mastered <span id="fc-count-mastered"></span></button>
-        </div>
+      <div style="display:flex;gap:4px;flex-wrap:wrap;">
+        <button class="show-filter-btn active" id="fc-filter-all" onclick="setFcFilter('all',this)">All <span id="fc-count-all"></span></button>
+        <button class="show-filter-btn" id="fc-filter-learning" onclick="setFcFilter('learning',this)">Learning <span id="fc-count-learning"></span></button>
+        <button class="show-filter-btn" id="fc-filter-mastered" onclick="setFcFilter('mastered',this)">Mastered <span id="fc-count-mastered"></span></button>
+      </div>
+      <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
+        <span class="fc-meta" id="fc-counter">Card 1 of 8</span>
         <select class="deck-select" id="deck-select" onchange="changeDeck()">
           <option value="sanja_may" selected>Sanja May</option>
           <option value="sanja_april">Sanja April</option>
@@ -4070,9 +4071,12 @@ function refreshAllCounts(){
   // Phrase counts
   const pM = phrases.filter(p => mastered.has(p.hr)).length;
   const pL = phrases.length - pM;
-  document.getElementById('pf-count-all').textContent = `(${phrases.length})`;
-  document.getElementById('pf-count-learning').textContent = `(${pL})`;
-  document.getElementById('pf-count-mastered').textContent = `(${pM})`;
+  const pfAll = document.getElementById('pf-count-all');
+  const pfLearn = document.getElementById('pf-count-learning');
+  const pfMast = document.getElementById('pf-count-mastered');
+  if(pfAll) pfAll.textContent = `(${phrases.length})`;
+  if(pfLearn) pfLearn.textContent = `(${pL})`;
+  if(pfMast) pfMast.textContent = `(${pM})`;
 }
 
 function toggleMastered(){
