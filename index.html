@@ -1449,7 +1449,8 @@
           <button class="show-filter-btn" id="fc-filter-mastered" onclick="setFcFilter('mastered',this)">Mastered <span id="fc-count-mastered"></span></button>
         </div>
         <select class="deck-select" id="deck-select" onchange="changeDeck()">
-          <option value="sanja_april" selected>Sanja April</option>
+          <option value="sanja_may" selected>Sanja May</option>
+          <option value="sanja_april">Sanja April</option>
           <option value="art_culture">Art &amp; Culture</option>
           <option value="nature_env">Nature &amp; Environment</option>
           <option value="animals">Animals</option>
@@ -1521,7 +1522,8 @@
       <div style="display:flex;gap:8px;align-items:center;">
         <select class="deck-select" id="quiz-deck" onchange="resetQuiz()">
           <option value="all">All categories</option>
-          <option value="sanja_april" selected>Sanja April</option>
+          <option value="sanja_may" selected>Sanja May</option>
+          <option value="sanja_april">Sanja April</option>
           <option value="art_culture">Art &amp; Culture</option>
           <option value="nature_env">Nature &amp; Environment</option>
           <option value="animals">Animals</option>
@@ -1614,7 +1616,8 @@
       <div style="display:flex;gap:8px;align-items:center;">
         <select class="deck-select" id="match-deck" onchange="startMatch()">
           <option value="all">All categories</option>
-          <option value="sanja_april" selected>Sanja April</option>
+          <option value="sanja_may" selected>Sanja May</option>
+          <option value="sanja_april">Sanja April</option>
           <option value="art_culture">Art &amp; Culture</option>
           <option value="nature_env">Nature &amp; Environment</option>
           <option value="animals">Animals</option>
@@ -1661,7 +1664,8 @@
       <div style="display:flex;gap:8px;align-items:center;">
         <select class="deck-select" id="ti-deck" onchange="resetTypeIt()">
           <option value="all">All categories</option>
-          <option value="sanja_april" selected>Sanja April</option>
+          <option value="sanja_may" selected>Sanja May</option>
+          <option value="sanja_april">Sanja April</option>
           <option value="art_culture">Art &amp; Culture</option>
           <option value="nature_env">Nature &amp; Environment</option>
           <option value="animals">Animals</option>
@@ -1846,7 +1850,8 @@
         <div style="font-size:0.82rem;color:var(--stone-light);margin-bottom:10px;">Category</div>
         <select class="deck-select" id="session-deck" style="margin-bottom:1.5rem;">
           <option value="all">All categories</option>
-          <option value="sanja_april" selected>Sanja April</option>
+          <option value="sanja_may" selected>Sanja May</option>
+          <option value="sanja_april">Sanja April</option>
           <option value="art_culture">Art &amp; Culture</option>
           <option value="nature_env">Nature &amp; Environment</option>
           <option value="animals">Animals</option>
@@ -1950,7 +1955,8 @@
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;flex-wrap:wrap;gap:8px;">
       <div style="display:flex;gap:6px;flex-wrap:wrap;">
         <select class="deck-select" id="shadow-deck" onchange="initShadow()">
-          <option value="sanja_april" selected>Sanja April</option>
+          <option value="sanja_may" selected>Sanja May</option>
+          <option value="sanja_april">Sanja April</option>
           <option value="art_culture">Art &amp; Culture</option>
           <option value="nature_env">Nature &amp; Environment</option>
           <option value="animals">Animals</option>
@@ -3778,6 +3784,52 @@ const allWords = {
     {hr:"Vruće", en:"Hot", hint:"VROO-cheh"},
     {hr:"Fotogeničan", en:"Photogenic", hint:"foh-toh-geh-NEECH-an"},
   ],
+  sanja_may: [
+    {hr:"Dan", en:"Day", hint:"dan · m"},
+    {hr:"Dani", en:"Days", hint:"DAH-nee · m pl"},
+    {hr:"Tjedan", en:"Week", hint:"TYEH-dan · m"},
+    {hr:"Mjesec", en:"Month", hint:"MYEH-sets · m"},
+    {hr:"Godina", en:"Year", hint:"goh-DEE-nah · f"},
+    {hr:"Danas", en:"Today", hint:"DAH-nahs"},
+    {hr:"Jučer", en:"Yesterday", hint:"YOO-cher"},
+    {hr:"Prekjučer", en:"Day before yesterday", hint:"prek-YOO-cher"},
+    {hr:"Sutra", en:"Tomorrow", hint:"SOO-trah"},
+    {hr:"Prekosutra", en:"Day after tomorrow", hint:"preh-koh-SOO-trah"},
+    {hr:"Prošli ponedjeljak", en:"Last Monday", hint:"PROSH-lee poh-ned-YEH-lyak"},
+    {hr:"Ovaj petak", en:"This Friday", hint:"OH-vay PEH-tak"},
+    {hr:"Sljedeća srijeda", en:"Next Wednesday", hint:"slyeh-DEH-chah SREE-yeh-dah"},
+    {hr:"Prije", en:"Before", hint:"PREE-yeh"},
+    {hr:"Poslije", en:"After", hint:"POS-lee-yeh"},
+    {hr:"Nedjeljom", en:"On Sundays", hint:"ned-YEH-lyom"},
+    {hr:"Utorkom", en:"On Tuesdays", hint:"oo-TOR-kom"},
+    {hr:"Ponedjeljkom", en:"On Mondays", hint:"poh-ned-YEH-lykom"},
+    {hr:"Srijedom", en:"On Wednesdays", hint:"SREE-yeh-dom"},
+    {hr:"Četvrtkom", en:"On Thursdays", hint:"chet-VRRRT-kom"},
+    {hr:"Petkom", en:"On Fridays", hint:"PET-kom"},
+    {hr:"Subotom", en:"On Saturdays", hint:"SOO-boh-tom"},
+    {hr:"Prošli tjedan", en:"Last week", hint:"PROSH-lee TYEH-dan"},
+    {hr:"Ovaj tjedan", en:"This week", hint:"OH-vay TYEH-dan"},
+    {hr:"Sljedeći tjedan", en:"Next week", hint:"slyeh-DEH-chee TYEH-dan"},
+    {hr:"Prošli mjesec", en:"Last month", hint:"PROSH-lee MYEH-sets"},
+    {hr:"Ovaj mjesec", en:"This month", hint:"OH-vay MYEH-sets"},
+    {hr:"Sljedeći mjesec", en:"Next month", hint:"slyeh-DEH-chee MYEH-sets"},
+    {hr:"Prošle godine", en:"Last year", hint:"PROSH-leh goh-DEE-neh"},
+    {hr:"Ove godine", en:"This year", hint:"OH-veh goh-DEE-neh"},
+    {hr:"Sljedeće godine", en:"Next year", hint:"slyeh-DEH-cheh goh-DEE-neh"},
+    {hr:"Prošli utorak", en:"Last Tuesday", hint:"PROSH-lee oo-TOH-rak"},
+    {hr:"Ovaj ponedjeljak", en:"This Monday", hint:"OH-vay poh-ned-YEH-lyak"},
+    {hr:"Sljedeći četvrtak", en:"Next Thursday", hint:"slyeh-DEH-chee chet-VRR-tak"},
+    {hr:"Prošla srijeda", en:"Last Wednesday", hint:"PROSH-lah SREE-yeh-dah"},
+    {hr:"Ova subota", en:"This Saturday", hint:"OH-vah SOO-boh-tah"},
+    {hr:"Sljedeća nedjelja", en:"Next Sunday", hint:"slyeh-DEH-chah ned-YEH-lyah"},
+    {hr:"Ponedjeljak", en:"Monday", hint:"poh-ned-YEH-lyak · m"},
+    {hr:"Utorak", en:"Tuesday", hint:"oo-TOH-rak · m"},
+    {hr:"Srijeda", en:"Wednesday", hint:"SREE-yeh-dah · f"},
+    {hr:"Četvrtak", en:"Thursday", hint:"chet-VRR-tak · m"},
+    {hr:"Petak", en:"Friday", hint:"PEH-tak · m"},
+    {hr:"Subota", en:"Saturday", hint:"SOO-boh-tah · f"},
+    {hr:"Nedjelja", en:"Sunday", hint:"ned-YEH-lyah · f"},
+  ],
   sanja_april: [
     {hr:"Tako je.", en:"That's right. / Exactly.", hint:"TAH-koh yeh"},
     {hr:"Nema na čemu.", en:"You're welcome. / Don't mention it.", hint:"NEH-mah nah CHEH-moo"},
@@ -4097,7 +4149,7 @@ function updateCard(){
   document.getElementById('fc-translation').style.opacity = '0';
   document.getElementById('fc-tap').textContent = 'tap to reveal English';
   document.getElementById('fc-tap').style.opacity = '1';
-  const fcCatLabels = {sanja_april:'April',sanja_may:'May',sanja_june:'June',sanja_july:'July',sanja_august:'August',sanja_september:'September',sanja_october:'October'};
+  const fcCatLabels = {sanja_april:'April',sanja_may:'May',sanja_may:'May',sanja_june:'June',sanja_july:'July',sanja_august:'August',sanja_september:'September',sanja_october:'October'};
   const deckKey = document.getElementById('deck-select').value;
   const fcCatEl = document.getElementById('fc-cat');
   if(fcCatLabels[deckKey]){
@@ -4157,11 +4209,12 @@ function setVocabShowFilter(f, el){
 
 function buildVocabFilters(){
   const row = document.getElementById('vocab-filters');
-  const catLabels = {numbers:'Numbers',colors:'Colors',days:'Days',food:'Food',sanja_april:'Sanja April',art_culture:'Art & Culture',nature_env:'Nature & Environment',animals:'Animals',food_drink:'Food & Drink',home_daily:'Home & Daily Life',people_places:'People & Places',arts_culture_sport:'Arts, Culture & Sport',science_numbers:'Science & Numbers',adjectives:'Adjectives'};
+  const catLabels = {numbers:'Numbers',colors:'Colors',days:'Days',food:'Food',sanja_april:'Sanja April',sanja_may:'Sanja May',art_culture:'Art & Culture',nature_env:'Nature & Environment',animals:'Animals',food_drink:'Food & Drink',home_daily:'Home & Daily Life',people_places:'People & Places',arts_culture_sport:'Arts, Culture & Sport',science_numbers:'Science & Numbers',adjectives:'Adjectives'};
   const sanja = {val:'sanja_april', label:'Sanja April'};
+  const sanja2 = {val:'sanja_may', label:'Sanja May'};
   const hiddenFromFilter = [];
   const rest = allCats.filter(c=>c!=='sanja_april' && !hiddenFromFilter.includes(c)).map(c=>({val:c,label:catLabels[c]||c.charAt(0).toUpperCase()+c.slice(1)}));
-  const btns = [sanja, {val:'all',label:'All'}, ...rest];
+  const btns = [sanja2, sanja, {val:'all',label:'All'}, ...rest];
   row.innerHTML = btns.map(b =>
     `<button class="filter-chip${b.val===vocabFilter?' active':''}" onclick="setVocabFilter('${b.val}')">${b.label}</button>`
   ).join('');
@@ -5320,7 +5373,7 @@ function buildPracticeStats(){
 function buildCatBreakdown(){
   const el = document.getElementById('prog-cat-breakdown');
   if(!el) return;
-  const catLabels2 = {numbers:'Numbers',colors:'Colors',days:'Days',food:'Food',sanja_april:'Sanja April',art_culture:'Art & Culture',nature_env:'Nature & Environment',animals:'Animals',food_drink:'Food & Drink',home_daily:'Home & Daily Life',people_places:'People & Places',arts_culture_sport:'Arts, Culture & Sport',science_numbers:'Science & Numbers',adjectives:'Adjectives'};
+  const catLabels2 = {numbers:'Numbers',colors:'Colors',days:'Days',food:'Food',sanja_april:'Sanja April',sanja_may:'Sanja May',art_culture:'Art & Culture',nature_env:'Nature & Environment',animals:'Animals',food_drink:'Food & Drink',home_daily:'Home & Daily Life',people_places:'People & Places',arts_culture_sport:'Arts, Culture & Sport',science_numbers:'Science & Numbers',adjectives:'Adjectives'};
   const hidden = ['greetings','basics'];
   const cats = ['sanja_april', ...allCats.filter(c => c !== 'sanja_april' && !hidden.includes(c))];
   el.innerHTML = cats.map(cat=>{
@@ -6407,8 +6460,8 @@ function speakNoun(){ const n = window._nounCurrent; if(n) speak(n.hr); }
 
 // Init
 loadState();
-document.getElementById('deck-select').value = 'sanja_april';
-currentDeck = allWords.sanja_april;
+document.getElementById('deck-select').value = 'sanja_may';
+currentDeck = allWords.sanja_may;
 updateCard();
 buildVocabFilters();
 buildVocabList();
