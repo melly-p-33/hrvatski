@@ -5702,7 +5702,7 @@ function prevVisual(){
 }
 
 // ── SHADOW MODE ──
-let shadowPool = [], shadowIdx = 0, shadowRep = 0, shadowMaxRep = 3, shadowPlaying = false;
+let shadowPool = [], shadowIdx = 0, shadowRep = 0, shadowMaxRep = 3, shadowPlaying = false, shadowTick = null;
 
 function initShadow(){
   const deck = document.getElementById('shadow-deck').value;
@@ -5715,6 +5715,8 @@ function initShadow(){
 
 function showShadowCard(){
   if(!shadowPool.length) return;
+  // Clear any running timer from previous card
+  if(shadowTick){ clearInterval(shadowTick); shadowTick = null; }
   shadowRep = 0;
   shadowPlaying = false;
   const w = shadowPool[shadowIdx % shadowPool.length];
@@ -5749,12 +5751,13 @@ function startShadowRound(){
     let count = 3;
     document.getElementById('shadow-status').textContent = 'Now you say it...';
     countdownEl.innerHTML = `<div style="font-family:var(--font-display);font-size:3rem;font-weight:700;color:var(--terracotta-light);position:relative;z-index:1;">${count}</div>`;
-    const tick = setInterval(()=>{
+    const tick = shadowTick = setInterval(()=>{
       count--;
       if(count > 0){
         countdownEl.innerHTML = `<div style="font-family:var(--font-display);font-size:3rem;font-weight:700;color:var(--terracotta-light);position:relative;z-index:1;">${count}</div>`;
       } else {
         clearInterval(tick);
+        shadowTick = null;
         shadowRep++;
         shadowPlaying = false;
         buildShadowDots();
