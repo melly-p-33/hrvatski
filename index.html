@@ -5379,7 +5379,7 @@ function buildCatBreakdown(){
   if(!el) return;
   const catLabels2 = {numbers:'Numbers',colors:'Colors',days:'Days',food:'Food',sanja_april:'Sanja April',sanja_may:'Sanja May',art_culture:'Art & Culture',nature_env:'Nature & Environment',animals:'Animals',food_drink:'Food & Drink',home_daily:'Home & Daily Life',people_places:'People & Places',arts_culture_sport:'Arts, Culture & Sport',science_numbers:'Science & Numbers',adjectives:'Adjectives'};
   const hidden = ['greetings','basics'];
-  const cats = ['sanja_april', ...allCats.filter(c => c !== 'sanja_april' && !hidden.includes(c))];
+  const cats = ['sanja_may', 'sanja_april', ...allCats.filter(c => c !== 'sanja_april' && c !== 'sanja_may' && !hidden.includes(c))];
   el.innerHTML = cats.map(cat=>{
     const words = allWords[cat];
     const m = words.filter(w=>isMastered(w)).length;
