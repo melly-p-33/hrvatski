@@ -2429,22 +2429,22 @@
       <div class="sb-translation" id="sb-translation"></div>
     </div>
 
+    <!-- Follow-up challenge — sits right under display so it's always visible -->
+    <div class="sb-followup" id="sb-followup">
+      <div class="sb-followup-label" id="sb-followup-label">Next challenge</div>
+      <div class="sb-followup-prompt" id="sb-followup-prompt"></div>
+    </div>
+
     <!-- Slot panels (built dynamically) -->
     <div class="sb-slots" id="sb-slots"></div>
 
     <!-- Feedback -->
     <div class="sb-feedback" id="sb-feedback"></div>
 
-    <!-- Follow-up challenge -->
-    <div class="sb-followup" id="sb-followup">
-      <div class="sb-followup-label" id="sb-followup-label">Next challenge</div>
-      <div class="sb-followup-prompt" id="sb-followup-prompt"></div>
-    </div>
-
     <!-- Actions -->
     <div class="sb-actions">
       <button class="btn btn-sea btn-icon" onclick="sbSpeak()" title="Hear it"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg></button>
-      <button class="btn btn-primary" onclick="sbCheck()" id="sb-check-btn" style="flex:1;font-weight:600;">Check ✓</button>
+      <button class="btn btn-primary" onclick="sbCheck()" id="sb-check-btn" style="flex:1;font-weight:600;">Done ✓</button>
       <button class="btn btn-ghost" onclick="sbClear()">Clear</button>
       <button class="btn btn-ghost" onclick="sbNext()">New &#8635;</button>
     </div>
@@ -7034,52 +7034,67 @@ function sbBuildSlots(){
     return;
   }
 
-  // Subject slot (all groups except exchange)
+  // Subject slot
   if(sbGroup !== 'questions'){
     container.appendChild(sbMakeSlot('Subject', sbSubjects.map(s =>
       sbMakeOpt(s.hr, 'subj', () => sbPickSubj(s))
     )));
   }
 
-  // Verb slot
+  // Verb slot — conjugated for current subject
+  const subjKey = sbSelSubj ? sbSelSubj.key : 'ja';
   const verbs = sbVerbList.map(vk => {
-    const vdata = sbVerbs[vk];
-    const subj = sbSelSubj ? sbSelSubj.key : 'ja';
-    const form = vdata[subj];
-    return sbMakeOpt(`${form} <span style="font-size:0.72rem;opacity:0.6">(${vk})</span>`, 'verb', () => sbPickVerb(vk), vk);
+    const form = sbVerbs[vk][subjKey];
+    return sbMakeOpt(form + ' <span style="font-size:0.72rem;opacity:0.6">(' + vk + ')</span>', 'verb', () => sbPickVerb(vk), vk);
   });
   container.appendChild(sbMakeSlot('Verb', verbs));
 
-  // Complement slot (shown only when verb selected)
+  // Complement slot — filtered to verb's valid types only
   if(sbCurrentVerbKey){
     const compTypes = sbVerbComplements[sbCurrentVerbKey] || [];
     const compOpts = [];
     compTypes.forEach(t => {
-      (sbComplements[t]||[]).forEach(c => {
-        compOpts.push(sbMakeOpt(c.hr, 'comp', () => sbPickComp(c)));
-      });
+      let items = (sbComplements[t] || []).slice();
+      // Filter adjectives by subject gender (on=masc only, ona=fem only, ja/ti=both)
+      if(t === 'adj'){
+        const sk = sbSelSubj ? sbSelSubj.key : null;
+        if(sk === 'on')  items = items.filter(c => !c.note || c.note === 'masc');
+        if(sk === 'ona') items = items.filter(c => !c.note || c.note === 'fem');
+      }
+      items.forEach(c => compOpts.push(sbMakeOpt(c.hr, 'comp', () => sbPickComp(c))));
     });
-    if(compOpts.length) container.appendChild(sbMakeSlot('Complement', compOpts));
+    if(compOpts.length){
+      const compLabel = compTypes.includes('adj') ? 'Adjective' :
+        compTypes.includes('dest') ? 'Destination' :
+        compTypes.includes('loc') ? 'Location' :
+        compTypes.includes('drink') ? 'What to drink' :
+        compTypes.includes('food') ? 'What to eat' :
+        compTypes.includes('readable') ? 'What to read' :
+        compTypes.includes('watchable') ? 'What to watch' :
+        compTypes.includes('likeable') ? 'What you like' :
+        compTypes.includes('lang') ? 'Language' :
+        compTypes.includes('obj') ? 'Object' : 'Complement';
+      container.appendChild(sbMakeSlot(compLabel, compOpts));
+    }
 
-    // Time slot (optional, for most verbs)
-    const timeOpts = sbComplements.time.map(t =>
-      sbMakeOpt(t.hr, 'time', () => sbPickTime(t))
-    );
-    container.appendChild(sbMakeSlot('Time (optional)', timeOpts));
+    // Time slot — only for verbs that genuinely take time expressions
+    const verbsTakingTime = ['ići','raditi','studirati','kuhati','putovati'];
+    if(verbsTakingTime.includes(sbCurrentVerbKey)){
+      const timeOpts = sbComplements.time.map(t => sbMakeOpt(t.hr, 'time', () => sbPickTime(t)));
+      container.appendChild(sbMakeSlot('Time (optional)', timeOpts));
+    }
   }
 
-  // Questions group — add je li / jesi li framing hint
+  // Questions: je li / jesi li hint
   if(sbGroup === 'questions' && sbSelVerb){
-    const subj = sbSelSubj ? sbSelSubj.key : null;
-    let qMarker = 'Je li';
-    let hint = 'Je li / Jesi li — the question marker goes at the start';
-    if(subj === 'ti') { qMarker = 'Jesi li'; hint = 'Jesi li — for "ti" questions'; }
+    const sk = sbSelSubj ? sbSelSubj.key : null;
+    const hint = sk === 'ti' ? 'Jesi li — for "ti" questions' : 'Je li — for on / ona questions';
     const hintDiv = document.createElement('div');
     hintDiv.style.cssText = 'font-size:0.8rem;color:var(--terracotta);padding:8px 12px;background:var(--terracotta-pale);border-radius:var(--radius-sm);border:1px solid #E0A890;';
     hintDiv.textContent = '💡 ' + hint;
     container.appendChild(hintDiv);
   }
-  // Restore selections
+
   sbRestoreSelections();
 }
 
@@ -7342,43 +7357,38 @@ function sbUpdateDisplay(){
   }
 }
 
-// ── CHECK ──
+// ── DONE (was Check) ──
 function sbCheck(){
   if(sbGroup === 'exchange'){
     if(!sbExPicked){ sbShowFeedback('info', 'Pick a reply first!'); return; }
     speak(sbExPicked.hr);
-    sbShowFeedback('correct', `✓ "${sbExPicked.hr}" — ${sbExPicked.en}`);
+    sbHideFeedback();
     setTimeout(() => {
       sbExIdx++;
       sbBuildExchangeSlots(document.getElementById('sb-slots'));
       document.getElementById('sb-sentence').innerHTML = '<span class="sb-placeholder">tap a reply...</span>';
       document.getElementById('sb-translation').textContent = '';
-      sbHideFeedback();
-    }, 1800);
+    }, 1600);
     return;
   }
 
-  if(!sbSelVerb){ sbShowFeedback('info', 'Pick at least a subject and verb first.'); return; }
+  if(!sbSelVerb){ sbShowFeedback('info', 'Pick at least a verb first.'); return; }
+
+  sbHideFeedback();
 
   // Speak the sentence
-  const sentEl = document.getElementById('sb-sentence');
-  const text = sentEl.textContent;
-  speak(text);
-  sbShowFeedback('correct', `✓ "${text}"`);
+  const text = document.getElementById('sb-sentence').textContent.replace(/[.?]$/, '').trim();
+  if(text) speak(text);
 
-  // Show follow-up if we have a full statement
+  // Show follow-up right under display
   if(sbGroup === 'statements' && sbSelSubj && sbSelVerb){
-    const followups = [];
-    followups.push({label:'Now make it a question', prompt:`How would you turn this into a question? Think: ${sbSelSubj.key === 'ti' ? 'Jesi li...' : 'Je li...'}`, next:'questions'});
-    followups.push({label:'Now negate it', prompt:'How would you say the opposite? Think: ne + verb, or nisam/nisi/nije for biti.', next:'negation'});
-    const fu = followups[Math.floor(Math.random() * followups.length)];
+    const fu = Math.random() < 0.5
+      ? {label:'Now make it a question', prompt:'How would you turn this into a question? Think: ' + (sbSelSubj.key === 'ti' ? 'Jesi li...' : 'Je li...'), next:'questions'}
+      : {label:'Now negate it', prompt:'How would you say the opposite? Think: ne + verb (or nisam/nisi/nije for biti).', next:'negation'};
     sbFollowupState = fu.next;
-    setTimeout(() => sbShowFollowup(fu), 1400);
+    sbShowFollowup(fu);
   } else if(sbGroup === 'questions' || sbGroup === 'negation'){
-    // After question or negation, offer to go back to statement
-    setTimeout(() => {
-      sbShowFollowup({label:'Try the statement form', prompt:'Can you say the same thing as a plain statement?', next:'statements'});
-    }, 1400);
+    sbShowFollowup({label:'Try the statement form', prompt:'Can you say the same thing as a plain statement?', next:'statements'});
   }
 }
 
@@ -7386,19 +7396,19 @@ function sbShowFollowup(fu){
   document.getElementById('sb-followup-label').textContent = fu.label;
   document.getElementById('sb-followup-prompt').textContent = fu.prompt;
   const div = document.getElementById('sb-followup');
-  div.style.display = '';
-  // Add a button to switch to the suggested mode
+  // Remove any existing switch button before adding new one
   const existingBtn = div.querySelector('.sb-fu-btn');
   if(existingBtn) existingBtn.remove();
   const btn = document.createElement('button');
   btn.className = 'btn btn-ghost sb-fu-btn';
   btn.style.cssText = 'margin-top:8px;font-size:0.82rem;';
-  btn.textContent = `Switch to ${fu.next} →`;
+  btn.textContent = 'Switch to ' + fu.next + ' \u2192';
   btn.onclick = () => {
     const tab = document.getElementById('sb-grp-' + fu.next);
     if(tab) sbSetGroup(fu.next, tab);
   };
   div.appendChild(btn);
+  div.style.display = '';
 }
 
 function sbHideFollowup(){ document.getElementById('sb-followup').style.display = 'none'; }
