@@ -1614,32 +1614,15 @@
         <div><div class="match-stat-val" id="match-mistakes">0</div>mistakes</div>
         <div><div class="match-stat-val" id="match-streak">0</div>streak</div>
       </div>
-      <div style="display:flex;gap:8px;align-items:center;">
-        <select class="deck-select" id="match-deck" onchange="startMatch()">
-          <option value="all">All categories</option>
-          <option value="sanja_may" selected>Sanja May</option>
-          <option value="sanja_april">Sanja April</option>
-          <option value="art_culture">Art &amp; Culture</option>
-          <option value="nature_env">Nature &amp; Environment</option>
-          <option value="animals">Animals</option>
-          <option value="food_drink">Food &amp; Drink</option>
-          <option value="home_daily">Home &amp; Daily Life</option>
-          <option value="people_places">People &amp; Places</option>
-          <option value="arts_culture_sport">Arts, Culture &amp; Sport</option>
-          <option value="science_numbers">Science &amp; Numbers</option>
-          <option value="adjectives">Adjectives</option>
-          <option value="numbers">Numbers</option>
-          <option value="colors">Colors</option>
-          <option value="days">Days</option>
-          <option value="food">Food</option>
-        </select>
-        <select class="deck-select" id="match-size" onchange="startMatch()">
+      <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:6px;">
+        <select class="deck-select" id="match-size" onchange="startMatch()" style="flex:0 0 auto;">
           <option value="6">6 pairs</option>
           <option value="8" selected>8 pairs</option>
           <option value="10">10 pairs</option>
         </select>
         <button class="btn btn-ghost" onclick="startMatch()">&#8635; New game</button>
       </div>
+      <div id="match-cat-pills" style="display:flex;flex-wrap:wrap;gap:6px;margin-top:8px;"></div>
     </div>
     <div class="match-progress"><div class="match-progress-bar" id="match-bar"></div></div>
     <div id="match-board">
@@ -4081,6 +4064,7 @@ function switchTab(id, el){
   if(id === 'progress') renderProgress();
   if(id === 'favourites') buildFavouritesList();
   if(id === 'srs') initSRS();
+  if(id === 'match') { buildMatchPills(); startMatch(); }
   if(id === 'fillin') buildFillIn();
   if(id === 'session') resetSession();
   if(id === 'visual') initVisual();
@@ -4531,10 +4515,49 @@ function buildPhrasesList(){
 let matchPairs = [], matchMatched = new Set(), matchSelected = null;
 let matchMistakes = 0, matchStreak = 0, matchTotal = 0;
 
+let matchSelectedCats = new Set(['sanja_may']);
+
+function buildMatchPills(){
+  const container = document.getElementById('match-cat-pills');
+  if(!container) return;
+  const cats = [
+    {val:'sanja_may', label:'Sanja May'},
+    {val:'sanja_april', label:'Sanja April'},
+    {val:'art_culture', label:'Art & Culture'},
+    {val:'nature_env', label:'Nature & Environment'},
+    {val:'animals', label:'Animals'},
+    {val:'food_drink', label:'Food & Drink'},
+    {val:'home_daily', label:'Home & Daily Life'},
+    {val:'people_places', label:'People & Places'},
+    {val:'arts_culture_sport', label:'Arts, Culture & Sport'},
+    {val:'science_numbers', label:'Science & Numbers'},
+    {val:'adjectives', label:'Adjectives'},
+    {val:'numbers', label:'Numbers'},
+    {val:'colors', label:'Colors'},
+    {val:'days', label:'Days'},
+    {val:'food', label:'Food'},
+  ];
+  container.innerHTML = cats.map(c => {
+    const active = matchSelectedCats.has(c.val) ? ' active' : '';
+    return `<button class="show-filter-btn${active}" onclick="toggleMatchCat('${c.val}',this)">${c.label}</button>`;
+  }).join('');
+}
+
+function toggleMatchCat(val, el){
+  if(matchSelectedCats.has(val)){
+    if(matchSelectedCats.size === 1) return; // keep at least one
+    matchSelectedCats.delete(val);
+    el.classList.remove('active');
+  } else {
+    matchSelectedCats.add(val);
+    el.classList.add('active');
+  }
+  startMatch();
+}
+
 function getMatchPool(){
-  const deck = document.getElementById('match-deck').value;
-  const all = deck === 'all' ? allCats.flatMap(c => allWords[c]) : (allWords[deck]||[]);
-  return [...all].sort(() => Math.random()-0.5);
+  const pool = [...matchSelectedCats].flatMap(c => allWords[c]||[]);
+  return [...pool].sort(() => Math.random()-0.5);
 }
 
 function startMatch(){
@@ -4976,6 +4999,7 @@ function switchTabById(id){
   if(id === 'favourites') buildFavouritesList();
   if(id === 'progress') renderProgress();
   if(id === 'srs') initSRS();
+  if(id === 'match') { buildMatchPills(); startMatch(); }
   if(id === 'fillin') buildFillIn();
   if(id === 'session') resetSession();
   if(id === 'visual') initVisual();
