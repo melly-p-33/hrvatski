@@ -1375,6 +1375,154 @@
   .noun-gender-btn.wrong { background: var(--terracotta-pale); border-color: var(--terracotta); color: var(--terracotta); }
   .noun-plural-opts { display:grid; grid-template-columns:1fr 1fr 1fr; gap:8px; }
 
+  /* ── SENTENCE BUILDER ── */
+  .sb-display {
+    background: var(--ink);
+    border-radius: var(--radius);
+    padding: 1.5rem 1.75rem;
+    margin-bottom: 1rem;
+    position: relative;
+    overflow: hidden;
+    min-height: 90px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .sb-display::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 20% 50%, rgba(42,107,138,0.3) 0%, transparent 60%),
+                radial-gradient(ellipse at 80% 50%, rgba(196,98,58,0.2) 0%, transparent 60%);
+  }
+  .sb-sentence {
+    font-family: var(--font-display);
+    font-size: 1.6rem;
+    font-weight: 600;
+    color: var(--white);
+    line-height: 1.3;
+    position: relative;
+    z-index: 1;
+    min-height: 2em;
+    word-break: break-word;
+  }
+  .sb-sentence .sb-placeholder { color: rgba(255,255,255,0.22); font-style: italic; font-size: 1rem; font-family: var(--font-body); font-weight: 300; letter-spacing: 0.02em; }
+  .sb-sentence .sb-part { color: var(--white); }
+  .sb-sentence .sb-part.subj { color: #7DD4F0; }
+  .sb-sentence .sb-part.verb { color: #F0C060; }
+  .sb-sentence .sb-part.comp { color: #98D88A; }
+  .sb-sentence .sb-part.time { color: #E8A0C8; }
+  .sb-translation {
+    font-size: 0.85rem;
+    color: rgba(255,255,255,0.4);
+    margin-top: 6px;
+    position: relative;
+    z-index: 1;
+    font-style: italic;
+    min-height: 1.2em;
+  }
+  .sb-mode-label {
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: rgba(255,255,255,0.3);
+    position: absolute;
+    top: 12px; right: 14px;
+    z-index: 1;
+  }
+  .sb-slots { display: flex; flex-direction: column; gap: 10px; margin-bottom: 1rem; }
+  .sb-slot {
+    background: var(--white);
+    border: 1px solid rgba(90,82,72,0.1);
+    border-radius: var(--radius-sm);
+    padding: 10px 12px;
+  }
+  .sb-slot-label {
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--stone-light);
+    margin-bottom: 8px;
+    font-weight: 500;
+  }
+  .sb-options { display: flex; flex-wrap: wrap; gap: 6px; }
+  .sb-opt {
+    font-family: var(--font-body);
+    font-size: 0.875rem;
+    padding: 6px 14px;
+    border-radius: 999px;
+    border: 1.5px solid var(--sand-dark);
+    background: var(--sand);
+    color: var(--stone);
+    cursor: pointer;
+    transition: all 0.12s;
+    font-weight: 400;
+  }
+  .sb-opt:hover:not(.selected) { border-color: var(--sea-light); color: var(--sea); background: var(--sea-pale); }
+  .sb-opt.selected { border-color: var(--sea); background: var(--sea); color: var(--white); font-weight: 500; }
+  .sb-opt.subj.selected { border-color: #1A7A9A; background: #1A7A9A; }
+  .sb-opt.verb.selected { border-color: #8A6010; background: #9A7020; }
+  .sb-opt.comp.selected { border-color: var(--olive); background: var(--olive); }
+  .sb-opt.time.selected { border-color: #804070; background: #904080; }
+  .sb-actions { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; margin-bottom: 0.75rem; }
+  .sb-feedback {
+    padding: 10px 16px;
+    border-radius: var(--radius-sm);
+    font-size: 0.88rem;
+    font-weight: 500;
+    margin-bottom: 0.75rem;
+    display: none;
+  }
+  .sb-feedback.correct { background: var(--olive-pale); color: var(--olive); border: 1px solid #B8D090; }
+  .sb-feedback.info { background: var(--sea-pale); color: var(--sea); border: 1px solid #A0C8E0; }
+  .sb-followup {
+    background: var(--terracotta-pale);
+    border: 1px solid #E0A890;
+    border-radius: var(--radius-sm);
+    padding: 12px 16px;
+    margin-bottom: 0.75rem;
+    display: none;
+  }
+  .sb-followup-label { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--terracotta); font-weight: 600; margin-bottom: 4px; }
+  .sb-followup-prompt { font-size: 0.9rem; color: var(--stone); }
+  .sb-group-tabs { display: flex; gap: 4px; flex-wrap: wrap; margin-bottom: 1rem; }
+  .sb-group-tab {
+    font-family: var(--font-body);
+    font-size: 0.78rem;
+    padding: 5px 14px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--sand-dark);
+    background: var(--white);
+    color: var(--stone-light);
+    cursor: pointer;
+    font-weight: 400;
+    transition: all 0.12s;
+  }
+  .sb-group-tab:hover { color: var(--ink); border-color: var(--stone-pale); }
+  .sb-group-tab.active { background: var(--ink); color: var(--white); border-color: var(--ink); font-weight: 500; }
+  .sb-quick-phrases { margin-top: 1.25rem; padding-top: 1.25rem; border-top: 1px solid var(--sand-dark); }
+  .sb-quick-label { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--stone-light); font-weight: 500; margin-bottom: 10px; }
+  .sb-quick-grid { display: flex; flex-wrap: wrap; gap: 6px; }
+  .sb-quick-tile {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    background: var(--white);
+    border: 1px solid rgba(90,82,72,0.1);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: border-color 0.12s, background 0.12s;
+    font-size: 0.875rem;
+  }
+  .sb-quick-tile:hover { border-color: var(--terracotta); background: var(--terracotta-pale); }
+  .sb-quick-tile-hr { font-family: var(--font-display); font-weight: 600; color: var(--ink); }
+  .sb-quick-tile-en { font-size: 0.75rem; color: var(--stone-light); }
+  @media (max-width: 500px) {
+    .sb-sentence { font-size: 1.2rem; }
+    .sb-opt { font-size: 0.82rem; padding: 5px 10px; }
+  }
+
 </style>
 </head>
 <body>
@@ -1422,6 +1570,7 @@
     <button class="nav-btn" onclick="switchTab('match',this)">Match</button>
     <button class="nav-btn" onclick="switchTab('fillin',this)">Fill In</button>
     <button class="nav-btn" onclick="switchTab('nouns',this)">Nouns</button>
+    <button class="nav-btn" onclick="switchTab('builder',this)">Builder</button>
   </div>
   <div class="nav-sub" id="sub-reference">
     <button class="nav-btn" onclick="switchTab('visual',this)" style="display:none">Visual</button>
@@ -2256,6 +2405,55 @@
       <button class="btn btn-ghost" onclick="shuffleNouns()">&#8635; Shuffle</button>
     </div>
     <div style="font-size:0.78rem;color:var(--stone-light);text-align:center;margin-top:8px;" id="noun-counter"></div>
+  </div>
+
+  <!-- ── SENTENCE BUILDER ── -->
+  <div id="builder" class="section">
+    <div class="section-header">
+      <div class="section-title">Builder</div>
+      <div class="section-sub">Tap slots to build sentences — then flip to questions and negation</div>
+    </div>
+
+    <!-- Group tabs -->
+    <div class="sb-group-tabs">
+      <button class="sb-group-tab active" id="sb-grp-statements" onclick="sbSetGroup('statements',this)">Statements</button>
+      <button class="sb-group-tab" id="sb-grp-questions" onclick="sbSetGroup('questions',this)">Questions</button>
+      <button class="sb-group-tab" id="sb-grp-negation" onclick="sbSetGroup('negation',this)">Negation</button>
+      <button class="sb-group-tab" id="sb-grp-exchange" onclick="sbSetGroup('exchange',this)">Exchanges</button>
+    </div>
+
+    <!-- Live sentence display -->
+    <div class="sb-display">
+      <div class="sb-mode-label" id="sb-mode-label">Statement</div>
+      <div class="sb-sentence" id="sb-sentence"><span class="sb-placeholder">pick a subject to start...</span></div>
+      <div class="sb-translation" id="sb-translation"></div>
+    </div>
+
+    <!-- Slot panels (built dynamically) -->
+    <div class="sb-slots" id="sb-slots"></div>
+
+    <!-- Feedback -->
+    <div class="sb-feedback" id="sb-feedback"></div>
+
+    <!-- Follow-up challenge -->
+    <div class="sb-followup" id="sb-followup">
+      <div class="sb-followup-label" id="sb-followup-label">Next challenge</div>
+      <div class="sb-followup-prompt" id="sb-followup-prompt"></div>
+    </div>
+
+    <!-- Actions -->
+    <div class="sb-actions">
+      <button class="btn btn-sea btn-icon" onclick="sbSpeak()" title="Hear it"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg></button>
+      <button class="btn btn-primary" onclick="sbCheck()" id="sb-check-btn" style="flex:1;font-weight:600;">Check ✓</button>
+      <button class="btn btn-ghost" onclick="sbClear()">Clear</button>
+      <button class="btn btn-ghost" onclick="sbNext()">New &#8635;</button>
+    </div>
+
+    <!-- Quick phrases -->
+    <div class="sb-quick-phrases">
+      <div class="sb-quick-label">Conversational shortcuts</div>
+      <div class="sb-quick-grid" id="sb-quick-grid"></div>
+    </div>
   </div>
 
 </main>
@@ -4037,7 +4235,7 @@ function addPoints(n){}
 // Nav group mapping
 const tabGroups = {
   flashcards:'learn', srs:'learn', session:'learn', shadow:'learn',
-  quiz:'practice', typeit:'practice', listen:'practice', match:'practice', fillin:'practice', nouns:'practice',
+  quiz:'practice', typeit:'practice', listen:'practice', match:'practice', fillin:'practice', nouns:'practice', builder:'practice',
   vocab:'reference', phrases:'reference', alphabet:'reference', visual:'reference', lessons:'reference', grammar:'reference',
 };
 
@@ -4070,6 +4268,7 @@ function switchTab(id, el){
   if(id === 'visual') initVisual();
   if(id === 'shadow') initShadow();
   if(id === 'nouns') shuffleNouns();
+  if(id === 'builder') initBuilder();
 }
 
 // ── PERSISTENCE ──
@@ -5005,6 +5204,7 @@ function switchTabById(id){
   if(id === 'visual') initVisual();
   if(id === 'shadow') initShadow();
   if(id === 'nouns') shuffleNouns();
+  if(id === 'builder') initBuilder();
 }
 
 function toggleFav(key){
@@ -6576,6 +6776,684 @@ updateHeaderFavBtn();
 renderProgress();
 window._fiShuffled = [...fillInPhrases].sort(()=>Math.random()-0.5);
 shuffleNouns();
+
+// ── SENTENCE BUILDER ──
+
+// ── DATA ──
+const sbVerbs = {
+  biti:     { en:'to be',      ja:'sam',      ti:'si',        on:'je',       ona:'je'      },
+  ići:      { en:'to go',      ja:'idem',     ti:'ideš',      on:'ide',      ona:'ide'     },
+  raditi:   { en:'to work',    ja:'radim',    ti:'radiš',     on:'radi',     ona:'radi'    },
+  živjeti:  { en:'to live',    ja:'živim',    ti:'živiš',     on:'živi',     ona:'živi'    },
+  imati:    { en:'to have',    ja:'imam',     ti:'imaš',      on:'ima',      ona:'ima'     },
+  studirati:{ en:'to study',   ja:'studiram', ti:'studiraš',  on:'studira',  ona:'studira' },
+  kuhati:   { en:'to cook',    ja:'kuham',    ti:'kuhaš',     on:'kuha',     ona:'kuha'    },
+  učiti:    { en:'to learn',   ja:'učim',     ti:'učiš',      on:'uči',      ona:'uči'     },
+  govoriti: { en:'to speak',   ja:'govorim',  ti:'govoriš',   on:'govori',   ona:'govori'  },
+  putovati: { en:'to travel',  ja:'putujem',  ti:'putuješ',   on:'putuje',   ona:'putuje'  },
+  piti:     { en:'to drink',   ja:'pijem',    ti:'piješ',     on:'pije',     ona:'pije'    },
+  jesti:    { en:'to eat',     ja:'jedem',    ti:'jedeš',     on:'jede',     ona:'jede'    },
+  čitati:   { en:'to read',    ja:'čitam',    ti:'čitaš',     on:'čita',     ona:'čita'    },
+  gledati:  { en:'to watch',   ja:'gledam',   ti:'gledaš',    on:'gleda',    ona:'gleda'   },
+  voliti:   { en:'to like/love',ja:'volim',   ti:'voliš',     on:'voli',     ona:'voli'    },
+};
+
+// Which verbs work with which complement types
+const sbVerbComplements = {
+  biti:      ['adj','loc'],
+  ići:       ['dest','time'],
+  raditi:    ['job','loc','time'],
+  živjeti:   ['loc'],
+  imati:     ['obj'],
+  studirati: ['subj_area','loc','time'],
+  kuhati:    ['food','time'],
+  učiti:     ['lang','subj_area'],
+  govoriti:  ['lang'],
+  putovati:  ['dest','time'],
+  piti:      ['drink'],
+  jesti:     ['food'],
+  čitati:    ['readable'],
+  gledati:   ['watchable'],
+  voliti:    ['likeable'],
+};
+
+const sbComplements = {
+  loc: [
+    {hr:'u školi', en:'at school'},
+    {hr:'u uredu', en:'at the office'},
+    {hr:'u gradu', en:'in the city'},
+    {hr:'u Zagrebu', en:'in Zagreb'},
+    {hr:'u Splitu', en:'in Split'},
+    {hr:'u Londonu', en:'in London'},
+    {hr:'kod kuće', en:'at home'},
+    {hr:'na poslu', en:'at work'},
+    {hr:'na plaži', en:'at the beach'},
+    {hr:'u kafiću', en:'at the café'},
+    {hr:'u restoranu', en:'at the restaurant'},
+  ],
+  dest: [
+    {hr:'u školu', en:'to school'},
+    {hr:'na posao', en:'to work'},
+    {hr:'u grad', en:'into the city'},
+    {hr:'na plažu', en:'to the beach'},
+    {hr:'kući', en:'home'},
+    {hr:'vani', en:'out'},
+    {hr:'na kavu', en:'for a coffee'},
+    {hr:'u Zagreb', en:'to Zagreb'},
+    {hr:'u Split', en:'to Split'},
+    {hr:'u London', en:'to London'},
+    {hr:'na tržnicu', en:'to the market'},
+  ],
+  adj: [
+    {hr:'dobro', en:'well / good'},
+    {hr:'umoran', en:'tired (m)', note:'masc'},
+    {hr:'umorna', en:'tired (f)', note:'fem'},
+    {hr:'slobodan', en:'free (m)', note:'masc'},
+    {hr:'slobodna', en:'free (f)', note:'fem'},
+    {hr:'gladan', en:'hungry (m)', note:'masc'},
+    {hr:'gladna', en:'hungry (f)', note:'fem'},
+    {hr:'sretan', en:'happy (m)', note:'masc'},
+    {hr:'sretna', en:'happy (f)', note:'fem'},
+    {hr:'zauzet', en:'busy (m)', note:'masc'},
+    {hr:'zauzeta', en:'busy (f)', note:'fem'},
+    {hr:'u redu', en:'ok / fine'},
+    {hr:'bolestan', en:'sick (m)', note:'masc'},
+    {hr:'bolesna', en:'sick (f)', note:'fem'},
+  ],
+  obj: [
+    {hr:'auto', en:'a car'},
+    {hr:'psa', en:'a dog'},
+    {hr:'mačku', en:'a cat'},
+    {hr:'brata', en:'a brother'},
+    {hr:'sestru', en:'a sister'},
+    {hr:'plan', en:'a plan'},
+    {hr:'posao', en:'a job'},
+    {hr:'pitanje', en:'a question'},
+    {hr:'ideju', en:'an idea'},
+    {hr:'prijatelja', en:'a friend (m)'},
+    {hr:'prijateljicu', en:'a friend (f)'},
+  ],
+  food: [
+    {hr:'kavu', en:'coffee'},
+    {hr:'čaj', en:'tea'},
+    {hr:'juhu', en:'soup'},
+    {hr:'salatu', en:'salad'},
+    {hr:'ribu', en:'fish'},
+    {hr:'kruh', en:'bread'},
+    {hr:'tjesteninu', en:'pasta'},
+    {hr:'rižu', en:'rice'},
+  ],
+  drink: [
+    {hr:'kavu', en:'coffee'},
+    {hr:'čaj', en:'tea'},
+    {hr:'vodu', en:'water'},
+    {hr:'pivo', en:'beer'},
+    {hr:'vino', en:'wine'},
+    {hr:'sok', en:'juice'},
+    {hr:'mlijeko', en:'milk'},
+  ],
+  readable: [
+    {hr:'knjigu', en:'a book'},
+    {hr:'novine', en:'the newspaper'},
+    {hr:'roman', en:'a novel'},
+    {hr:'poruku', en:'a message'},
+  ],
+  watchable: [
+    {hr:'film', en:'a film'},
+    {hr:'seriju', en:'a series'},
+    {hr:'vijesti', en:'the news'},
+    {hr:'utakmicu', en:'a match'},
+  ],
+  likeable: [
+    {hr:'kavu', en:'coffee'},
+    {hr:'more', en:'the sea'},
+    {hr:'Zagreb', en:'Zagreb'},
+    {hr:'Hrvatsku', en:'Croatia'},
+    {hr:'glazbu', en:'music'},
+    {hr:'hiking', en:'hiking'},
+    {hr:'putovati', en:'travelling'},
+    {hr:'čitati', en:'reading'},
+    {hr:'kuhati', en:'cooking'},
+    {hr:'plivati', en:'swimming'},
+  ],
+  lang: [
+    {hr:'hrvatski', en:'Croatian'},
+    {hr:'engleski', en:'English'},
+    {hr:'talijanski', en:'Italian'},
+    {hr:'španjolski', en:'Spanish'},
+    {hr:'francuski', en:'French'},
+    {hr:'njemački', en:'German'},
+  ],
+  subj_area: [
+    {hr:'medicinu', en:'medicine'},
+    {hr:'pravo', en:'law'},
+    {hr:'ekonomiju', en:'economics'},
+    {hr:'arhitekturu', en:'architecture'},
+    {hr:'povijest', en:'history'},
+    {hr:'biologiju', en:'biology'},
+  ],
+  job: [
+    {hr:'u školi', en:'at school'},
+    {hr:'u uredu', en:'in an office'},
+    {hr:'u bolnici', en:'at a hospital'},
+    {hr:'kod kuće', en:'from home'},
+    {hr:'u restoranu', en:'at a restaurant'},
+    {hr:'kao učiteljica', en:'as a teacher (f)'},
+    {hr:'kao liječnik', en:'as a doctor (m)'},
+    {hr:'kao novinar', en:'as a journalist (m)'},
+  ],
+  time: [
+    {hr:'danas', en:'today'},
+    {hr:'sutra', en:'tomorrow'},
+    {hr:'jučer', en:'yesterday'},
+    {hr:'sada', en:'now'},
+    {hr:'ujutro', en:'in the morning'},
+    {hr:'navečer', en:'in the evening'},
+    {hr:'vikendom', en:'at weekends'},
+    {hr:'ponedjeljkom', en:'on Mondays'},
+    {hr:'petkom', en:'on Fridays'},
+    {hr:'često', en:'often'},
+    {hr:'ponekad', en:'sometimes'},
+    {hr:'uvijek', en:'always'},
+    {hr:'nikad', en:'never'},
+  ],
+};
+
+const sbSubjects = [
+  {hr:'Ja',   en:'I',      key:'ja'},
+  {hr:'Ti',   en:'You',    key:'ti'},
+  {hr:'On',   en:'He',     key:'on'},
+  {hr:'Ona',  en:'She',    key:'ona'},
+];
+
+const sbVerbList = Object.keys(sbVerbs);
+
+// Quick phrases (fixed tiles, no slot building)
+const sbQuickPhrases = [
+  {hr:'Ja bih kavu.', en:'I\'d like a coffee.'},
+  {hr:'Može kava.', en:'Coffee is fine. / A coffee, please.'},
+  {hr:'Ja ću kavu.', en:'I\'ll have a coffee.'},
+  {hr:'Tko je to?', en:'Who is that?'},
+  {hr:'Ovo je...', en:'This is...'},
+  {hr:'Drago mi je.', en:'Nice to meet you.'},
+  {hr:'Koliko je sati?', en:'What time is it?'},
+  {hr:'Ne volim tamo živjeti.', en:'I don\'t like living there.'},
+  {hr:'Živim u Zagrebu.', en:'I live in Zagreb.'},
+  {hr:'Idem na kavu.', en:'I\'m going for a coffee.'},
+  {hr:'Idem na posao.', en:'I\'m going to work.'},
+  {hr:'Što radiš?', en:'What are you doing?'},
+  {hr:'Radim kao...', en:'I work as...'},
+  {hr:'Gdje živiš?', en:'Where do you live?'},
+  {hr:'Kamo ideš?', en:'Where are you going?'},
+  {hr:'Volim Hrvatsku.', en:'I love Croatia.'},
+  {hr:'Ne volim...', en:'I don\'t like...'},
+  {hr:'Učim hrvatski.', en:'I\'m learning Croatian.'},
+  {hr:'Govorim malo hrvatski.', en:'I speak a little Croatian.'},
+];
+
+// ── STATE ──
+let sbGroup = 'statements';
+let sbSelSubj = null, sbSelVerb = null, sbSelComp = null, sbSelTime = null;
+let sbFollowupState = null; // null | 'question' | 'negation'
+let sbCurrentVerbKey = null;
+
+// ── INIT ──
+function initBuilder(){
+  sbGroup = 'statements';
+  sbFollowupState = null;
+  sbSelSubj = null; sbSelVerb = null; sbSelComp = null; sbSelTime = null;
+  sbCurrentVerbKey = null;
+  document.querySelectorAll('.sb-group-tab').forEach(b => b.classList.remove('active'));
+  document.getElementById('sb-grp-statements').classList.add('active');
+  sbUpdateDisplay();
+  sbBuildSlots();
+  sbBuildQuickPhrases();
+  sbHideFollowup();
+  sbHideFeedback();
+}
+
+function sbSetGroup(group, el){
+  sbGroup = group;
+  sbFollowupState = null;
+  sbSelSubj = null; sbSelVerb = null; sbSelComp = null; sbSelTime = null;
+  document.querySelectorAll('.sb-group-tab').forEach(b => b.classList.remove('active'));
+  el.classList.add('active');
+  sbBuildSlots();
+  sbUpdateDisplay();
+  sbHideFollowup();
+  sbHideFeedback();
+}
+
+// ── SLOT BUILDING ──
+function sbBuildSlots(){
+  const container = document.getElementById('sb-slots');
+  container.innerHTML = '';
+
+  if(sbGroup === 'exchange'){
+    sbBuildExchangeSlots(container);
+    return;
+  }
+
+  // Subject slot (all groups except exchange)
+  if(sbGroup !== 'questions'){
+    container.appendChild(sbMakeSlot('Subject', sbSubjects.map(s =>
+      sbMakeOpt(s.hr, 'subj', () => sbPickSubj(s))
+    )));
+  }
+
+  // Verb slot
+  const verbs = sbVerbList.map(vk => {
+    const vdata = sbVerbs[vk];
+    const subj = sbSelSubj ? sbSelSubj.key : 'ja';
+    const form = vdata[subj];
+    return sbMakeOpt(`${form} <span style="font-size:0.72rem;opacity:0.6">(${vk})</span>`, 'verb', () => sbPickVerb(vk), vk);
+  });
+  container.appendChild(sbMakeSlot('Verb', verbs));
+
+  // Complement slot (shown only when verb selected)
+  if(sbCurrentVerbKey){
+    const compTypes = sbVerbComplements[sbCurrentVerbKey] || [];
+    const compOpts = [];
+    compTypes.forEach(t => {
+      (sbComplements[t]||[]).forEach(c => {
+        compOpts.push(sbMakeOpt(c.hr, 'comp', () => sbPickComp(c)));
+      });
+    });
+    if(compOpts.length) container.appendChild(sbMakeSlot('Complement', compOpts));
+
+    // Time slot (optional, for most verbs)
+    const timeOpts = sbComplements.time.map(t =>
+      sbMakeOpt(t.hr, 'time', () => sbPickTime(t))
+    );
+    container.appendChild(sbMakeSlot('Time (optional)', timeOpts));
+  }
+
+  // Questions group — add je li / jesi li framing hint
+  if(sbGroup === 'questions' && sbSelVerb){
+    const subj = sbSelSubj ? sbSelSubj.key : null;
+    let qMarker = 'Je li';
+    let hint = 'Je li / Jesi li — the question marker goes at the start';
+    if(subj === 'ti') { qMarker = 'Jesi li'; hint = 'Jesi li — for "ti" questions'; }
+    const hintDiv = document.createElement('div');
+    hintDiv.style.cssText = 'font-size:0.8rem;color:var(--terracotta);padding:8px 12px;background:var(--terracotta-pale);border-radius:var(--radius-sm);border:1px solid #E0A890;';
+    hintDiv.textContent = '💡 ' + hint;
+    container.appendChild(hintDiv);
+  }
+  // Restore selections
+  sbRestoreSelections();
+}
+
+function sbMakeSlot(label, optEls){
+  const div = document.createElement('div');
+  div.className = 'sb-slot';
+  div.innerHTML = `<div class="sb-slot-label">${label}</div>`;
+  const row = document.createElement('div');
+  row.className = 'sb-options';
+  optEls.forEach(o => row.appendChild(o));
+  div.appendChild(row);
+  return div;
+}
+
+function sbMakeOpt(labelHTML, cls, onClick, dataKey){
+  const btn = document.createElement('button');
+  btn.className = `sb-opt ${cls}`;
+  btn.innerHTML = labelHTML;
+  if(dataKey) btn.dataset.key = dataKey;
+  btn.onclick = onClick;
+  return btn;
+}
+
+function sbRestoreSelections(){
+  // Re-apply selected states after rebuilding
+  if(sbSelSubj){
+    document.querySelectorAll('.sb-opt.subj').forEach(b => {
+      if(b.textContent.trim().startsWith(sbSelSubj.hr)) b.classList.add('selected');
+    });
+  }
+  if(sbSelVerb && sbCurrentVerbKey){
+    document.querySelectorAll('.sb-opt.verb').forEach(b => {
+      if(b.dataset.key === sbCurrentVerbKey) b.classList.add('selected');
+    });
+  }
+  if(sbSelComp){
+    document.querySelectorAll('.sb-opt.comp').forEach(b => {
+      if(b.textContent.trim() === sbSelComp.hr) b.classList.add('selected');
+    });
+  }
+  if(sbSelTime){
+    document.querySelectorAll('.sb-opt.time').forEach(b => {
+      if(b.textContent.trim() === sbSelTime.hr) b.classList.add('selected');
+    });
+  }
+}
+
+// ── EXCHANGE GROUP ──
+const sbExchanges = [
+  {
+    q: {hr:'Kako si?', en:'How are you?'},
+    a: [{hr:'Dobro, hvala!', en:'Good, thanks!'}, {hr:'Nije loše.', en:'Not bad.'}, {hr:'Umoran/umorna sam.', en:'I\'m tired.'}, {hr:'Super, hvala!', en:'Great, thanks!'}],
+  },
+  {
+    q: {hr:'Što radiš?', en:'What are you doing?'},
+    a: [{hr:'Idem na kavu.', en:'I\'m going for a coffee.'}, {hr:'Radim kod kuće.', en:'I\'m working from home.'}, {hr:'Učim hrvatski.', en:'I\'m learning Croatian.'}, {hr:'Gledam film.', en:'I\'m watching a film.'}],
+  },
+  {
+    q: {hr:'Gdje živiš?', en:'Where do you live?'},
+    a: [{hr:'Živim u Zagrebu.', en:'I live in Zagreb.'}, {hr:'Živim u Londonu.', en:'I live in London.'}, {hr:'Živim u Splitu.', en:'I live in Split.'}, {hr:'Živim u gradu.', en:'I live in the city.'}],
+  },
+  {
+    q: {hr:'Kamo ideš?', en:'Where are you going?'},
+    a: [{hr:'Idem na posao.', en:'I\'m going to work.'}, {hr:'Idem na plažu.', en:'I\'m going to the beach.'}, {hr:'Idem kući.', en:'I\'m going home.'}, {hr:'Idem u grad.', en:'I\'m going into the city.'}],
+  },
+  {
+    q: {hr:'Što piješ?', en:'What are you drinking?'},
+    a: [{hr:'Pijem kavu.', en:'I\'m drinking coffee.'}, {hr:'Pijem čaj.', en:'I\'m drinking tea.'}, {hr:'Pijem vodu.', en:'I\'m drinking water.'}, {hr:'Pijem vino.', en:'I\'m drinking wine.'}],
+  },
+  {
+    q: {hr:'Voliš li Hrvatsku?', en:'Do you like Croatia?'},
+    a: [{hr:'Da, volim!', en:'Yes, I do!'}, {hr:'Jako volim!', en:'I love it!'}, {hr:'Da, jako mi je lijepo.', en:'Yes, I really like it.'}, {hr:'Volim more.', en:'I love the sea.'}],
+  },
+  {
+    q: {hr:'Govoriš li hrvatski?', en:'Do you speak Croatian?'},
+    a: [{hr:'Da, malo.', en:'Yes, a little.'}, {hr:'Učim.', en:'I\'m learning.'}, {hr:'Govorim malo.', en:'I speak a little.'}, {hr:'Još učim.', en:'I\'m still learning.'}],
+  },
+  {
+    q: {hr:'Što jedeš?', en:'What are you eating?'},
+    a: [{hr:'Jedem salatu.', en:'I\'m eating a salad.'}, {hr:'Jedem ribu.', en:'I\'m eating fish.'}, {hr:'Jedem juhu.', en:'I\'m eating soup.'}, {hr:'Jedem kruh.', en:'I\'m eating bread.'}],
+  },
+];
+
+let sbExIdx = 0, sbExPicked = null;
+
+function sbBuildExchangeSlots(container){
+  sbExIdx = Math.floor(Math.random() * sbExchanges.length);
+  sbShowExchange(container);
+}
+
+function sbShowExchange(container){
+  if(!container) container = document.getElementById('sb-slots');
+  container.innerHTML = '';
+  const ex = sbExchanges[sbExIdx % sbExchanges.length];
+  sbExPicked = null;
+
+  const qDiv = document.createElement('div');
+  qDiv.className = 'sb-slot';
+  qDiv.innerHTML = `<div class="sb-slot-label">Someone asks you</div>
+    <div style="font-family:var(--font-display);font-size:1.2rem;font-weight:600;color:var(--ink);margin-bottom:4px;">${ex.q.hr}</div>
+    <div style="font-size:0.8rem;color:var(--stone-light);font-style:italic;">${ex.q.en}</div>`;
+  container.appendChild(qDiv);
+
+  const aDiv = document.createElement('div');
+  aDiv.className = 'sb-slot';
+  aDiv.innerHTML = '<div class="sb-slot-label">You reply</div>';
+  const row = document.createElement('div');
+  row.className = 'sb-options';
+  ex.a.forEach(ans => {
+    const btn = document.createElement('button');
+    btn.className = 'sb-opt comp';
+    btn.textContent = ans.hr;
+    btn.onclick = () => {
+      document.querySelectorAll('#sb-slots .sb-opt.comp').forEach(b => b.classList.remove('selected'));
+      btn.classList.add('selected');
+      sbExPicked = ans;
+      // Show sentence in display
+      document.getElementById('sb-sentence').innerHTML = `<span class="sb-part comp">${ans.hr}</span>`;
+      document.getElementById('sb-translation').textContent = ans.en;
+      sbHideFeedback();
+      sbHideFollowup();
+    };
+    row.appendChild(btn);
+  });
+  aDiv.appendChild(row);
+  container.appendChild(aDiv);
+
+  document.getElementById('sb-mode-label').textContent = 'Exchange';
+  document.getElementById('sb-sentence').innerHTML = '<span class="sb-placeholder">tap a reply...</span>';
+  document.getElementById('sb-translation').textContent = '';
+}
+
+// ── PICKS ──
+function sbPickSubj(s){
+  sbSelSubj = s;
+  sbSelComp = null; sbSelTime = null;
+  // Update verb form if verb already selected
+  if(sbCurrentVerbKey){
+    const vdata = sbVerbs[sbCurrentVerbKey];
+    sbSelVerb = {hr: vdata[s.key], en: vdata.en};
+  }
+  sbHideFeedback(); sbHideFollowup();
+  sbBuildSlots();
+  sbUpdateDisplay();
+}
+
+function sbPickVerb(vk){
+  sbCurrentVerbKey = vk;
+  const subj = sbSelSubj ? sbSelSubj.key : 'ja';
+  sbSelVerb = {hr: sbVerbs[vk][subj], en: sbVerbs[vk].en, key: vk};
+  sbSelComp = null; sbSelTime = null;
+  sbHideFeedback(); sbHideFollowup();
+  sbBuildSlots();
+  sbUpdateDisplay();
+}
+
+function sbPickComp(c){
+  sbSelComp = c;
+  sbHideFeedback(); sbHideFollowup();
+  document.querySelectorAll('.sb-opt.comp').forEach(b => b.classList.remove('selected'));
+  // Find and select the button
+  document.querySelectorAll('.sb-opt.comp').forEach(b => {
+    if(b.textContent.trim() === c.hr) b.classList.add('selected');
+  });
+  sbUpdateDisplay();
+}
+
+function sbPickTime(t){
+  // Toggle
+  if(sbSelTime && sbSelTime.hr === t.hr){
+    sbSelTime = null;
+  } else {
+    sbSelTime = t;
+  }
+  sbHideFeedback(); sbHideFollowup();
+  document.querySelectorAll('.sb-opt.time').forEach(b => b.classList.remove('selected'));
+  if(sbSelTime){
+    document.querySelectorAll('.sb-opt.time').forEach(b => {
+      if(b.textContent.trim() === sbSelTime.hr) b.classList.add('selected');
+    });
+  }
+  sbUpdateDisplay();
+}
+
+// ── DISPLAY UPDATE ──
+function sbUpdateDisplay(){
+  const sentEl = document.getElementById('sb-sentence');
+  const transEl = document.getElementById('sb-translation');
+  const modeEl = document.getElementById('sb-mode-label');
+
+  if(sbGroup === 'exchange') return;
+
+  const subj = sbSelSubj;
+  const verb = sbSelVerb;
+  const comp = sbSelComp;
+  const time = sbSelTime;
+  const vk = sbCurrentVerbKey;
+
+  if(!subj && !verb){
+    sentEl.innerHTML = '<span class="sb-placeholder">pick a subject to start...</span>';
+    transEl.textContent = '';
+    modeEl.textContent = sbGroup.charAt(0).toUpperCase() + sbGroup.slice(1);
+    return;
+  }
+
+  let hr = '', en = '';
+
+  if(sbGroup === 'statements'){
+    modeEl.textContent = 'Statement';
+    const parts = [];
+    const enParts = [];
+    if(subj){ parts.push(`<span class="sb-part subj">${subj.hr}</span>`); enParts.push(subj.en); }
+    if(verb){ parts.push(`<span class="sb-part verb">${verb.hr}</span>`); enParts.push(verb.en.replace('to ','')); }
+    if(comp){ parts.push(`<span class="sb-part comp">${comp.hr}</span>`); enParts.push(comp.en); }
+    if(time){ parts.push(`<span class="sb-part time">${time.hr}</span>`); enParts.push(time.en); }
+    if(!parts.length){ sentEl.innerHTML = '<span class="sb-placeholder">pick a subject to start...</span>'; transEl.textContent = ''; return; }
+    sentEl.innerHTML = parts.join(' ') + (comp || time ? '.' : '');
+    transEl.textContent = enParts.join(' ');
+
+  } else if(sbGroup === 'questions'){
+    modeEl.textContent = 'Question';
+    if(!verb){ sentEl.innerHTML = '<span class="sb-placeholder">pick a verb to form a question...</span>'; transEl.textContent = ''; return; }
+    const subjKey = subj ? subj.key : 'on';
+    const qMarker = subjKey === 'ti' ? 'Jesi li' : 'Je li';
+    // For je li: drop explicit subject (it's already "he/she"), for jesi li keep "ti" implicit
+    const subjDisplay = subjKey === 'ti' ? '' : (subj ? subj.hr.toLowerCase() + ' ' : '');
+    const parts = [];
+    const enParts = [];
+    parts.push(`<span class="sb-part" style="color:#E8845C">${qMarker}</span>`);
+    if(subjKey === 'on' || subjKey === 'ona') parts.push(`<span class="sb-part subj">${subj ? subj.hr.toLowerCase() : ''}</span>`);
+    parts.push(`<span class="sb-part verb">${verb.hr}</span>`);
+    if(comp) parts.push(`<span class="sb-part comp">${comp.hr}</span>`);
+    if(time) parts.push(`<span class="sb-part time">${time.hr}</span>`);
+    sentEl.innerHTML = parts.filter(p=>!p.includes('></span>')).join(' ') + '?';
+    const subjEn = subj ? subj.en.toLowerCase() : '';
+    if(subjKey === 'ti') transEl.textContent = `Are you ${verb.en.replace('to ','')}${comp?' '+comp.en:''}${time?' '+time.en:''}?`;
+    else transEl.textContent = `Is ${subjEn} ${verb.en.replace('to ','')}${comp?' '+comp.en:''}${time?' '+time.en:''}?`;
+
+  } else if(sbGroup === 'negation'){
+    modeEl.textContent = 'Negation';
+    if(!verb){ sentEl.innerHTML = '<span class="sb-placeholder">pick a verb to negate...</span>'; transEl.textContent = ''; return; }
+    const vkLocal = vk;
+    // biti uses "nisam/nisi/nije", others use "ne + verb"
+    let negVerb;
+    if(vkLocal === 'biti'){
+      const negForms = {ja:'nisam', ti:'nisi', on:'nije', ona:'nije'};
+      const subjKey = subj ? subj.key : 'ja';
+      negVerb = negForms[subjKey];
+    } else {
+      negVerb = 'ne ' + verb.hr;
+    }
+    const parts = [];
+    if(subj) parts.push(`<span class="sb-part subj">${subj.hr}</span>`);
+    parts.push(`<span class="sb-part verb" style="color:#F0A070">${negVerb}</span>`);
+    if(comp) parts.push(`<span class="sb-part comp">${comp.hr}</span>`);
+    if(time) parts.push(`<span class="sb-part time">${time.hr}</span>`);
+    sentEl.innerHTML = parts.join(' ') + '.';
+    const subjEn = subj ? subj.en : 'I';
+    transEl.textContent = `${subjEn} don't / am not ${verb.en.replace('to ','')}${comp?' '+comp.en:''}${time?' '+time.en:''}`;
+  }
+}
+
+// ── CHECK ──
+function sbCheck(){
+  if(sbGroup === 'exchange'){
+    if(!sbExPicked){ sbShowFeedback('info', 'Pick a reply first!'); return; }
+    speak(sbExPicked.hr);
+    sbShowFeedback('correct', `✓ "${sbExPicked.hr}" — ${sbExPicked.en}`);
+    setTimeout(() => {
+      sbExIdx++;
+      sbBuildExchangeSlots(document.getElementById('sb-slots'));
+      document.getElementById('sb-sentence').innerHTML = '<span class="sb-placeholder">tap a reply...</span>';
+      document.getElementById('sb-translation').textContent = '';
+      sbHideFeedback();
+    }, 1800);
+    return;
+  }
+
+  if(!sbSelVerb){ sbShowFeedback('info', 'Pick at least a subject and verb first.'); return; }
+
+  // Speak the sentence
+  const sentEl = document.getElementById('sb-sentence');
+  const text = sentEl.textContent;
+  speak(text);
+  sbShowFeedback('correct', `✓ "${text}"`);
+
+  // Show follow-up if we have a full statement
+  if(sbGroup === 'statements' && sbSelSubj && sbSelVerb){
+    const followups = [];
+    followups.push({label:'Now make it a question', prompt:`How would you turn this into a question? Think: ${sbSelSubj.key === 'ti' ? 'Jesi li...' : 'Je li...'}`, next:'questions'});
+    followups.push({label:'Now negate it', prompt:'How would you say the opposite? Think: ne + verb, or nisam/nisi/nije for biti.', next:'negation'});
+    const fu = followups[Math.floor(Math.random() * followups.length)];
+    sbFollowupState = fu.next;
+    setTimeout(() => sbShowFollowup(fu), 1400);
+  } else if(sbGroup === 'questions' || sbGroup === 'negation'){
+    // After question or negation, offer to go back to statement
+    setTimeout(() => {
+      sbShowFollowup({label:'Try the statement form', prompt:'Can you say the same thing as a plain statement?', next:'statements'});
+    }, 1400);
+  }
+}
+
+function sbShowFollowup(fu){
+  document.getElementById('sb-followup-label').textContent = fu.label;
+  document.getElementById('sb-followup-prompt').textContent = fu.prompt;
+  const div = document.getElementById('sb-followup');
+  div.style.display = '';
+  // Add a button to switch to the suggested mode
+  const existingBtn = div.querySelector('.sb-fu-btn');
+  if(existingBtn) existingBtn.remove();
+  const btn = document.createElement('button');
+  btn.className = 'btn btn-ghost sb-fu-btn';
+  btn.style.cssText = 'margin-top:8px;font-size:0.82rem;';
+  btn.textContent = `Switch to ${fu.next} →`;
+  btn.onclick = () => {
+    const tab = document.getElementById('sb-grp-' + fu.next);
+    if(tab) sbSetGroup(fu.next, tab);
+  };
+  div.appendChild(btn);
+}
+
+function sbHideFollowup(){ document.getElementById('sb-followup').style.display = 'none'; }
+
+function sbShowFeedback(type, msg){
+  const el = document.getElementById('sb-feedback');
+  el.className = 'sb-feedback ' + type;
+  el.textContent = msg;
+  el.style.display = '';
+}
+
+function sbHideFeedback(){ document.getElementById('sb-feedback').style.display = 'none'; }
+
+// ── ACTIONS ──
+function sbSpeak(){
+  const text = document.getElementById('sb-sentence').textContent.trim().replace(/\.$/, '');
+  if(text && !text.includes('pick a')) speak(text);
+}
+
+function sbClear(){
+  sbSelSubj = null; sbSelVerb = null; sbSelComp = null; sbSelTime = null; sbCurrentVerbKey = null;
+  sbHideFeedback(); sbHideFollowup();
+  sbBuildSlots();
+  sbUpdateDisplay();
+}
+
+function sbNext(){
+  sbSelSubj = null; sbSelVerb = null; sbSelComp = null; sbSelTime = null; sbCurrentVerbKey = null;
+  sbFollowupState = null;
+  sbHideFeedback(); sbHideFollowup();
+  if(sbGroup === 'exchange'){
+    sbExIdx++;
+    sbBuildExchangeSlots(document.getElementById('sb-slots'));
+    document.getElementById('sb-sentence').innerHTML = '<span class="sb-placeholder">tap a reply...</span>';
+    document.getElementById('sb-translation').textContent = '';
+  } else {
+    sbBuildSlots();
+    sbUpdateDisplay();
+  }
+}
+
+function sbBuildQuickPhrases(){
+  const grid = document.getElementById('sb-quick-grid');
+  if(!grid) return;
+  grid.innerHTML = sbQuickPhrases.map(p => {
+    const safeHr = p.hr.replace(/'/g,"\\'");
+    return `<div class="sb-quick-tile" onclick="speak('${safeHr}')">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;color:var(--sea)"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
+      <div>
+        <div class="sb-quick-tile-hr">${p.hr}</div>
+        <div class="sb-quick-tile-en">${p.en}</div>
+      </div>
+    </div>`;
+  }).join('');
+}
 </script>
 </body>
 </html>
