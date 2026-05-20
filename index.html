@@ -1523,6 +1523,159 @@
     .sb-opt { font-size: 0.82rem; padding: 5px 10px; }
   }
 
+  /* ── TOPICS ── */
+  .topic-frame {
+    background: var(--ink);
+    border-radius: var(--radius);
+    padding: 1.25rem 1.5rem;
+    margin-bottom: 1.5rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .topic-frame::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 15% 50%, rgba(42,107,138,0.35) 0%, transparent 55%),
+                radial-gradient(ellipse at 85% 50%, rgba(196,98,58,0.25) 0%, transparent 55%);
+  }
+  .topic-frame-label {
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: rgba(255,255,255,0.35);
+    margin-bottom: 10px;
+    position: relative;
+    z-index: 1;
+  }
+  .topic-frame-table {
+    width: 100%;
+    border-collapse: collapse;
+    position: relative;
+    z-index: 1;
+  }
+  .topic-frame-table td {
+    padding: 5px 0;
+    vertical-align: top;
+    border-bottom: 1px solid rgba(255,255,255,0.07);
+  }
+  .topic-frame-table tr:last-child td { border-bottom: none; }
+  .topic-frame-table td:first-child {
+    font-family: var(--font-display);
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--white);
+    width: 55%;
+    padding-right: 16px;
+  }
+  .topic-frame-table td:last-child {
+    font-size: 0.82rem;
+    color: rgba(255,255,255,0.45);
+    font-style: italic;
+  }
+  .topic-section-title {
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--stone-light);
+    font-weight: 500;
+    margin: 1.25rem 0 10px;
+  }
+  .topic-vocab-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 1.25rem;
+  }
+  .topic-vocab-tile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3px;
+    padding: 8px 10px;
+    background: var(--white);
+    border: 1px solid rgba(90,82,72,0.1);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: border-color 0.12s, background 0.12s, transform 0.1s;
+    min-width: 60px;
+    text-align: center;
+  }
+  .topic-vocab-tile:hover { border-color: var(--sea-light); background: var(--sea-pale); }
+  .topic-vocab-tile:active { transform: scale(0.96); }
+  .tvt-hr { font-family: var(--font-display); font-size: 0.92rem; font-weight: 600; color: var(--ink); line-height: 1.2; }
+  .tvt-en { font-size: 0.68rem; color: var(--stone-light); line-height: 1.2; }
+  .topic-mod-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 1.5rem;
+  }
+  .topic-mod-tile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    padding: 7px 12px;
+    background: var(--white);
+    border: 1px solid rgba(90,82,72,0.1);
+    border-radius: 999px;
+    cursor: pointer;
+    transition: border-color 0.12s, background 0.12s;
+    text-align: center;
+  }
+  .topic-mod-tile:hover { border-color: var(--terracotta-light); background: var(--terracotta-pale); }
+  .tmt-hr { font-family: var(--font-display); font-size: 0.88rem; font-weight: 600; color: var(--ink); }
+  .tmt-en { font-size: 0.68rem; color: var(--stone-light); }
+  .topic-build {
+    background: var(--white);
+    border: 1px solid rgba(90,82,72,0.08);
+    border-radius: var(--radius);
+    padding: 1.25rem 1.25rem 1rem;
+    box-shadow: var(--shadow-sm);
+  }
+  .topic-build-display {
+    background: var(--sand);
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--sand-dark);
+    padding: 12px 16px;
+    margin-bottom: 1rem;
+    min-height: 52px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .topic-build-sentence { font-family: var(--font-display); font-size: 1.2rem; font-weight: 600; color: var(--ink); line-height: 1.3; }
+  .topic-build-translation { font-size: 0.8rem; color: var(--stone-light); font-style: italic; margin-top: 3px; }
+  .topic-build-placeholder { font-size: 0.88rem; color: var(--stone-pale); font-style: italic; }
+  .topic-build-row { display: flex; align-items: flex-start; gap: 8px; margin-bottom: 8px; flex-wrap: wrap; }
+  .topic-build-label { font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--stone-light); min-width: 44px; padding-top: 8px; flex-shrink: 0; }
+  .topic-build-chips { display: flex; flex-wrap: wrap; gap: 5px; flex: 1; }
+  .topic-chip {
+    font-family: var(--font-body);
+    font-size: 0.82rem;
+    padding: 5px 12px;
+    border-radius: 999px;
+    border: 1.5px solid var(--sand-dark);
+    background: var(--sand);
+    color: var(--stone);
+    cursor: pointer;
+    transition: all 0.12s;
+    font-weight: 400;
+    white-space: nowrap;
+  }
+  .topic-chip:hover:not(.tc-selected) { border-color: var(--sea-light); color: var(--sea); background: var(--sea-pale); }
+  .topic-chip.tc-selected { background: var(--sea); border-color: var(--sea); color: var(--white); font-weight: 500; }
+  .topic-chip.tc-meal.tc-selected { background: var(--terracotta); border-color: var(--terracotta); }
+  .topic-chip.tc-verb.tc-selected { background: #8A6010; border-color: #8A6010; }
+  .topic-chip.tc-mod.tc-selected { background: var(--olive); border-color: var(--olive); }
+  .topic-build-actions { display: flex; gap: 8px; margin-top: 10px; }
+  @media (max-width: 500px) {
+    .topic-frame-table td:first-child { font-size: 0.9rem; }
+    .tvt-hr { font-size: 0.82rem; }
+    .topic-build-sentence { font-size: 1rem; }
+  }
+
 </style>
 </head>
 <body>
@@ -1556,6 +1709,7 @@
     <button class="nav-group-btn active" id="grp-learn" onclick="switchGroup('learn',this)">Learn</button>
     <button class="nav-group-btn" id="grp-practice" onclick="switchGroup('practice',this)">Practice</button>
     <button class="nav-group-btn" id="grp-reference" onclick="switchGroup('reference',this)">Reference</button>
+    <button class="nav-group-btn" id="grp-topics" onclick="switchGroup('topics',this)">Topics</button>
   </div>
   <div class="nav-sub active" id="sub-learn">
     <button class="nav-btn active" onclick="switchTab('flashcards',this)">Flashcards</button>
@@ -1579,6 +1733,11 @@
     <button class="nav-btn" onclick="switchTab('alphabet',this)">Alphabet</button>
     <button class="nav-btn" onclick="switchTab('grammar',this)">Grammar</button>
     <button class="nav-btn" onclick="switchTab('lessons',this)">Lessons</button>
+  </div>
+  <div class="nav-sub" id="sub-topics">
+    <button class="nav-btn" onclick="switchTab('topic-food',this)">Food</button>
+    <button class="nav-btn" onclick="switchTab('topic-weather',this)">Weather</button>
+    <button class="nav-btn" onclick="switchTab('topic-greetings',this)">Greetings</button>
   </div>
 </nav>
 
@@ -2456,6 +2615,186 @@
     </div>
   </div>
 
+  <!-- ── TOPIC: FOOD ── -->
+  <div id="topic-food" class="section">
+    <div class="section-header">
+      <div class="section-title">Food Sentences</div>
+      <div class="section-sub">What do you eat and drink — za doručak, ručak, večeru</div>
+    </div>
+
+    <!-- Sentence frame -->
+    <div class="topic-frame">
+      <div class="topic-frame-label">Sentence frames</div>
+      <table class="topic-frame-table">
+        <tr><td>Što jedeš za doručak?</td><td>What do you eat for breakfast?</td></tr>
+        <tr><td>Što piješ za doručak?</td><td>What do you drink for breakfast?</td></tr>
+        <tr><td>Za doručak jedem [hrana].</td><td>For breakfast I eat [food].</td></tr>
+        <tr><td>Za doručak pijem [piće].</td><td>For breakfast I drink [drink].</td></tr>
+        <tr><td>Za doručak ne jedem [hrana].</td><td>For breakfast I don't eat [food].</td></tr>
+        <tr><td>Za ručak obično jedem...</td><td>For lunch I usually eat...</td></tr>
+        <tr><td>Za večeru rijetko jedem...</td><td>For dinner I rarely eat...</td></tr>
+        <tr><td>Svaki dan pijem kavu.</td><td>Every day I drink coffee.</td></tr>
+      </table>
+    </div>
+
+    <!-- Food vocab -->
+    <div class="topic-section-title">Food &amp; drink vocabulary — tap to hear</div>
+    <div class="topic-vocab-grid" id="tfood-vocab"></div>
+
+    <!-- How often modifiers -->
+    <div class="topic-section-title">Koliko često? — How often?</div>
+    <div class="topic-mod-grid" id="tfood-mods"></div>
+
+    <!-- Build your answer -->
+    <div class="topic-section-title">Build your answer</div>
+    <div class="topic-build">
+      <div class="topic-build-display" id="tfood-display">
+        <div class="topic-build-placeholder">Pick a meal, verb and food to build your sentence...</div>
+      </div>
+      <div class="topic-build-row">
+        <div class="topic-build-label">Meal</div>
+        <div class="topic-build-chips" id="tfood-meal-chips"></div>
+      </div>
+      <div class="topic-build-row">
+        <div class="topic-build-label">Verb</div>
+        <div class="topic-build-chips" id="tfood-verb-chips"></div>
+      </div>
+      <div class="topic-build-row">
+        <div class="topic-build-label">Food</div>
+        <div class="topic-build-chips" id="tfood-food-chips"></div>
+      </div>
+      <div class="topic-build-row">
+        <div class="topic-build-label">Often</div>
+        <div class="topic-build-chips" id="tfood-mod-chips"></div>
+      </div>
+      <div class="topic-build-actions">
+        <button class="btn btn-sea btn-icon" onclick="tfoodSpeak()" title="Hear it"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg></button>
+        <button class="btn btn-ghost" onclick="tfoodClear()">Clear</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── TOPIC: WEATHER ── -->
+  <div id="topic-weather" class="section">
+    <div class="section-header">
+      <div class="section-title">Weather Sentences</div>
+      <div class="section-sub">Kakvo je vrijeme? — talking about the weather</div>
+    </div>
+
+    <!-- Sentence frame -->
+    <div class="topic-frame">
+      <div class="topic-frame-label">Sentence frames</div>
+      <table class="topic-frame-table">
+        <tr><td>Kakvo je vrijeme?</td><td>What's the weather like?</td></tr>
+        <tr><td>Kakvo je vrijeme danas?</td><td>What's the weather like today?</td></tr>
+        <tr><td>Vrijeme je [opis].</td><td>The weather is [descriptor].</td></tr>
+        <tr><td>U Zagrebu je [opis].</td><td>In Zagreb it's [descriptor].</td></tr>
+        <tr><td>Je li hladno u Splitu?</td><td>Is it cold in Split?</td></tr>
+        <tr><td>Pada kiša.</td><td>It's raining.</td></tr>
+        <tr><td>Pada snijeg.</td><td>It's snowing.</td></tr>
+        <tr><td>Sunce sija.</td><td>The sun is shining.</td></tr>
+        <tr><td>Puše vjetar.</td><td>The wind is blowing.</td></tr>
+        <tr><td>Nije loše — ali je vjetrovito.</td><td>Not bad — but it's windy.</td></tr>
+      </table>
+    </div>
+
+    <!-- Weather descriptors -->
+    <div class="topic-section-title">Weather words — tap to hear</div>
+    <div class="topic-vocab-grid" id="tweather-vocab"></div>
+
+    <!-- Time / location modifiers -->
+    <div class="topic-section-title">Kada / Gdje? — When / Where?</div>
+    <div class="topic-mod-grid" id="tweather-mods"></div>
+
+    <!-- Build your answer -->
+    <div class="topic-section-title">Build your answer</div>
+    <div class="topic-build">
+      <div class="topic-build-display" id="tweather-display">
+        <div class="topic-build-placeholder">Pick a frame, descriptor and time to build your sentence...</div>
+      </div>
+      <div class="topic-build-row">
+        <div class="topic-build-label">Frame</div>
+        <div class="topic-build-chips" id="tweather-frame-chips"></div>
+      </div>
+      <div class="topic-build-row">
+        <div class="topic-build-label">Weather</div>
+        <div class="topic-build-chips" id="tweather-desc-chips"></div>
+      </div>
+      <div class="topic-build-row">
+        <div class="topic-build-label">When/Where</div>
+        <div class="topic-build-chips" id="tweather-mod-chips"></div>
+      </div>
+      <div class="topic-build-actions">
+        <button class="btn btn-sea btn-icon" onclick="tweatherSpeak()" title="Hear it"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg></button>
+        <button class="btn btn-ghost" onclick="tweatherClear()">Clear</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── TOPIC: GREETINGS & INTRODUCTIONS ── -->
+  <div id="topic-greetings" class="section">
+    <div class="section-header">
+      <div class="section-title">Greetings &amp; Introductions</div>
+      <div class="section-sub">Kako se zoveš? Odakle si? Što radiš? — introducing yourself</div>
+    </div>
+
+    <!-- Sentence frame -->
+    <div class="topic-frame">
+      <div class="topic-frame-label">Sentence frames</div>
+      <table class="topic-frame-table">
+        <tr><td>Kako se zoveš?</td><td>What's your name?</td></tr>
+        <tr><td>Zovem se... / Ja sam...</td><td>My name is... / I am...</td></tr>
+        <tr><td>Drago mi je.</td><td>Nice to meet you.</td></tr>
+        <tr><td>Odakle si?</td><td>Where are you from?</td></tr>
+        <tr><td>Ja sam iz...</td><td>I'm from...</td></tr>
+        <tr><td>Gdje živiš?</td><td>Where do you live?</td></tr>
+        <tr><td>Živim u...</td><td>I live in...</td></tr>
+        <tr><td>Kako si?</td><td>How are you?</td></tr>
+        <tr><td>Dobro sam, hvala. A ti?</td><td>I'm fine, thanks. And you?</td></tr>
+        <tr><td>Što radiš?</td><td>What do you do?</td></tr>
+        <tr><td>Radim kao...</td><td>I work as...</td></tr>
+        <tr><td>Studiram...</td><td>I study...</td></tr>
+        <tr><td>Učim hrvatski.</td><td>I'm learning Croatian.</td></tr>
+      </table>
+    </div>
+
+    <!-- How are you responses -->
+    <div class="topic-section-title">Kako si? — responses, tap to hear</div>
+    <div class="topic-vocab-grid" id="tgreet-feelings"></div>
+
+    <!-- Places -->
+    <div class="topic-section-title">Places — odakle si / gdje živiš</div>
+    <div class="topic-vocab-grid" id="tgreet-places"></div>
+
+    <!-- Professions -->
+    <div class="topic-section-title">Što radiš? — professions (m / f)</div>
+    <div class="topic-vocab-grid" id="tgreet-jobs"></div>
+
+    <!-- Build your answer -->
+    <div class="topic-section-title">Build your answer</div>
+    <div class="topic-build">
+      <div class="topic-build-display" id="tgreet-display">
+        <div class="topic-build-placeholder">Pick a question, then build your answer...</div>
+      </div>
+      <div class="topic-build-row">
+        <div class="topic-build-label">Question</div>
+        <div class="topic-build-chips" id="tgreet-q-chips"></div>
+      </div>
+      <div class="topic-build-row">
+        <div class="topic-build-label">Answer</div>
+        <div class="topic-build-chips" id="tgreet-a-chips"></div>
+      </div>
+      <div class="topic-build-row" id="tgreet-detail-row">
+        <div class="topic-build-label">Detail</div>
+        <div class="topic-build-chips" id="tgreet-detail-chips"></div>
+      </div>
+      <div class="topic-build-actions">
+        <button class="btn btn-sea btn-icon" onclick="tgreetSpeak()" title="Hear it"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg></button>
+        <button class="btn btn-ghost" onclick="tgreetClear()">Clear</button>
+      </div>
+    </div>
+  </div>
+
 </main>
 
 <script>
@@ -2597,6 +2936,28 @@ const allWords = {
     {hr:"Doručak", en:"Breakfast", hint:"DOH-roo-chak"},
     {hr:"Ručak", en:"Lunch", hint:"ROO-chak"},
     {hr:"Večera", en:"Dinner", hint:"VEH-cheh-rah"},
+    {hr:"Ananas", en:"Pineapple", hint:"ah-NAH-nahs"},
+    {hr:"Banana", en:"Banana", hint:"bah-NAH-nah"},
+    {hr:"Cola", en:"Cola", hint:"KOH-lah"},
+    {hr:"Džem", en:"Jam", hint:"dzhem"},
+    {hr:"Grah", en:"Beans", hint:"grah"},
+    {hr:"Jaja", en:"Eggs (plural)", hint:"YAH-yah"},
+    {hr:"Jogurt", en:"Yogurt", hint:"YOH-goort"},
+    {hr:"Krumpir", en:"Potato", hint:"KROOM-peer"},
+    {hr:"Krumpirići", en:"Chips / French fries", hint:"kroom-pee-REE-chee"},
+    {hr:"Lubenica", en:"Watermelon", hint:"loo-BEH-nee-tsah"},
+    {hr:"Med", en:"Honey", hint:"med"},
+    {hr:"Mrkva", en:"Carrot", hint:"MRRR-kvah"},
+    {hr:"Naranča", en:"Orange", hint:"nah-RAN-chah"},
+    {hr:"Palačinke", en:"Pancakes / Crêpes", hint:"pah-lah-CHEEN-keh"},
+    {hr:"Pizza", en:"Pizza", hint:"PEE-tsah"},
+    {hr:"Rajčica", en:"Tomato", hint:"ray-CHEE-tsah"},
+    {hr:"Sendvič", en:"Sandwich", hint:"SEN-dveech"},
+    {hr:"Sok od naranče", en:"Orange juice", hint:"sok od nah-RAN-cheh"},
+    {hr:"Torta", en:"Cake / Tart", hint:"TOR-tah"},
+    {hr:"Tost", en:"Toast", hint:"tost"},
+    {hr:"Špageti", en:"Spaghetti", hint:"shpah-GEH-tee"},
+    {hr:"Žitarice", en:"Cereal", hint:"zhee-TAH-ree-tseh"},
   ],
   basics: [
     {hr:"Hvala", en:"Thanks", hint:"HVAH-lah"},
@@ -4237,6 +4598,7 @@ const tabGroups = {
   flashcards:'learn', srs:'learn', session:'learn', shadow:'learn',
   quiz:'practice', typeit:'practice', listen:'practice', match:'practice', fillin:'practice', nouns:'practice', builder:'practice',
   vocab:'reference', phrases:'reference', alphabet:'reference', visual:'reference', lessons:'reference', grammar:'reference',
+  'topic-food':'topics', 'topic-weather':'topics', 'topic-greetings':'topics',
 };
 
 function switchGroup(group, el){
@@ -4269,6 +4631,9 @@ function switchTab(id, el){
   if(id === 'shadow') initShadow();
   if(id === 'nouns') shuffleNouns();
   if(id === 'builder') initBuilder();
+  if(id === 'topic-food') initTopicFood();
+  if(id === 'topic-weather') initTopicWeather();
+  if(id === 'topic-greetings') initTopicGreetings();
 }
 
 // ── PERSISTENCE ──
@@ -5205,6 +5570,9 @@ function switchTabById(id){
   if(id === 'shadow') initShadow();
   if(id === 'nouns') shuffleNouns();
   if(id === 'builder') initBuilder();
+  if(id === 'topic-food') initTopicFood();
+  if(id === 'topic-weather') initTopicWeather();
+  if(id === 'topic-greetings') initTopicGreetings();
 }
 
 function toggleFav(key){
@@ -7463,6 +7831,491 @@ function sbBuildQuickPhrases(){
       </div>
     </div>`;
   }).join('');
+}
+
+// ── TOPIC: FOOD ──
+
+const tfoodVocab = [
+  {hr:'mlijeko', en:'milk'}, {hr:'tost', en:'toast'}, {hr:'povrće', en:'vegetables'},
+  {hr:'kava', en:'coffee'}, {hr:'riba', en:'fish'}, {hr:'džem', en:'jam'},
+  {hr:'med', en:'honey'}, {hr:'salata', en:'salad'}, {hr:'voda', en:'water'},
+  {hr:'sendvič', en:'sandwich'}, {hr:'torta', en:'cake'}, {hr:'žitarice', en:'cereal'},
+  {hr:'sok od naranče', en:'orange juice'}, {hr:'jaja', en:'eggs'}, {hr:'vino', en:'wine'},
+  {hr:'sir', en:'cheese'}, {hr:'juha', en:'soup'}, {hr:'voće', en:'fruit'},
+  {hr:'jogurt', en:'yogurt'}, {hr:'palačinke', en:'pancakes'}, {hr:'riža', en:'rice'},
+  {hr:'kruh', en:'bread'}, {hr:'piletina', en:'chicken'}, {hr:'pizza', en:'pizza'},
+  {hr:'čaj', en:'tea'}, {hr:'pivo', en:'beer'},
+];
+
+const tfoodMods = [
+  {hr:'uvijek', en:'always'}, {hr:'često', en:'often'}, {hr:'obično', en:'usually'},
+  {hr:'ponekad', en:'sometimes'}, {hr:'rijetko', en:'rarely'},
+  {hr:'skoro nikad', en:'almost never'}, {hr:'nikad', en:'never'}, {hr:'svaki dan', en:'every day'},
+];
+
+const tfoodMeals = [
+  {hr:'za doručak', en:'for breakfast'},
+  {hr:'za ručak', en:'for lunch'},
+  {hr:'za večeru', en:'for dinner'},
+];
+
+const tfoodVerbs = [
+  {hr:'jedem', en:'I eat'}, {hr:'pijem', en:'I drink'},
+  {hr:'ne jedem', en:"I don't eat"}, {hr:'ne pijem', en:"I don't drink"},
+];
+
+let tfood = { meal:null, verb:null, food:null, mod:null };
+
+function initTopicFood(){
+  tfood = { meal:null, verb:null, food:null, mod:null };
+
+  // Vocab grid — tap to hear only
+  document.getElementById('tfood-vocab').innerHTML = tfoodVocab.map(function(w){
+    return '<div class="topic-vocab-tile" onclick="speak(this.dataset.hr)" data-hr="'+w.hr+'">' +
+      '<span class="tvt-hr">'+w.hr+'</span><span class="tvt-en">'+w.en+'</span></div>';
+  }).join('');
+
+  // Mod grid — tap to hear only
+  document.getElementById('tfood-mods').innerHTML = tfoodMods.map(function(m){
+    return '<div class="topic-mod-tile" onclick="speak(this.dataset.hr)" data-hr="'+m.hr+'">' +
+      '<span class="tmt-hr">'+m.hr+'</span><span class="tmt-en">'+m.en+'</span></div>';
+  }).join('');
+
+  buildTfoodChips();
+  tfoodUpdateDisplay();
+}
+
+function buildTfoodChips(){
+  function makeChips(containerId, items, slot, extraClass){
+    document.getElementById(containerId).innerHTML = items.map(function(item, i){
+      return '<button class="topic-chip '+extraClass+'" data-slot="'+slot+'" data-idx="'+i+'" onclick="tfoodPickIdx(this,\'' + slot + '\',' + containerId.replace(/-/g,'_') + '_data,'+i+')">' + item.hr + '</button>';
+    }).join('');
+  }
+  // Store data on window for access from inline handler
+  window.tfood_meal_chips_data = tfoodMeals;
+  window.tfood_verb_chips_data = tfoodVerbs;
+  window.tfood_food_chips_data = tfoodVocab;
+  window.tfood_mod_chips_data  = tfoodMods;
+
+  var mealHtml = tfoodMeals.map(function(m,i){ return '<button class="topic-chip tc-meal" onclick="tfoodPickIdx(this,\'meal\',window.tfood_meal_chips_data,'+i+')">'+m.hr+'</button>'; }).join('');
+  var verbHtml = tfoodVerbs.map(function(v,i){ return '<button class="topic-chip tc-verb" onclick="tfoodPickIdx(this,\'verb\',window.tfood_verb_chips_data,'+i+')">'+v.hr+'</button>'; }).join('');
+  var foodHtml = tfoodVocab.map(function(f,i){ return '<button class="topic-chip" onclick="tfoodPickIdx(this,\'food\',window.tfood_food_chips_data,'+i+')">'+f.hr+'</button>'; }).join('');
+  var modHtml  = tfoodMods.map(function(m,i){  return '<button class="topic-chip tc-mod" onclick="tfoodPickIdx(this,\'mod\',window.tfood_mod_chips_data,'+i+')">'+m.hr+'</button>'; }).join('');
+
+  document.getElementById('tfood-meal-chips').innerHTML = mealHtml;
+  document.getElementById('tfood-verb-chips').innerHTML = verbHtml;
+  document.getElementById('tfood-food-chips').innerHTML = foodHtml;
+  document.getElementById('tfood-mod-chips').innerHTML  = modHtml;
+}
+
+function tfoodPickIdx(btn, slot, arr, idx){
+  tfood[slot] = arr[idx];
+  var rowMap = {meal:'tfood-meal-chips', verb:'tfood-verb-chips', food:'tfood-food-chips', mod:'tfood-mod-chips'};
+  document.getElementById(rowMap[slot]).querySelectorAll('.topic-chip').forEach(function(b){ b.classList.remove('tc-selected'); });
+  btn.classList.add('tc-selected');
+  tfoodUpdateDisplay();
+}
+
+function tfoodUpdateDisplay(){
+  var el = document.getElementById('tfood-display');
+  var m = tfood.meal, v = tfood.verb, f = tfood.food, mod = tfood.mod;
+  if(!m && !v && !f){
+    el.innerHTML = '<div class="topic-build-placeholder">Pick a meal, verb and food to build your sentence...</div>';
+    return;
+  }
+  var parts = [], enParts = [];
+  if(m){ parts.push(m.hr); enParts.push(m.en); }
+  if(mod){ parts.push(mod.hr); enParts.push(mod.en); }
+  if(v){ parts.push(v.hr); enParts.push(v.en); }
+  if(f){ parts.push(f.hr); enParts.push(f.en); }
+  var hr = parts.join(' ') + '.';
+  var en = enParts.join(' ') + '.';
+  hr = hr.charAt(0).toUpperCase() + hr.slice(1);
+  en = en.charAt(0).toUpperCase() + en.slice(1);
+  el.innerHTML = '<div class="topic-build-sentence">'+hr+'</div><div class="topic-build-translation">'+en+'</div>';
+}
+
+function tfoodSpeak(){
+  var sent = document.querySelector('#tfood-display .topic-build-sentence');
+  if(sent) speak(sent.textContent.replace(/\.$/, ''));
+}
+
+function tfoodClear(){
+  tfood = { meal:null, verb:null, food:null, mod:null };
+  document.querySelectorAll('#topic-food .topic-chip').forEach(function(b){ b.classList.remove('tc-selected'); });
+  tfoodUpdateDisplay();
+}
+
+// ── TOPIC: WEATHER ──
+
+const tweatherVocab = [
+  {hr:'sunčano', en:'sunny'}, {hr:'oblačno', en:'cloudy'}, {hr:'kišovito', en:'rainy'},
+  {hr:'snježno', en:'snowy'}, {hr:'vjetrovito', en:'windy'}, {hr:'maglovito', en:'foggy'},
+  {hr:'toplo', en:'warm'}, {hr:'hladno', en:'cold'}, {hr:'vruće', en:'hot'},
+  {hr:'svježe', en:'fresh / cool'}, {hr:'tmurno', en:'gloomy / overcast'},
+  {hr:'olujno', en:'stormy'}, {hr:'lijepo', en:'nice / beautiful'},
+  {hr:'loše', en:'bad'}, {hr:'vedro', en:'clear / bright'}, {hr:'mokro', en:'wet'},
+];
+
+const tweatherMods = [
+  {hr:'danas', en:'today'}, {hr:'sutra', en:'tomorrow'}, {hr:'jučer', en:'yesterday'},
+  {hr:'ujutro', en:'in the morning'}, {hr:'navečer', en:'in the evening'},
+  {hr:'u Zagrebu', en:'in Zagreb'}, {hr:'u Splitu', en:'in Split'},
+  {hr:'u Londonu', en:'in London'}, {hr:'na moru', en:'at the coast'},
+  {hr:'u planinama', en:'in the mountains'},
+];
+
+const tweatherFrames = [
+  {hr:'Vrijeme je', en:'The weather is', needsDesc:true},
+  {hr:'Pada kiša', en:"It's raining", needsDesc:false},
+  {hr:'Pada snijeg', en:"It's snowing", needsDesc:false},
+  {hr:'Sunce sija', en:'The sun is shining', needsDesc:false},
+  {hr:'Puše vjetar', en:'The wind is blowing', needsDesc:false},
+  {hr:'Je li', en:'Is it', needsDesc:true},
+  {hr:'Nije', en:"It's not", needsDesc:true},
+];
+
+let tweather = { frame:null, desc:null, mod:null };
+
+function initTopicWeather(){
+  tweather = { frame:null, desc:null, mod:null };
+
+  document.getElementById('tweather-vocab').innerHTML = tweatherVocab.map(function(w){
+    return '<div class="topic-vocab-tile" onclick="speak(this.dataset.hr)" data-hr="'+w.hr+'">' +
+      '<span class="tvt-hr">'+w.hr+'</span><span class="tvt-en">'+w.en+'</span></div>';
+  }).join('');
+
+  document.getElementById('tweather-mods').innerHTML = tweatherMods.map(function(m){
+    return '<div class="topic-mod-tile" onclick="speak(this.dataset.hr)" data-hr="'+m.hr+'">' +
+      '<span class="tmt-hr">'+m.hr+'</span><span class="tmt-en">'+m.en+'</span></div>';
+  }).join('');
+
+  window.tweather_frame_chips_data = tweatherFrames;
+  window.tweather_desc_chips_data  = tweatherVocab;
+  window.tweather_mod_chips_data   = tweatherMods;
+
+  var frameHtml = tweatherFrames.map(function(f,i){ return '<button class="topic-chip tc-meal" onclick="tweatherPickIdx(this,\'frame\',window.tweather_frame_chips_data,'+i+')">'+f.hr+'</button>'; }).join('');
+  var descHtml  = tweatherVocab.map(function(w,i){  return '<button class="topic-chip" onclick="tweatherPickIdx(this,\'desc\',window.tweather_desc_chips_data,'+i+')">'+w.hr+'</button>'; }).join('');
+  var modHtml   = tweatherMods.map(function(m,i){   return '<button class="topic-chip tc-mod" onclick="tweatherPickIdx(this,\'mod\',window.tweather_mod_chips_data,'+i+')">'+m.hr+'</button>'; }).join('');
+
+  document.getElementById('tweather-frame-chips').innerHTML = frameHtml;
+  document.getElementById('tweather-desc-chips').innerHTML  = descHtml;
+  document.getElementById('tweather-mod-chips').innerHTML   = modHtml;
+
+  tweatherUpdateDisplay();
+}
+
+function tweatherPickIdx(btn, slot, arr, idx){
+  tweather[slot] = arr[idx];
+  var rowMap = {frame:'tweather-frame-chips', desc:'tweather-desc-chips', mod:'tweather-mod-chips'};
+  document.getElementById(rowMap[slot]).querySelectorAll('.topic-chip').forEach(function(b){ b.classList.remove('tc-selected'); });
+  btn.classList.add('tc-selected');
+  tweatherUpdateDisplay();
+}
+
+function tweatherUpdateDisplay(){
+  var el = document.getElementById('tweather-display');
+  var f = tweather.frame, d = tweather.desc, m = tweather.mod;
+  if(!f && !d){
+    el.innerHTML = '<div class="topic-build-placeholder">Pick a frame, descriptor and time to build your sentence...</div>';
+    return;
+  }
+  var hr = '', en = '';
+  if(f){
+    if(f.needsDesc){
+      if(m && d){ hr = f.hr + ' ' + m.hr + ' ' + d.hr; en = f.en + ' ' + m.en + ' ' + d.en; }
+      else if(d){ hr = f.hr + ' ' + d.hr; en = f.en + ' ' + d.en; }
+      else if(m){ hr = f.hr + ' ' + m.hr + '...'; en = f.en + ' ' + m.en + '...'; }
+      else { hr = f.hr + '...'; en = f.en + '...'; }
+    } else {
+      hr = f.hr; en = f.en;
+      if(m){ hr += ' ' + m.hr; en += ' ' + m.en; }
+    }
+  } else if(d){
+    hr = 'Vrijeme je ' + (m ? m.hr + ' ' : '') + d.hr;
+    en = 'The weather is ' + (m ? m.en + ' ' : '') + d.en;
+  }
+  var punct = (f && f.hr === 'Je li') ? '?' : '.';
+  hr = hr.charAt(0).toUpperCase() + hr.slice(1) + punct;
+  en = en.charAt(0).toUpperCase() + en.slice(1) + punct;
+  el.innerHTML = '<div class="topic-build-sentence">'+hr+'</div><div class="topic-build-translation">'+en+'</div>';
+}
+
+function tweatherSpeak(){
+  var sent = document.querySelector('#tweather-display .topic-build-sentence');
+  if(sent) speak(sent.textContent.replace(/[.?]$/, ''));
+}
+
+function tweatherClear(){
+  tweather = { frame:null, desc:null, mod:null };
+  document.querySelectorAll('#topic-weather .topic-chip').forEach(function(b){ b.classList.remove('tc-selected'); });
+  tweatherUpdateDisplay();
+}
+
+
+// ── TOPIC: GREETINGS & INTRODUCTIONS ──
+
+const tgreetFeelings = [
+  {hr:'Dobro sam', en:"I'm fine"},
+  {hr:'Odlično', en:'Excellent'},
+  {hr:'Super, hvala', en:'Great, thanks'},
+  {hr:'Nije loše', en:'Not bad'},
+  {hr:'Tako-tako', en:'So-so'},
+  {hr:'Umoran sam', en:"I'm tired (m)"},
+  {hr:'Umorna sam', en:"I'm tired (f)"},
+  {hr:'Sretan sam', en:"I'm happy (m)"},
+  {hr:'Sretna sam', en:"I'm happy (f)"},
+  {hr:'Zauzet sam', en:"I'm busy (m)"},
+  {hr:'Zauzeta sam', en:"I'm busy (f)"},
+  {hr:'Malo umoran', en:'A little tired (m)'},
+  {hr:'Malo umorna', en:'A little tired (f)'},
+];
+
+const tgreetPlaces = [
+  {hr:'Zagreb', en:'Zagreb'},
+  {hr:'Split', en:'Split'},
+  {hr:'Rijeka', en:'Rijeka'},
+  {hr:'Dubrovnik', en:'Dubrovnik'},
+  {hr:'Pula', en:'Pula'},
+  {hr:'Osijek', en:'Osijek'},
+  {hr:'London', en:'London'},
+  {hr:'New York', en:'New York'},
+  {hr:'u gradu', en:'in the city'},
+  {hr:'u predgrađu', en:'in the suburbs'},
+  {hr:'na moru', en:'by the coast'},
+  {hr:'u Engleskoj', en:'in England'},
+  {hr:'u Americi', en:'in America'},
+  {hr:'u Australiji', en:'in Australia'},
+];
+
+const tgreetJobs = [
+  {hr:'učitelj', en:'teacher (m)'},
+  {hr:'učiteljica', en:'teacher (f)'},
+  {hr:'liječnik', en:'doctor (m)'},
+  {hr:'liječnica', en:'doctor (f)'},
+  {hr:'konobar', en:'waiter (m)'},
+  {hr:'konobarica', en:'waitress (f)'},
+  {hr:'novinar', en:'journalist (m)'},
+  {hr:'novinarka', en:'journalist (f)'},
+  {hr:'student', en:'student (m)'},
+  {hr:'studentica', en:'student (f)'},
+  {hr:'odvjetnik', en:'lawyer (m)'},
+  {hr:'odvjetnica', en:'lawyer (f)'},
+  {hr:'kuhar', en:'chef (m)'},
+  {hr:'kuharica', en:'chef (f)'},
+  {hr:'programer', en:'programmer (m)'},
+  {hr:'programerica', en:'programmer (f)'},
+];
+
+const tgreetQuestions = [
+  {hr:'Kako se zoveš?', en:'What is your name?'},
+  {hr:'Kako si?', en:'How are you?'},
+  {hr:'Odakle si?', en:'Where are you from?'},
+  {hr:'Gdje živiš?', en:'Where do you live?'},
+  {hr:'Što radiš?', en:'What do you do?'},
+];
+
+// Answer starters — each knows which detail type it needs
+const tgreetAnswers = [
+  {hr:'Zovem se', en:'My name is', detail:'name'},
+  {hr:'Ja sam', en:'I am', detail:'name'},
+  {hr:'Dobro sam, hvala.', en:"I'm fine, thanks.", detail:'feeling', standalone:true},
+  {hr:'Nije loše.', en:'Not bad.', detail:'feeling', standalone:true},
+  {hr:'Tako-tako.', en:'So-so.', detail:'feeling', standalone:true},
+  {hr:'Ja sam iz', en:"I'm from", detail:'place'},
+  {hr:'Živim u', en:'I live in', detail:'place'},
+  {hr:'Radim kao', en:'I work as', detail:'job'},
+  {hr:'Studiram', en:'I study', detail:'subject'},
+  {hr:'Učim hrvatski.', en:"I'm learning Croatian.", detail:'none', standalone:true},
+  {hr:'Drago mi je.', en:'Nice to meet you.', detail:'none', standalone:true},
+];
+
+const tgreetSubjects = [
+  {hr:'medicinu', en:'medicine'},
+  {hr:'pravo', en:'law'},
+  {hr:'ekonomiju', en:'economics'},
+  {hr:'arhitekturu', en:'architecture'},
+  {hr:'povijest', en:'history'},
+  {hr:'biologiju', en:'biology'},
+  {hr:'jezike', en:'languages'},
+  {hr:'informatiku', en:'computer science'},
+];
+
+let tgreet = { q:null, a:null, detail:null };
+
+function initTopicGreetings(){
+  tgreet = { q:null, a:null, detail:null };
+
+  // Feelings vocab — tap to hear
+  document.getElementById('tgreet-feelings').innerHTML = tgreetFeelings.map(function(w){
+    return '<div class="topic-vocab-tile" onclick="speak(this.dataset.hr)" data-hr="' + w.hr + '">' +
+      '<span class="tvt-hr">' + w.hr + '</span><span class="tvt-en">' + w.en + '</span></div>';
+  }).join('');
+
+  // Places vocab — tap to hear
+  document.getElementById('tgreet-places').innerHTML = tgreetPlaces.map(function(w){
+    return '<div class="topic-vocab-tile" onclick="speak(this.dataset.hr)" data-hr="' + w.hr + '">' +
+      '<span class="tvt-hr">' + w.hr + '</span><span class="tvt-en">' + w.en + '</span></div>';
+  }).join('');
+
+  // Jobs vocab — tap to hear
+  document.getElementById('tgreet-jobs').innerHTML = tgreetJobs.map(function(w){
+    return '<div class="topic-vocab-tile" onclick="speak(this.dataset.hr)" data-hr="' + w.hr + '">' +
+      '<span class="tvt-hr">' + w.hr + '</span><span class="tvt-en">' + w.en + '</span></div>';
+  }).join('');
+
+  // Store data on window for index-based onclick handlers
+  window.tgreet_q_data = tgreetQuestions;
+  window.tgreet_a_data = tgreetAnswers;
+
+  // Question chips
+  document.getElementById('tgreet-q-chips').innerHTML = tgreetQuestions.map(function(q, i){
+    return '<button class="topic-chip tc-meal" onclick="tgreetPickQ(' + i + ',this)">' + q.hr + '</button>';
+  }).join('');
+
+  // Answer chips
+  document.getElementById('tgreet-a-chips').innerHTML = tgreetAnswers.map(function(a, i){
+    return '<button class="topic-chip tc-verb" onclick="tgreetPickA(' + i + ',this)">' + a.hr + '</button>';
+  }).join('');
+
+  // Detail chips — hidden until answer picked
+  document.getElementById('tgreet-detail-chips').innerHTML = '';
+  document.getElementById('tgreet-detail-row').style.display = 'none';
+
+  tgreetUpdateDisplay();
+}
+
+function tgreetPickQ(idx, btn){
+  tgreet.q = tgreetQuestions[idx];
+  tgreet.a = null;
+  tgreet.detail = null;
+  document.getElementById('tgreet-q-chips').querySelectorAll('.topic-chip').forEach(function(b){ b.classList.remove('tc-selected'); });
+  btn.classList.add('tc-selected');
+  // Reset answer chips selection
+  document.getElementById('tgreet-a-chips').querySelectorAll('.topic-chip').forEach(function(b){ b.classList.remove('tc-selected'); });
+  document.getElementById('tgreet-detail-chips').innerHTML = '';
+  document.getElementById('tgreet-detail-row').style.display = 'none';
+  tgreetUpdateDisplay();
+}
+
+function tgreetPickA(idx, btn){
+  tgreet.a = tgreetAnswers[idx];
+  tgreet.detail = null;
+  document.getElementById('tgreet-a-chips').querySelectorAll('.topic-chip').forEach(function(b){ b.classList.remove('tc-selected'); });
+  btn.classList.add('tc-selected');
+
+  // Build detail chips based on what answer needs
+  var detailRow = document.getElementById('tgreet-detail-row');
+  var detailEl = document.getElementById('tgreet-detail-chips');
+  var a = tgreet.a;
+
+  if(a.standalone || a.detail === 'none'){
+    detailEl.innerHTML = '<span style="font-size:0.82rem;color:var(--stone-light);font-style:italic;padding:6px 0 0;">Complete sentence — nothing more needed.</span>';
+    detailRow.style.display = 'flex';
+  } else if(a.detail === 'name'){
+    detailEl.innerHTML = '<span style="font-size:0.82rem;color:var(--terracotta);font-style:italic;padding:6px 0 0;">...then say your name!</span>';
+    detailRow.style.display = 'flex';
+  } else if(a.detail === 'place'){
+    window.tgreet_detail_data = tgreetPlaces;
+    detailEl.innerHTML = tgreetPlaces.map(function(p, i){
+      return '<button class="topic-chip tc-mod" onclick="tgreetPickDetail(' + i + ',window.tgreet_detail_data,this)">' + p.hr + '</button>';
+    }).join('');
+    detailRow.style.display = 'flex';
+  } else if(a.detail === 'job'){
+    window.tgreet_detail_data = tgreetJobs;
+    detailEl.innerHTML = tgreetJobs.map(function(j, i){
+      return '<button class="topic-chip tc-mod" onclick="tgreetPickDetail(' + i + ',window.tgreet_detail_data,this)">' + j.hr + '</button>';
+    }).join('');
+    detailRow.style.display = 'flex';
+  } else if(a.detail === 'feeling'){
+    window.tgreet_detail_data = tgreetFeelings;
+    detailEl.innerHTML = tgreetFeelings.map(function(f, i){
+      return '<button class="topic-chip tc-mod" onclick="tgreetPickDetail(' + i + ',window.tgreet_detail_data,this)">' + f.hr + '</button>';
+    }).join('');
+    detailRow.style.display = 'flex';
+  } else if(a.detail === 'subject'){
+    window.tgreet_detail_data = tgreetSubjects;
+    detailEl.innerHTML = tgreetSubjects.map(function(s, i){
+      return '<button class="topic-chip tc-mod" onclick="tgreetPickDetail(' + i + ',window.tgreet_detail_data,this)">' + s.hr + '</button>';
+    }).join('');
+    detailRow.style.display = 'flex';
+  } else {
+    detailEl.innerHTML = '';
+    detailRow.style.display = 'none';
+  }
+
+  tgreetUpdateDisplay();
+}
+
+function tgreetPickDetail(idx, arr, btn){
+  tgreet.detail = arr[idx];
+  document.getElementById('tgreet-detail-chips').querySelectorAll('.topic-chip').forEach(function(b){ b.classList.remove('tc-selected'); });
+  btn.classList.add('tc-selected');
+  tgreetUpdateDisplay();
+}
+
+function tgreetUpdateDisplay(){
+  var el = document.getElementById('tgreet-display');
+  var q = tgreet.q, a = tgreet.a, d = tgreet.detail;
+
+  if(!q && !a){
+    el.innerHTML = '<div class="topic-build-placeholder">Pick a question, then build your answer...</div>';
+    return;
+  }
+
+  var hrParts = [], enParts = [];
+
+  // Show question in display as context
+  if(q){
+    hrParts.push('<span style="color:var(--stone-light);font-size:0.85rem;font-family:var(--font-body);font-weight:400;">' + q.hr + '</span>');
+    enParts.push('<span style="color:var(--stone-light)">' + q.en + '</span>');
+  }
+
+  if(a){
+    var answerHr = a.hr;
+    var answerEn = a.en;
+
+    if(d && !a.standalone && a.detail !== 'name' && a.detail !== 'none'){
+      answerHr = answerHr + ' ' + d.hr;
+      answerEn = answerEn + ' ' + d.en;
+    }
+
+    if(!a.standalone){
+      answerHr = answerHr + '.';
+      answerEn = answerEn + '.';
+    }
+
+    // Capitalise
+    answerHr = answerHr.charAt(0).toUpperCase() + answerHr.slice(1);
+    answerEn = answerEn.charAt(0).toUpperCase() + answerEn.slice(1);
+
+    hrParts.push('<span style="font-family:var(--font-display);font-size:1.2rem;font-weight:600;color:var(--ink);">' + answerHr + '</span>');
+    enParts.push('<span style="font-size:0.82rem;color:var(--stone-light);font-style:italic;">' + answerEn + '</span>');
+  }
+
+  el.innerHTML =
+    '<div style="display:flex;flex-direction:column;gap:4px;">' +
+    hrParts.join('<br>') +
+    '</div>' +
+    '<div style="margin-top:4px;display:flex;flex-direction:column;gap:2px;">' +
+    enParts.join('<br>') +
+    '</div>';
+}
+
+function tgreetSpeak(){
+  var a = tgreet.a, d = tgreet.detail;
+  if(!a) return;
+  var text = a.hr;
+  if(d && !a.standalone && a.detail !== 'name' && a.detail !== 'none') text = text + ' ' + d.hr;
+  speak(text.replace(/\.$/, ''));
+}
+
+function tgreetClear(){
+  tgreet = { q:null, a:null, detail:null };
+  document.querySelectorAll('#topic-greetings .topic-chip').forEach(function(b){ b.classList.remove('tc-selected'); });
+  document.getElementById('tgreet-detail-chips').innerHTML = '';
+  document.getElementById('tgreet-detail-row').style.display = 'none';
+  tgreetUpdateDisplay();
 }
 </script>
 </body>
