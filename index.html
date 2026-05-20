@@ -2655,6 +2655,7 @@
       <div style="display:flex;gap:6px;margin-bottom:1rem;">
         <button class="sb-group-tab active" id="tfood-mode-answer" onclick="tfoodSetMode('answer',this)">My answer</button>
         <button class="sb-group-tab" id="tfood-mode-ask" onclick="tfoodSetMode('ask',this)">Ask someone</button>
+        <button class="sb-group-tab" id="tfood-mode-prompted" onclick="tfoodSetMode('prompted',this)">Prompted</button>
       </div>
       <div class="topic-build-display" id="tfood-display">
         <div class="topic-build-placeholder">Pick a meal, verb and food to build your sentence...</div>
@@ -2693,9 +2694,39 @@
           <div class="topic-build-chips" id="tfood-ask-meal-chips"></div>
         </div>
       </div>
+      <!-- Prompted rows -->
+      <div id="tfood-prompted-rows" style="display:none;">
+        <div style="background:var(--sand);border-radius:var(--radius-sm);border:1px solid var(--sand-dark);padding:12px 16px;margin-bottom:1rem;">
+          <div style="font-size:0.68rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--stone-light);margin-bottom:6px;">Your task</div>
+          <div style="font-size:1rem;font-weight:500;color:var(--ink);" id="tfood-prompt-text">Loading...</div>
+        </div>
+        <div class="topic-build-row">
+          <div class="topic-build-label">Meal</div>
+          <div class="topic-build-chips" id="tfood-pr-meal-chips"></div>
+        </div>
+        <div class="topic-build-row">
+          <div class="topic-build-label">Verb</div>
+          <div class="topic-build-chips" id="tfood-pr-verb-chips"></div>
+        </div>
+        <div class="topic-build-row">
+          <div class="topic-build-label">Food</div>
+          <div class="topic-build-chips" id="tfood-pr-food-chips"></div>
+        </div>
+        <div class="topic-build-row">
+          <div class="topic-build-label">Often</div>
+          <div class="topic-build-chips" id="tfood-pr-mod-chips"></div>
+        </div>
+        <!-- Model answer (shown after Done) -->
+        <div id="tfood-model-answer" style="display:none;margin-top:0.75rem;background:var(--olive-pale);border:1px solid #B8D090;border-radius:var(--radius-sm);padding:12px 16px;">
+          <div style="font-size:0.68rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--olive);margin-bottom:8px;font-weight:500;">Ways you could say it</div>
+          <div id="tfood-model-answer-content"></div>
+        </div>
+      </div>
       <div class="topic-build-actions">
         <button class="btn btn-sea btn-icon" onclick="tfoodSpeak()" title="Hear it"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg></button>
-        <button class="btn btn-ghost" onclick="tfoodClear()">Clear</button>
+        <button class="btn btn-primary" id="tfood-done-btn" onclick="tfoodDone()" style="display:none;flex:1;font-weight:600;">Done ✓</button>
+        <button class="btn btn-ghost" id="tfood-skip-btn" onclick="tfoodNextPrompt()" style="display:none;">Skip &#8594;</button>
+        <button class="btn btn-ghost" id="tfood-clear-btn" onclick="tfoodClear()">Clear</button>
       </div>
     </div>
   </div>
@@ -7895,62 +7926,198 @@ const tfoodVerbs = [
 ];
 
 const tfoodAskVerbs = [
-  {hr:'Jedeš li', en:'Do you eat', questionWord:true},
-  {hr:'Piješ li', en:'Do you drink', questionWord:true},
+  {hr:'Jedeš li', en:'Do you eat'},
+  {hr:'Piješ li', en:'Do you drink'},
+];
+
+const tfoodPrompts = [
+  {
+    prompt: 'Tell Sanja what you eat for breakfast.',
+    answers: [
+      {hr:'Za doručak jedem [food].', en:'For breakfast I eat [food].'},
+      {hr:'Jedem [food] za doručak.', en:'I eat [food] for breakfast.'},
+      {hr:'Za doručak obično jedem [food].', en:'For breakfast I usually eat [food].'},
+    ]
+  },
+  {
+    prompt: 'Tell Sanja what you drink every morning.',
+    answers: [
+      {hr:'Svaki dan pijem [drink].', en:'Every day I drink [drink].'},
+      {hr:'Ujutro uvijek pijem [drink].', en:'Every morning I always drink [drink].'},
+      {hr:'Za doručak pijem [drink].', en:'For breakfast I drink [drink].'},
+    ]
+  },
+  {
+    prompt: 'Say you never eat meat.',
+    answers: [
+      {hr:'Nikad ne jedem meso.', en:'I never eat meat.'},
+      {hr:'Ne jedem nikad meso.', en:'I never eat meat.'},
+      {hr:'Ne jedem meso.', en:"I don't eat meat."},
+    ]
+  },
+  {
+    prompt: 'Say you usually drink coffee for breakfast.',
+    answers: [
+      {hr:'Za doručak obično pijem kavu.', en:'For breakfast I usually drink coffee.'},
+      {hr:'Obično pijem kavu za doručak.', en:'I usually drink coffee for breakfast.'},
+      {hr:'Svaki dan pijem kavu za doručak.', en:'Every day I drink coffee for breakfast.'},
+    ]
+  },
+  {
+    prompt: 'Ask Sanja if she eats fish.',
+    answers: [
+      {hr:'Jedeš li ribu?', en:'Do you eat fish?'},
+      {hr:'Jedeš li ribu za ručak?', en:'Do you eat fish for lunch?'},
+      {hr:'Jedeš li ribu za večeru?', en:'Do you eat fish for dinner?'},
+    ]
+  },
+  {
+    prompt: 'Say you sometimes eat pizza for dinner.',
+    answers: [
+      {hr:'Za večeru ponekad jedem pizzu.', en:'For dinner I sometimes eat pizza.'},
+      {hr:'Ponekad jedem pizzu za večeru.', en:'I sometimes eat pizza for dinner.'},
+      {hr:'Jedem pizzu za večeru ponekad.', en:'I eat pizza for dinner sometimes.'},
+    ]
+  },
+  {
+    prompt: 'Tell Sanja what you eat for lunch.',
+    answers: [
+      {hr:'Za ručak jedem [food].', en:'For lunch I eat [food].'},
+      {hr:'Jedem [food] za ručak.', en:'I eat [food] for lunch.'},
+      {hr:'Za ručak obično jedem [food].', en:'For lunch I usually eat [food].'},
+    ]
+  },
+  {
+    prompt: 'Ask Sanja if she drinks wine.',
+    answers: [
+      {hr:'Piješ li vino?', en:'Do you drink wine?'},
+      {hr:'Piješ li vino za večeru?', en:'Do you drink wine for dinner?'},
+    ]
+  },
+  {
+    prompt: 'Say you always eat fruit.',
+    answers: [
+      {hr:'Uvijek jedem voće.', en:'I always eat fruit.'},
+      {hr:'Jedem uvijek voće.', en:'I always eat fruit.'},
+      {hr:'Za doručak uvijek jedem voće.', en:'For breakfast I always eat fruit.'},
+    ]
+  },
+  {
+    prompt: "Say you don't drink beer.",
+    answers: [
+      {hr:'Ne pijem pivo.', en:"I don't drink beer."},
+      {hr:'Nikad ne pijem pivo.', en:'I never drink beer.'},
+      {hr:'Ne pijem nikad pivo.', en:'I never drink beer.'},
+    ]
+  },
+  {
+    prompt: 'Ask Sanja if she eats eggs for breakfast.',
+    answers: [
+      {hr:'Jedeš li jaja za doručak?', en:'Do you eat eggs for breakfast?'},
+      {hr:'Jedeš li jaja?', en:'Do you eat eggs?'},
+    ]
+  },
+  {
+    prompt: 'Say you rarely eat soup.',
+    answers: [
+      {hr:'Rijetko jedem juhu.', en:'I rarely eat soup.'},
+      {hr:'Jedem juhu rijetko.', en:'I eat soup rarely.'},
+      {hr:'Za ručak rijetko jedem juhu.', en:'For lunch I rarely eat soup.'},
+    ]
+  },
+  {
+    prompt: 'Tell Sanja what you drink for dinner.',
+    answers: [
+      {hr:'Za večeru pijem [drink].', en:'For dinner I drink [drink].'},
+      {hr:'Pijem [drink] za večeru.', en:'I drink [drink] for dinner.'},
+    ]
+  },
+  {
+    prompt: 'Ask Sanja if she eats cereal for breakfast.',
+    answers: [
+      {hr:'Jedeš li žitarice za doručak?', en:'Do you eat cereal for breakfast?'},
+      {hr:'Jedeš li žitarice?', en:'Do you eat cereal?'},
+    ]
+  },
+  {
+    prompt: 'Say you sometimes eat spaghetti for lunch.',
+    answers: [
+      {hr:'Za ručak ponekad jedem špagete.', en:'For lunch I sometimes eat spaghetti.'},
+      {hr:'Ponekad jedem špagete za ručak.', en:'I sometimes eat spaghetti for lunch.'},
+      {hr:'Jedem špagete za ručak ponekad.', en:'I eat spaghetti for lunch sometimes.'},
+    ]
+  },
 ];
 
 let tfood = { meal:null, verb:null, food:null, mod:null };
-let tfoodMode = 'answer'; // 'answer' | 'ask'
+let tfoodMode = 'answer';
 let tfoodAsk = { verb:null, food:null, meal:null };
+let tfoodPr = { meal:null, verb:null, food:null, mod:null };
+let tfoodPromptIdx = 0;
+let tfoodPromptOrder = [];
 
 function initTopicFood(){
   tfood = { meal:null, verb:null, food:null, mod:null };
   tfoodAsk = { verb:null, food:null, meal:null };
+  tfoodPr = { meal:null, verb:null, food:null, mod:null };
   tfoodMode = 'answer';
+  tfoodPromptOrder = tfoodPrompts.map(function(_,i){ return i; }).sort(function(){ return Math.random()-0.5; });
+  tfoodPromptIdx = 0;
 
-  // Reset mode toggle
   document.getElementById('tfood-mode-answer').classList.add('active');
   document.getElementById('tfood-mode-ask').classList.remove('active');
+  document.getElementById('tfood-mode-prompted').classList.remove('active');
   document.getElementById('tfood-answer-rows').style.display = '';
   document.getElementById('tfood-ask-rows').style.display = 'none';
+  document.getElementById('tfood-prompted-rows').style.display = 'none';
+  document.getElementById('tfood-done-btn').style.display = 'none';
+  document.getElementById('tfood-skip-btn').style.display = 'none';
+  document.getElementById('tfood-clear-btn').style.display = '';
 
-  // Vocab grid — tap to hear only
   document.getElementById('tfood-vocab').innerHTML = tfoodVocab.map(function(w){
     return '<div class="topic-vocab-tile" onclick="speak(this.dataset.hr)" data-hr="' + w.hr + '">' +
       '<span class="tvt-hr">' + w.hr + '</span><span class="tvt-en">' + w.en + '</span></div>';
   }).join('');
 
-  // Mod grid — tap to hear only
   document.getElementById('tfood-mods').innerHTML = tfoodMods.map(function(m){
     return '<div class="topic-mod-tile" onclick="speak(this.dataset.hr)" data-hr="' + m.hr + '">' +
       '<span class="tmt-hr">' + m.hr + '</span><span class="tmt-en">' + m.en + '</span></div>';
   }).join('');
 
-  window.tfood_meal_data = tfoodMeals;
-  window.tfood_verb_data = tfoodVerbs;
-  window.tfood_food_data = tfoodVocab;
-  window.tfood_mod_data  = tfoodMods;
+  window.tfood_meal_data     = tfoodMeals;
+  window.tfood_verb_data     = tfoodVerbs;
+  window.tfood_food_data     = tfoodVocab;
+  window.tfood_mod_data      = tfoodMods;
   window.tfood_ask_verb_data = tfoodAskVerbs;
 
   buildTfoodAnswerChips();
   buildTfoodAskChips();
+  buildTfoodPromptedChips();
   tfoodUpdateDisplay();
 }
 
 function tfoodSetMode(mode, btn){
   tfoodMode = mode;
-  tfood = { meal:null, verb:null, food:null, mod:null };
+  tfood    = { meal:null, verb:null, food:null, mod:null };
   tfoodAsk = { verb:null, food:null, meal:null };
+  tfoodPr  = { meal:null, verb:null, food:null, mod:null };
+
   document.querySelectorAll('#topic-food .sb-group-tab').forEach(function(b){ b.classList.remove('active'); });
   btn.classList.add('active');
-  document.getElementById('tfood-answer-rows').style.display = mode === 'answer' ? '' : 'none';
-  document.getElementById('tfood-ask-rows').style.display = mode === 'ask' ? '' : 'none';
-  // Clear selections
+
+  document.getElementById('tfood-answer-rows').style.display   = mode === 'answer'   ? '' : 'none';
+  document.getElementById('tfood-ask-rows').style.display      = mode === 'ask'      ? '' : 'none';
+  document.getElementById('tfood-prompted-rows').style.display = mode === 'prompted' ? '' : 'none';
+
+  document.getElementById('tfood-done-btn').style.display  = mode === 'prompted' ? '' : 'none';
+  document.getElementById('tfood-skip-btn').style.display  = mode === 'prompted' ? '' : 'none';
+  document.getElementById('tfood-clear-btn').style.display = mode === 'prompted' ? 'none' : '';
+
+  document.getElementById('tfood-model-answer').style.display = 'none';
   document.querySelectorAll('#topic-food .topic-chip').forEach(function(b){ b.classList.remove('tc-selected'); });
-  var placeholder = mode === 'answer'
-    ? 'Pick a meal, verb and food to build your sentence...'
-    : 'Pick a verb and food to build your question...';
-  document.getElementById('tfood-display').innerHTML = '<div class="topic-build-placeholder">' + placeholder + '</div>';
+
+  if(mode === 'prompted') tfoodLoadPrompt();
+  else tfoodUpdateDisplay();
 }
 
 function buildTfoodAnswerChips(){
@@ -7980,6 +8147,36 @@ function buildTfoodAskChips(){
   }).join('');
 }
 
+function buildTfoodPromptedChips(){
+  document.getElementById('tfood-pr-meal-chips').innerHTML = tfoodMeals.map(function(m,i){
+    return '<button class="topic-chip tc-meal" onclick="tfoodPrPickIdx(this,\'meal\',window.tfood_meal_data,'+i+')">' + m.hr + '</button>';
+  }).join('');
+  document.getElementById('tfood-pr-verb-chips').innerHTML = tfoodVerbs.map(function(v,i){
+    return '<button class="topic-chip tc-verb" onclick="tfoodPrPickIdx(this,\'verb\',window.tfood_verb_data,'+i+')">' + v.hr + '</button>';
+  }).join('');
+  document.getElementById('tfood-pr-food-chips').innerHTML = tfoodVocab.map(function(f,i){
+    return '<button class="topic-chip" onclick="tfoodPrPickIdx(this,\'food\',window.tfood_food_data,'+i+')">' + f.hr + '</button>';
+  }).join('');
+  document.getElementById('tfood-pr-mod-chips').innerHTML = tfoodMods.map(function(m,i){
+    return '<button class="topic-chip tc-mod" onclick="tfoodPrPickIdx(this,\'mod\',window.tfood_mod_data,'+i+')">' + m.hr + '</button>';
+  }).join('');
+}
+
+function tfoodLoadPrompt(){
+  document.getElementById('tfood-model-answer').style.display = 'none';
+  document.querySelectorAll('#tfood-prompted-rows .topic-chip').forEach(function(b){ b.classList.remove('tc-selected'); });
+  tfoodPr = { meal:null, verb:null, food:null, mod:null };
+  var idx = tfoodPromptOrder[tfoodPromptIdx % tfoodPromptOrder.length];
+  var p = tfoodPrompts[idx];
+  document.getElementById('tfood-prompt-text').textContent = p.prompt;
+  document.getElementById('tfood-display').innerHTML = '<div class="topic-build-placeholder">Build your answer using the chips below...</div>';
+}
+
+function tfoodNextPrompt(){
+  tfoodPromptIdx++;
+  tfoodLoadPrompt();
+}
+
 function tfoodPickIdx(btn, slot, arr, idx){
   tfood[slot] = arr[idx];
   var rowMap = {meal:'tfood-meal-chips', verb:'tfood-verb-chips', food:'tfood-food-chips', mod:'tfood-mod-chips'};
@@ -7996,43 +8193,75 @@ function tfoodAskPickIdx(btn, slot, arr, idx){
   tfoodUpdateDisplay();
 }
 
+function tfoodPrPickIdx(btn, slot, arr, idx){
+  tfoodPr[slot] = arr[idx];
+  var rowMap = {meal:'tfood-pr-meal-chips', verb:'tfood-pr-verb-chips', food:'tfood-pr-food-chips', mod:'tfood-pr-mod-chips'};
+  document.getElementById(rowMap[slot]).querySelectorAll('.topic-chip').forEach(function(b){ b.classList.remove('tc-selected'); });
+  btn.classList.add('tc-selected');
+  tfoodUpdateDisplay();
+}
+
 function tfoodUpdateDisplay(){
   var el = document.getElementById('tfood-display');
 
   if(tfoodMode === 'answer'){
     var m = tfood.meal, v = tfood.verb, f = tfood.food, mod = tfood.mod;
-    if(!m && !v && !f){
-      el.innerHTML = '<div class="topic-build-placeholder">Pick a meal, verb and food to build your sentence...</div>';
-      return;
-    }
+    if(!m && !v && !f){ el.innerHTML = '<div class="topic-build-placeholder">Pick a meal, verb and food to build your sentence...</div>'; return; }
     var parts = [], enParts = [];
     if(m){ parts.push(m.hr); enParts.push(m.en); }
     if(mod){ parts.push(mod.hr); enParts.push(mod.en); }
     if(v){ parts.push(v.hr); enParts.push(v.en); }
     if(f){ parts.push(f.hr); enParts.push(f.en); }
-    var hr = parts.join(' ') + '.';
-    var en = enParts.join(' ') + '.';
-    hr = hr.charAt(0).toUpperCase() + hr.slice(1);
-    en = en.charAt(0).toUpperCase() + en.slice(1);
+    var hr = (parts.join(' ') + '.'); hr = hr.charAt(0).toUpperCase() + hr.slice(1);
+    var en = (enParts.join(' ') + '.'); en = en.charAt(0).toUpperCase() + en.slice(1);
     el.innerHTML = '<div class="topic-build-sentence">' + hr + '</div><div class="topic-build-translation">' + en + '</div>';
 
-  } else {
-    // Ask mode
+  } else if(tfoodMode === 'ask'){
     var av = tfoodAsk.verb, af = tfoodAsk.food, am = tfoodAsk.meal;
-    if(!av && !af){
-      el.innerHTML = '<div class="topic-build-placeholder">Pick a verb and food to build your question...</div>';
-      return;
-    }
+    if(!av && !af){ el.innerHTML = '<div class="topic-build-placeholder">Pick a verb and food to build your question...</div>'; return; }
     var parts = [], enParts = [];
     if(av){ parts.push(av.hr); enParts.push(av.en); }
     if(af){ parts.push(af.hr); enParts.push(af.en); }
     if(am){ parts.push(am.hr); enParts.push(am.en); }
-    var hr = parts.join(' ') + '?';
-    var en = enParts.join(' ') + '?';
-    hr = hr.charAt(0).toUpperCase() + hr.slice(1);
-    en = en.charAt(0).toUpperCase() + en.slice(1);
+    var hr = (parts.join(' ') + '?'); hr = hr.charAt(0).toUpperCase() + hr.slice(1);
+    var en = (enParts.join(' ') + '?'); en = en.charAt(0).toUpperCase() + en.slice(1);
+    el.innerHTML = '<div class="topic-build-sentence">' + hr + '</div><div class="topic-build-translation">' + en + '</div>';
+
+  } else {
+    // Prompted — build display same as answer mode
+    var m = tfoodPr.meal, v = tfoodPr.verb, f = tfoodPr.food, mod = tfoodPr.mod;
+    if(!m && !v && !f){ el.innerHTML = '<div class="topic-build-placeholder">Build your answer using the chips below...</div>'; return; }
+    var parts = [], enParts = [];
+    if(m){ parts.push(m.hr); enParts.push(m.en); }
+    if(mod){ parts.push(mod.hr); enParts.push(mod.en); }
+    if(v){ parts.push(v.hr); enParts.push(v.en); }
+    if(f){ parts.push(f.hr); enParts.push(f.en); }
+    var hr = (parts.join(' ') + '.'); hr = hr.charAt(0).toUpperCase() + hr.slice(1);
+    var en = (enParts.join(' ') + '.'); en = en.charAt(0).toUpperCase() + en.slice(1);
     el.innerHTML = '<div class="topic-build-sentence">' + hr + '</div><div class="topic-build-translation">' + en + '</div>';
   }
+}
+
+function tfoodDone(){
+  // Show model answers immediately
+  var idx = tfoodPromptOrder[tfoodPromptIdx % tfoodPromptOrder.length];
+  var p = tfoodPrompts[idx];
+  var html = p.answers.map(function(a){
+    return '<div style="margin-bottom:8px;padding-bottom:8px;border-bottom:1px solid rgba(107,122,58,0.2);">' +
+      '<div style="font-family:var(--font-display);font-size:1rem;font-weight:600;color:var(--ink);margin-bottom:2px;">' + a.hr + '</div>' +
+      '<div style="font-size:0.8rem;color:var(--stone-light);font-style:italic;">' + a.en + '</div>' +
+      '</div>';
+  }).join('');
+  // Remove last border
+  html = html.replace(/border-bottom:1px solid rgba\(107,122,58,0.2\);">\s*<\/div>$/, ';""></div>');
+  document.getElementById('tfood-model-answer-content').innerHTML = html;
+  document.getElementById('tfood-model-answer').style.display = '';
+
+  // Speak whatever the user built if they built something
+  var sent = document.querySelector('#tfood-display .topic-build-sentence');
+  if(sent) speak(sent.textContent.replace(/[.?]$/, ''));
+
+  // After a moment, load next prompt automatically on next skip/done
 }
 
 function tfoodSpeak(){
@@ -8041,12 +8270,10 @@ function tfoodSpeak(){
 }
 
 function tfoodClear(){
-  tfood = { meal:null, verb:null, food:null, mod:null };
+  tfood    = { meal:null, verb:null, food:null, mod:null };
   tfoodAsk = { verb:null, food:null, meal:null };
   document.querySelectorAll('#topic-food .topic-chip').forEach(function(b){ b.classList.remove('tc-selected'); });
-  var placeholder = tfoodMode === 'answer'
-    ? 'Pick a meal, verb and food to build your sentence...'
-    : 'Pick a verb and food to build your question...';
+  var placeholder = tfoodMode === 'ask' ? 'Pick a verb and food to build your question...' : 'Pick a meal, verb and food to build your sentence...';
   document.getElementById('tfood-display').innerHTML = '<div class="topic-build-placeholder">' + placeholder + '</div>';
 }
 
