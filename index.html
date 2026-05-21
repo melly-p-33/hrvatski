@@ -8006,122 +8006,212 @@ const tfoodAskVerbs = [
 ];
 
 const tfoodPrompts = [
-  {
-    prompt: 'Tell Sanja what you eat for breakfast.',
+  // ── STATEMENTS ──
+  { prompt: 'Tell Sanja what you eat for breakfast.',
     answers: [
-      {hr:'Za doručak jedem [food].', en:'For breakfast I eat [food].'},
-      {hr:'Jedem [food] za doručak.', en:'I eat [food] for breakfast.'},
-      {hr:'Za doručak obično jedem [food].', en:'For breakfast I usually eat [food].'},
-    ]
-  },
-  {
-    prompt: 'Tell Sanja what you drink every morning.',
+      {hr:'Za doručak jedem [hranu].', en:'For breakfast I eat [food].'},
+      {hr:'Jedem [hranu] za doručak.', en:'I eat [food] for breakfast.'},
+      {hr:'Za doručak obično jedem [hranu].', en:'For breakfast I usually eat [food].'},
+    ]},
+  { prompt: 'Tell Sanja what you drink every morning.',
     answers: [
-      {hr:'Svaki dan pijem [drink].', en:'Every day I drink [drink].'},
-      {hr:'Ujutro uvijek pijem [drink].', en:'Every morning I always drink [drink].'},
-      {hr:'Za doručak pijem [drink].', en:'For breakfast I drink [drink].'},
-    ]
-  },
-  {
-    prompt: 'Say you never eat meat.',
+      {hr:'Svaki dan pijem [piće].', en:'Every day I drink [drink].'},
+      {hr:'Ujutro uvijek pijem [piće].', en:'Every morning I always drink [drink].'},
+      {hr:'Za doručak pijem [piće].', en:'For breakfast I drink [drink].'},
+    ]},
+  { prompt: 'Say you never eat meat.',
     answers: [
       {hr:'Nikad ne jedem meso.', en:'I never eat meat.'},
       {hr:'Ne jedem nikad meso.', en:'I never eat meat.'},
       {hr:'Ne jedem meso.', en:"I don't eat meat."},
-    ]
-  },
-  {
-    prompt: 'Say you usually drink coffee for breakfast.',
+    ]},
+  { prompt: 'Say you usually drink coffee for breakfast.',
     answers: [
       {hr:'Za doručak obično pijem kavu.', en:'For breakfast I usually drink coffee.'},
       {hr:'Obično pijem kavu za doručak.', en:'I usually drink coffee for breakfast.'},
       {hr:'Svaki dan pijem kavu za doručak.', en:'Every day I drink coffee for breakfast.'},
-    ]
-  },
-  {
-    prompt: 'Ask Sanja if she eats fish.',
-    answers: [
-      {hr:'Jedeš li ribu?', en:'Do you eat fish?'},
-      {hr:'Jedeš li ribu za ručak?', en:'Do you eat fish for lunch?'},
-      {hr:'Jedeš li ribu za večeru?', en:'Do you eat fish for dinner?'},
-    ]
-  },
-  {
-    prompt: 'Say you sometimes eat pizza for dinner.',
+    ]},
+  { prompt: 'Say you sometimes eat pizza for dinner.',
     answers: [
       {hr:'Za večeru ponekad jedem pizzu.', en:'For dinner I sometimes eat pizza.'},
       {hr:'Ponekad jedem pizzu za večeru.', en:'I sometimes eat pizza for dinner.'},
       {hr:'Jedem pizzu za večeru ponekad.', en:'I eat pizza for dinner sometimes.'},
-    ]
-  },
-  {
-    prompt: 'Tell Sanja what you eat for lunch.',
+    ]},
+  { prompt: 'Tell Sanja what you eat for lunch.',
     answers: [
-      {hr:'Za ručak jedem [food].', en:'For lunch I eat [food].'},
-      {hr:'Jedem [food] za ručak.', en:'I eat [food] for lunch.'},
-      {hr:'Za ručak obično jedem [food].', en:'For lunch I usually eat [food].'},
-    ]
-  },
-  {
-    prompt: 'Ask Sanja if she drinks wine.',
-    answers: [
-      {hr:'Piješ li vino?', en:'Do you drink wine?'},
-      {hr:'Piješ li vino za večeru?', en:'Do you drink wine for dinner?'},
-    ]
-  },
-  {
-    prompt: 'Say you always eat fruit.',
+      {hr:'Za ručak jedem [hranu].', en:'For lunch I eat [food].'},
+      {hr:'Jedem [hranu] za ručak.', en:'I eat [food] for lunch.'},
+      {hr:'Za ručak obično jedem [hranu].', en:'For lunch I usually eat [food].'},
+    ]},
+  { prompt: 'Say you always eat fruit.',
     answers: [
       {hr:'Uvijek jedem voće.', en:'I always eat fruit.'},
       {hr:'Jedem uvijek voće.', en:'I always eat fruit.'},
       {hr:'Za doručak uvijek jedem voće.', en:'For breakfast I always eat fruit.'},
-    ]
-  },
-  {
-    prompt: "Say you don't drink beer.",
+    ]},
+  { prompt: "Say you don't drink beer.",
     answers: [
       {hr:'Ne pijem pivo.', en:"I don't drink beer."},
       {hr:'Nikad ne pijem pivo.', en:'I never drink beer.'},
       {hr:'Ne pijem nikad pivo.', en:'I never drink beer.'},
-    ]
-  },
-  {
-    prompt: 'Ask Sanja if she eats eggs for breakfast.',
-    answers: [
-      {hr:'Jedeš li jaja za doručak?', en:'Do you eat eggs for breakfast?'},
-      {hr:'Jedeš li jaja?', en:'Do you eat eggs?'},
-    ]
-  },
-  {
-    prompt: 'Say you rarely eat soup.',
+    ]},
+  { prompt: 'Say you rarely eat soup.',
     answers: [
       {hr:'Rijetko jedem juhu.', en:'I rarely eat soup.'},
       {hr:'Jedem juhu rijetko.', en:'I eat soup rarely.'},
       {hr:'Za ručak rijetko jedem juhu.', en:'For lunch I rarely eat soup.'},
-    ]
-  },
-  {
-    prompt: 'Tell Sanja what you drink for dinner.',
+    ]},
+  { prompt: 'Tell Sanja what you drink for dinner.',
     answers: [
-      {hr:'Za večeru pijem [drink].', en:'For dinner I drink [drink].'},
-      {hr:'Pijem [drink] za večeru.', en:'I drink [drink] for dinner.'},
-    ]
-  },
-  {
-    prompt: 'Ask Sanja if she eats cereal for breakfast.',
-    answers: [
-      {hr:'Jedeš li žitarice za doručak?', en:'Do you eat cereal for breakfast?'},
-      {hr:'Jedeš li žitarice?', en:'Do you eat cereal?'},
-    ]
-  },
-  {
-    prompt: 'Say you sometimes eat spaghetti for lunch.',
+      {hr:'Za večeru pijem [piće].', en:'For dinner I drink [drink].'},
+      {hr:'Pijem [piće] za večeru.', en:'I drink [drink] for dinner.'},
+    ]},
+  { prompt: 'Say you sometimes eat spaghetti for lunch.',
     answers: [
       {hr:'Za ručak ponekad jedem špagete.', en:'For lunch I sometimes eat spaghetti.'},
       {hr:'Ponekad jedem špagete za ručak.', en:'I sometimes eat spaghetti for lunch.'},
       {hr:'Jedem špagete za ručak ponekad.', en:'I eat spaghetti for lunch sometimes.'},
-    ]
-  },
+    ]},
+  { prompt: "Say you don't eat breakfast.",
+    answers: [
+      {hr:'Ne jedem doručak.', en:"I don't eat breakfast."},
+      {hr:'Nikad ne jedem doručak.', en:'I never eat breakfast.'},
+      {hr:'Obično ne jedem doručak.', en:'I usually skip breakfast.'},
+    ]},
+  { prompt: 'Say you eat eggs every day.',
+    answers: [
+      {hr:'Svaki dan jedem jaja.', en:'Every day I eat eggs.'},
+      {hr:'Jedem jaja svaki dan za doručak.', en:'I eat eggs every day for breakfast.'},
+      {hr:'Uvijek jedem jaja za doručak.', en:'I always eat eggs for breakfast.'},
+    ]},
+  { prompt: 'Say you drink tea in the evening.',
+    answers: [
+      {hr:'Navečer pijem čaj.', en:'In the evening I drink tea.'},
+      {hr:'Pijem čaj navečer.', en:'I drink tea in the evening.'},
+      {hr:'Uvijek pijem čaj navečer.', en:'I always drink tea in the evening.'},
+    ]},
+  { prompt: 'Say you rarely drink wine.',
+    answers: [
+      {hr:'Rijetko pijem vino.', en:'I rarely drink wine.'},
+      {hr:'Pijem vino rijetko.', en:'I drink wine rarely.'},
+      {hr:'Ponekad pijem vino za večeru.', en:'I sometimes drink wine for dinner.'},
+    ]},
+  { prompt: 'Say you eat bread and cheese for breakfast.',
+    answers: [
+      {hr:'Za doručak jedem kruh i sir.', en:'For breakfast I eat bread and cheese.'},
+      {hr:'Jedem kruh i sir za doručak.', en:'I eat bread and cheese for breakfast.'},
+    ]},
+  { prompt: "Say you don't eat fish.",
+    answers: [
+      {hr:'Ne jedem ribu.', en:"I don't eat fish."},
+      {hr:'Nikad ne jedem ribu.', en:'I never eat fish.'},
+      {hr:'Rijetko jedem ribu.', en:'I rarely eat fish.'},
+    ]},
+  { prompt: 'Say you eat yogurt every morning.',
+    answers: [
+      {hr:'Svaki dan jedem jogurt ujutro.', en:'Every day I eat yogurt in the morning.'},
+      {hr:'Uvijek jedem jogurt za doručak.', en:'I always eat yogurt for breakfast.'},
+      {hr:'Jedem jogurt svaki dan.', en:'I eat yogurt every day.'},
+    ]},
+  { prompt: 'Say you often eat salad for lunch.',
+    answers: [
+      {hr:'Za ručak često jedem salatu.', en:'For lunch I often eat salad.'},
+      {hr:'Često jedem salatu za ručak.', en:'I often eat salad for lunch.'},
+      {hr:'Obično jedem salatu za ručak.', en:'I usually eat salad for lunch.'},
+    ]},
+  { prompt: 'Say you drink orange juice every morning.',
+    answers: [
+      {hr:'Svaki dan pijem sok od naranče.', en:'Every day I drink orange juice.'},
+      {hr:'Ujutro uvijek pijem sok od naranče.', en:'Every morning I always drink orange juice.'},
+      {hr:'Za doručak pijem sok od naranče.', en:'For breakfast I drink orange juice.'},
+    ]},
+  { prompt: 'Say you sometimes eat watermelon in summer.',
+    answers: [
+      {hr:'Ponekad jedem lubenicu.', en:'I sometimes eat watermelon.'},
+      {hr:'Često jedem lubenicu.', en:'I often eat watermelon.'},
+      {hr:'Uvijek jedem lubenicu ljeti.', en:'I always eat watermelon in summer.'},
+    ]},
+  { prompt: "Say you don't drink coffee.",
+    answers: [
+      {hr:'Ne pijem kavu.', en:"I don't drink coffee."},
+      {hr:'Nikad ne pijem kavu.', en:'I never drink coffee.'},
+      {hr:'Ne pijem kavu, pijem čaj.', en:"I don't drink coffee, I drink tea."},
+    ]},
+  { prompt: 'Say you always eat chicken for dinner.',
+    answers: [
+      {hr:'Za večeru uvijek jedem piletinu.', en:'For dinner I always eat chicken.'},
+      {hr:'Uvijek jedem piletinu za večeru.', en:'I always eat chicken for dinner.'},
+      {hr:'Obično jedem piletinu za večeru.', en:'I usually eat chicken for dinner.'},
+    ]},
+  { prompt: 'Say you eat toast and jam for breakfast.',
+    answers: [
+      {hr:'Za doručak jedem tost i džem.', en:'For breakfast I eat toast and jam.'},
+      {hr:'Jedem tost i džem za doručak.', en:'I eat toast and jam for breakfast.'},
+    ]},
+  { prompt: 'Say you rarely eat fast food.',
+    answers: [
+      {hr:'Rijetko jedem brzu hranu.', en:'I rarely eat fast food.'},
+      {hr:'Skoro nikad ne jedem brzu hranu.', en:'I almost never eat fast food.'},
+      {hr:'Ne jedem često brzu hranu.', en:"I don't eat fast food often."},
+    ]},
+  // ── QUESTIONS ──
+  { prompt: 'Ask Sanja if she eats fish.',
+    answers: [
+      {hr:'Jedeš li ribu?', en:'Do you eat fish?'},
+      {hr:'Jedeš li ribu za ručak?', en:'Do you eat fish for lunch?'},
+      {hr:'Jedeš li ribu za večeru?', en:'Do you eat fish for dinner?'},
+    ]},
+  { prompt: 'Ask Sanja if she drinks wine.',
+    answers: [
+      {hr:'Piješ li vino?', en:'Do you drink wine?'},
+      {hr:'Piješ li vino za večeru?', en:'Do you drink wine for dinner?'},
+    ]},
+  { prompt: 'Ask Sanja if she eats eggs for breakfast.',
+    answers: [
+      {hr:'Jedeš li jaja za doručak?', en:'Do you eat eggs for breakfast?'},
+      {hr:'Jedeš li jaja?', en:'Do you eat eggs?'},
+    ]},
+  { prompt: 'Ask Sanja if she eats cereal for breakfast.',
+    answers: [
+      {hr:'Jedeš li žitarice za doručak?', en:'Do you eat cereal for breakfast?'},
+      {hr:'Jedeš li žitarice?', en:'Do you eat cereal?'},
+    ]},
+  { prompt: 'Ask Sanja if she drinks coffee every day.',
+    answers: [
+      {hr:'Piješ li kavu svaki dan?', en:'Do you drink coffee every day?'},
+      {hr:'Piješ li kavu za doručak?', en:'Do you drink coffee for breakfast?'},
+      {hr:'Piješ li kavu često?', en:'Do you drink coffee often?'},
+    ]},
+  { prompt: 'Ask Sanja if she eats meat.',
+    answers: [
+      {hr:'Jedeš li meso?', en:'Do you eat meat?'},
+      {hr:'Jedeš li meso često?', en:'Do you eat meat often?'},
+      {hr:'Jedeš li piletinu?', en:'Do you eat chicken?'},
+    ]},
+  { prompt: 'Ask Sanja if she drinks tea in the evening.',
+    answers: [
+      {hr:'Piješ li čaj navečer?', en:'Do you drink tea in the evening?'},
+      {hr:'Piješ li čaj?', en:'Do you drink tea?'},
+      {hr:'Piješ li čaj ili kavu?', en:'Do you drink tea or coffee?'},
+    ]},
+  { prompt: 'Ask Sanja if she eats pizza.',
+    answers: [
+      {hr:'Jedeš li pizzu?', en:'Do you eat pizza?'},
+      {hr:'Jedeš li pizzu često?', en:'Do you eat pizza often?'},
+      {hr:'Jedeš li pizzu za večeru?', en:'Do you eat pizza for dinner?'},
+    ]},
+  { prompt: 'Ask Sanja if she eats bread.',
+    answers: [
+      {hr:'Jedeš li kruh?', en:'Do you eat bread?'},
+      {hr:'Jedeš li kruh za doručak?', en:'Do you eat bread for breakfast?'},
+      {hr:'Jedeš li kruh svaki dan?', en:'Do you eat bread every day?'},
+    ]},
+  { prompt: 'Ask Sanja if she drinks juice.',
+    answers: [
+      {hr:'Piješ li sok?', en:'Do you drink juice?'},
+      {hr:'Piješ li sok od naranče?', en:'Do you drink orange juice?'},
+      {hr:'Piješ li sok za doručak?', en:'Do you drink juice for breakfast?'},
+    ]},
 ];
 
 let tfood = { meal:null, verb:null, food:null, mod:null };
@@ -8401,119 +8491,179 @@ const tweatherFrames = [
 ];
 
 const tweatherPrompts = [
-  {
-    prompt: "Say it's sunny today.",
+  // ── STATEMENTS ──
+  { prompt: "Say it's sunny today.",
     answers: [
       {hr:'Danas je sunčano.', en:"Today it's sunny."},
-      {hr:'Vrijeme je danas sunčano.', en:"The weather is sunny today."},
+      {hr:'Vrijeme je danas sunčano.', en:'The weather is sunny today.'},
       {hr:'Sunce sija danas.', en:'The sun is shining today.'},
-    ]
-  },
-  {
-    prompt: "Say it's cold in Zagreb.",
+    ]},
+  { prompt: "Say it's cold in Zagreb.",
     answers: [
       {hr:'U Zagrebu je hladno.', en:"In Zagreb it's cold."},
       {hr:'Vrijeme je hladno u Zagrebu.', en:'The weather is cold in Zagreb.'},
-    ]
-  },
-  {
-    prompt: "Ask if it's raining.",
-    answers: [
-      {hr:'Je li kišovito?', en:"Is it rainy?"},
-      {hr:'Pada li kiša?', en:'Is it raining?'},
-      {hr:'Je li kišovito danas?', en:"Is it rainy today?"},
-    ]
-  },
-  {
-    prompt: "Say the weather is bad.",
+    ]},
+  { prompt: "Say the weather is bad.",
     answers: [
       {hr:'Vrijeme je loše.', en:'The weather is bad.'},
       {hr:'Loše je vrijeme danas.', en:"Today the weather is bad."},
       {hr:'Nije lijepo vrijeme.', en:"The weather isn't nice."},
-    ]
-  },
-  {
-    prompt: "Say it's windy but nice.",
+    ]},
+  { prompt: "Say it's windy but nice.",
     answers: [
       {hr:'Vjetrovito je ali lijepo.', en:"It's windy but nice."},
       {hr:'Nije loše — ali je vjetrovito.', en:"Not bad — but it's windy."},
-    ]
-  },
-  {
-    prompt: "Ask if it's cold in Split.",
-    answers: [
-      {hr:'Je li hladno u Splitu?', en:"Is it cold in Split?"},
-      {hr:'Je li hladno u Splitu danas?', en:"Is it cold in Split today?"},
-    ]
-  },
-  {
-    prompt: "Say it's snowing.",
+    ]},
+  { prompt: "Say it's snowing.",
     answers: [
       {hr:'Pada snijeg.', en:"It's snowing."},
       {hr:'Pada snijeg danas.', en:"It's snowing today."},
       {hr:'Pada snijeg u planinama.', en:"It's snowing in the mountains."},
-    ]
-  },
-  {
-    prompt: "Say the weather is warm today.",
+    ]},
+  { prompt: "Say the weather is warm today.",
     answers: [
       {hr:'Danas je toplo.', en:"Today it's warm."},
       {hr:'Vrijeme je toplo danas.', en:'The weather is warm today.'},
       {hr:'Danas je lijepo i toplo.', en:"Today it's nice and warm."},
-    ]
-  },
-  {
-    prompt: "Say it's foggy in the morning.",
+    ]},
+  { prompt: "Say it's foggy in the morning.",
     answers: [
       {hr:'Ujutro je maglovito.', en:"In the morning it's foggy."},
       {hr:'Maglovito je ujutro.', en:"It's foggy in the morning."},
-    ]
-  },
-  {
-    prompt: "Ask what the weather is like today.",
-    answers: [
-      {hr:'Kakvo je vrijeme danas?', en:"What's the weather like today?"},
-      {hr:'Kakvo je vrijeme?', en:"What's the weather like?"},
-    ]
-  },
-  {
-    prompt: "Say it's not cold, it's warm.",
+    ]},
+  { prompt: "Say it's not cold, it's warm.",
     answers: [
       {hr:'Nije hladno, toplo je.', en:"It's not cold, it's warm."},
       {hr:'Nije hladno nego toplo.', en:"It's not cold, it's warm."},
-      {hr:'Nije hladno — je toplo.', en:"It's not cold — it's warm."},
-    ]
-  },
-  {
-    prompt: "Say the sun is shining.",
+    ]},
+  { prompt: "Say the sun is shining.",
     answers: [
       {hr:'Sunce sija.', en:'The sun is shining.'},
       {hr:'Sunce sija danas.', en:'The sun is shining today.'},
       {hr:'Sunce sija i lijepo je.', en:"The sun is shining and it's nice."},
-    ]
-  },
-  {
-    prompt: "Say it's stormy in the mountains.",
+    ]},
+  { prompt: "Say it's stormy in the mountains.",
     answers: [
       {hr:'U planinama je olujno.', en:"In the mountains it's stormy."},
       {hr:'Olujno je u planinama.', en:"It's stormy in the mountains."},
-    ]
-  },
-  {
-    prompt: "Ask if it's hot at the coast.",
-    answers: [
-      {hr:'Je li vruće na moru?', en:"Is it hot at the coast?"},
-      {hr:'Je li vruće na moru danas?', en:"Is it hot at the coast today?"},
-    ]
-  },
-  {
-    prompt: "Say the weather is cloudy but fresh.",
+    ]},
+  { prompt: "Say the weather is cloudy but fresh.",
     answers: [
       {hr:'Oblačno je ali svježe.', en:"It's cloudy but fresh."},
       {hr:'Vrijeme je oblačno i svježe.', en:'The weather is cloudy and fresh.'},
       {hr:'Nije sunčano — oblačno je i svježe.', en:"It's not sunny — it's cloudy and fresh."},
-    ]
-  },
+    ]},
+  { prompt: "Say it's raining today.",
+    answers: [
+      {hr:'Pada kiša danas.', en:"It's raining today."},
+      {hr:'Danas pada kiša.', en:"Today it's raining."},
+      {hr:'Kišovito je danas.', en:"It's rainy today."},
+    ]},
+  { prompt: "Say it's hot at the coast.",
+    answers: [
+      {hr:'Na moru je vruće.', en:"At the coast it's hot."},
+      {hr:'Vruće je na moru.', en:"It's hot at the coast."},
+      {hr:'Na moru je lijepo i vruće.', en:"At the coast it's nice and hot."},
+    ]},
+  { prompt: "Say the weather is nice.",
+    answers: [
+      {hr:'Lijepo je vrijeme.', en:'The weather is nice.'},
+      {hr:'Vrijeme je lijepo danas.', en:"Today the weather is nice."},
+      {hr:'Sunčano je i lijepo.', en:"It's sunny and nice."},
+    ]},
+  { prompt: "Say it's cold and rainy.",
+    answers: [
+      {hr:'Hladno je i kišovito.', en:"It's cold and rainy."},
+      {hr:'Kišovito je i hladno.', en:"It's rainy and cold."},
+      {hr:'Loše je vrijeme — hladno i kišovito.', en:"The weather is bad — cold and rainy."},
+    ]},
+  { prompt: "Say it's gloomy today.",
+    answers: [
+      {hr:'Danas je tmurno.', en:"Today it's gloomy."},
+      {hr:'Tmurno je danas.', en:"It's gloomy today."},
+      {hr:'Nije sunčano, tmurno je.', en:"It's not sunny, it's gloomy."},
+    ]},
+  { prompt: "Say the wind is blowing.",
+    answers: [
+      {hr:'Puše vjetar.', en:'The wind is blowing.'},
+      {hr:'Jako puše vjetar.', en:'The wind is blowing strongly.'},
+      {hr:'Puše vjetar danas.', en:'The wind is blowing today.'},
+    ]},
+  { prompt: "Say it's not raining, it's snowing.",
+    answers: [
+      {hr:'Ne pada kiša, pada snijeg.', en:"It's not raining, it's snowing."},
+      {hr:'Nije kišovito nego snježno.', en:"It's not rainy, it's snowy."},
+      {hr:'Ne pada kiša nego snijeg.', en:"It's not raining but snowing."},
+    ]},
+  { prompt: "Say it's cool and fresh in the morning.",
+    answers: [
+      {hr:'Ujutro je svježe i hladno.', en:"In the morning it's fresh and cool."},
+      {hr:'Svježe je ujutro.', en:"It's fresh in the morning."},
+      {hr:'Ujutro nije vruće — svježe je.', en:"In the morning it's not hot — it's fresh."},
+    ]},
+  { prompt: "Say the weather in Split is always nice.",
+    answers: [
+      {hr:'U Splitu je uvijek lijepo.', en:"In Split it's always nice."},
+      {hr:'U Splitu je uvijek sunčano.', en:"In Split it's always sunny."},
+      {hr:'Uvijek je lijepo u Splitu.', en:"It's always nice in Split."},
+    ]},
+  { prompt: "Say it's not nice today, it's rainy.",
+    answers: [
+      {hr:'Danas nije lijepo, kišovito je.', en:"Today it's not nice, it's rainy."},
+      {hr:'Nije lijepo nego kišovito.', en:"It's not nice, it's rainy."},
+      {hr:'Loše je vrijeme danas — pada kiša.', en:"The weather is bad today — it's raining."},
+    ]},
+  { prompt: "Say it's hot in the summer.",
+    answers: [
+      {hr:'Ljeti je vruće.', en:"In summer it's hot."},
+      {hr:'U ljeto je uvijek vruće.', en:"In summer it's always hot."},
+      {hr:'Vruće je ljeti na moru.', en:"It's hot at the coast in summer."},
+    ]},
+  // ── QUESTIONS ──
+  { prompt: "Ask if it's raining.",
+    answers: [
+      {hr:'Je li kišovito?', en:"Is it rainy?"},
+      {hr:'Pada li kiša?', en:'Is it raining?'},
+      {hr:'Je li kišovito danas?', en:"Is it rainy today?"},
+    ]},
+  { prompt: "Ask if it's cold in Split.",
+    answers: [
+      {hr:'Je li hladno u Splitu?', en:"Is it cold in Split?"},
+      {hr:'Je li hladno u Splitu danas?', en:"Is it cold in Split today?"},
+    ]},
+  { prompt: "Ask what the weather is like today.",
+    answers: [
+      {hr:'Kakvo je vrijeme danas?', en:"What's the weather like today?"},
+      {hr:'Kakvo je vrijeme?', en:"What's the weather like?"},
+    ]},
+  { prompt: "Ask if it's hot at the coast.",
+    answers: [
+      {hr:'Je li vruće na moru?', en:"Is it hot at the coast?"},
+      {hr:'Je li vruće na moru danas?', en:"Is it hot at the coast today?"},
+    ]},
+  { prompt: "Ask if it's cold in London.",
+    answers: [
+      {hr:'Je li hladno u Londonu?', en:"Is it cold in London?"},
+      {hr:'Kakvo je vrijeme u Londonu?', en:"What's the weather like in London?"},
+      {hr:'Je li kišovito u Londonu?', en:"Is it rainy in London?"},
+    ]},
+  { prompt: "Ask if it's sunny today.",
+    answers: [
+      {hr:'Je li sunčano danas?', en:"Is it sunny today?"},
+      {hr:'Je li lijepo vrijeme danas?', en:"Is the weather nice today?"},
+      {hr:'Sija li sunce danas?', en:"Is the sun shining today?"},
+    ]},
+  { prompt: "Ask if the wind is blowing.",
+    answers: [
+      {hr:'Puše li vjetar?', en:'Is the wind blowing?'},
+      {hr:'Je li vjetrovito?', en:"Is it windy?"},
+      {hr:'Je li vjetrovito danas?', en:"Is it windy today?"},
+    ]},
+  { prompt: "Ask if it's snowing in the mountains.",
+    answers: [
+      {hr:'Pada li snijeg u planinama?', en:"Is it snowing in the mountains?"},
+      {hr:'Je li snježno u planinama?', en:"Is it snowy in the mountains?"},
+    ]},
 ];
 
 let tweather = { frame:null, desc:null, mod:null };
@@ -8749,122 +8899,199 @@ const tgreetSubjects = [
 ];
 
 const tgreetPrompts = [
-  {
-    prompt: 'Tell Sanja your name.',
+  // ── STATEMENTS ──
+  { prompt: 'Tell Sanja your name.',
     answers: [
       {hr:'Zovem se [ime].', en:'My name is [name].'},
       {hr:'Ja sam [ime].', en:'I am [name].'},
       {hr:'Moje ime je [ime].', en:'My name is [name].'},
-    ]
-  },
-  {
-    prompt: 'Say where you are from.',
+    ]},
+  { prompt: 'Say where you are from.',
     answers: [
       {hr:'Ja sam iz Londona.', en:"I'm from London."},
       {hr:'Dolazim iz Engleske.', en:'I come from England.'},
       {hr:'Ja sam iz [grada].', en:"I'm from [city]."},
-    ]
-  },
-  {
-    prompt: 'Say where you live.',
+    ]},
+  { prompt: 'Say where you live.',
     answers: [
       {hr:'Živim u Londonu.', en:'I live in London.'},
       {hr:'Živim u [gradu].', en:'I live in [city].'},
       {hr:'Živim u Engleskoj.', en:'I live in England.'},
-    ]
-  },
-  {
-    prompt: "Say you're fine, thanks.",
+    ]},
+  { prompt: "Say you're fine, thanks.",
     answers: [
       {hr:'Dobro sam, hvala.', en:"I'm fine, thanks."},
       {hr:'Dobro sam, hvala. A ti?', en:"I'm fine, thanks. And you?"},
       {hr:'Super, hvala!', en:'Great, thanks!'},
-    ]
-  },
-  {
-    prompt: "Ask Sanja where she's from.",
-    answers: [
-      {hr:'Odakle si?', en:'Where are you from?'},
-      {hr:'Odakle si ti?', en:'Where are you from?'},
-    ]
-  },
-  {
-    prompt: 'Say what you do for work.',
+    ]},
+  { prompt: 'Say what you do for work.',
     answers: [
       {hr:'Radim kao [zanimanje].', en:'I work as [profession].'},
       {hr:'Ja sam [zanimanje].', en:'I am [profession].'},
       {hr:'Radim u [mjesto].', en:'I work in [place].'},
-    ]
-  },
-  {
-    prompt: "Say you're studying Croatian.",
+    ]},
+  { prompt: "Say you're studying Croatian.",
     answers: [
       {hr:'Učim hrvatski.', en:"I'm learning Croatian."},
       {hr:'Studiram hrvatski.', en:"I'm studying Croatian."},
       {hr:'Učim hrvatski jezik.', en:"I'm learning the Croatian language."},
-    ]
-  },
-  {
-    prompt: "Say you're tired today.",
+    ]},
+  { prompt: "Say you're tired today.",
     answers: [
       {hr:'Umoran sam danas.', en:"I'm tired today. (m)"},
       {hr:'Umorna sam danas.', en:"I'm tired today. (f)"},
       {hr:'Malo sam umoran danas.', en:"I'm a little tired today. (m)"},
-    ]
-  },
-  {
-    prompt: 'Ask Sanja where she lives.',
-    answers: [
-      {hr:'Gdje živiš?', en:'Where do you live?'},
-      {hr:'Gdje živiš ti?', en:'Where do you live?'},
-    ]
-  },
-  {
-    prompt: 'Say nice to meet you.',
+    ]},
+  { prompt: 'Say nice to meet you.',
     answers: [
       {hr:'Drago mi je.', en:'Nice to meet you.'},
       {hr:'Drago mi je upoznati te.', en:'Nice to meet you.'},
-    ]
-  },
-  {
-    prompt: 'Say you work as a teacher.',
+    ]},
+  { prompt: 'Say you work as a teacher.',
     answers: [
       {hr:'Radim kao učiteljica.', en:'I work as a teacher. (f)'},
       {hr:'Radim kao učitelj.', en:'I work as a teacher. (m)'},
       {hr:'Ja sam učiteljica.', en:"I'm a teacher. (f)"},
-    ]
-  },
-  {
-    prompt: 'Ask Sanja how she is.',
-    answers: [
-      {hr:'Kako si?', en:'How are you?'},
-      {hr:'Kako si ti?', en:'How are you?'},
-      {hr:'Sve okej?', en:'Everything okay?'},
-    ]
-  },
-  {
-    prompt: "Say you're happy today.",
+    ]},
+  { prompt: "Say you're happy today.",
     answers: [
       {hr:'Sretan sam danas.', en:"I'm happy today. (m)"},
       {hr:'Sretna sam danas.', en:"I'm happy today. (f)"},
       {hr:'Jako sam sretan danas.', en:"I'm really happy today. (m)"},
-    ]
-  },
-  {
-    prompt: 'Say you live in London.',
+    ]},
+  { prompt: 'Say you live in London.',
     answers: [
       {hr:'Živim u Londonu.', en:'I live in London.'},
       {hr:'Ja živim u Londonu.', en:'I live in London.'},
-    ]
-  },
-  {
-    prompt: 'Ask Sanja what she does.',
+    ]},
+  { prompt: "Say you're not bad, thanks.",
+    answers: [
+      {hr:'Nije loše, hvala.', en:"Not bad, thanks."},
+      {hr:'Nije loše. A ti?', en:'Not bad. And you?'},
+      {hr:'Dobro, nije loše.', en:'Good, not bad.'},
+    ]},
+  { prompt: "Say you're a bit busy.",
+    answers: [
+      {hr:'Malo sam zauzet.', en:"I'm a bit busy. (m)"},
+      {hr:'Malo sam zauzeta.', en:"I'm a bit busy. (f)"},
+      {hr:'Zauzet sam danas.', en:"I'm busy today. (m)"},
+    ]},
+  { prompt: "Say you've been learning Croatian for a while.",
+    answers: [
+      {hr:'Učim hrvatski već neko vrijeme.', en:"I've been learning Croatian for a while."},
+      {hr:'Učim hrvatski.', en:"I'm learning Croatian."},
+      {hr:'Učim hrvatski, ali je teško.', en:"I'm learning Croatian but it's hard."},
+    ]},
+  { prompt: 'Say goodbye and see you later.',
+    answers: [
+      {hr:'Doviđenja! Vidimo se kasnije.', en:'Goodbye! See you later.'},
+      {hr:'Bok! Vidimo se!', en:'Bye! See you!'},
+      {hr:'Čujemo se!', en:"We'll talk soon!"},
+    ]},
+  { prompt: "Say you're from England.",
+    answers: [
+      {hr:'Ja sam iz Engleske.', en:"I'm from England."},
+      {hr:'Dolazim iz Engleske.', en:'I come from England.'},
+      {hr:'Ja sam Engleskinja.', en:"I'm English. (f)"},
+    ]},
+  { prompt: "Say you don't understand.",
+    answers: [
+      {hr:'Ne razumijem.', en:"I don't understand."},
+      {hr:'Ne kužim.', en:"I don't get it. (casual)"},
+      {hr:'Možeš li ponoviti?', en:'Can you repeat that?'},
+    ]},
+  { prompt: 'Say you speak a little Croatian.',
+    answers: [
+      {hr:'Govorim malo hrvatski.', en:'I speak a little Croatian.'},
+      {hr:'Znam malo hrvatski.', en:'I know a little Croatian.'},
+      {hr:'Učim hrvatski — govorim malo.', en:"I'm learning Croatian — I speak a little."},
+    ]},
+  { prompt: "Say everything is okay.",
+    answers: [
+      {hr:'Sve je okej.', en:"Everything is okay."},
+      {hr:'Sve je u redu.', en:"Everything is fine."},
+      {hr:'Sve okej, hvala.', en:'All okay, thanks.'},
+    ]},
+  { prompt: "Say you're so-so today.",
+    answers: [
+      {hr:'Tako-tako.', en:'So-so.'},
+      {hr:'Danas sam tako-tako.', en:"Today I'm so-so."},
+      {hr:'Nije loše, nije ni odlično.', en:"Not bad, not great either."},
+    ]},
+  { prompt: "Say you're not from Croatia.",
+    answers: [
+      {hr:'Nisam iz Hrvatske.', en:"I'm not from Croatia."},
+      {hr:'Ja nisam Hrvatica.', en:"I'm not Croatian. (f)"},
+      {hr:'Nisam iz Hrvatske, ja sam iz Engleske.', en:"I'm not from Croatia, I'm from England."},
+    ]},
+  { prompt: 'Say your name and where you are from.',
+    answers: [
+      {hr:'Ja sam [ime], ja sam iz [grada].', en:"I'm [name], I'm from [city]."},
+      {hr:'Zovem se [ime] i dolazim iz Engleske.', en:'My name is [name] and I come from England.'},
+      {hr:'Moje ime je [ime]. Ja sam iz Londona.', en:'My name is [name]. I am from London.'},
+    ]},
+  { prompt: "Say you don't work, you study.",
+    answers: [
+      {hr:'Ne radim, studiram.', en:"I don't work, I study."},
+      {hr:'Nisam zaposlena, studiram.', en:"I'm not employed, I study. (f)"},
+      {hr:'Studiram, ne radim.', en:"I study, I don't work."},
+    ]},
+  { prompt: 'Say you live in the city centre.',
+    answers: [
+      {hr:'Živim u centru grada.', en:'I live in the city centre.'},
+      {hr:'Živim u gradu.', en:'I live in the city.'},
+      {hr:'Živim u centru.', en:'I live in the centre.'},
+    ]},
+  { prompt: "Say you're really well today.",
+    answers: [
+      {hr:'Jako sam dobro danas.', en:"I'm really well today."},
+      {hr:'Odlično sam danas!', en:"I'm excellent today!"},
+      {hr:'Danas sam jako sretan.', en:"Today I'm really happy. (m)"},
+    ]},
+  // ── QUESTIONS ──
+  { prompt: "Ask Sanja where she's from.",
+    answers: [
+      {hr:'Odakle si?', en:'Where are you from?'},
+      {hr:'Odakle si ti?', en:'Where are you from?'},
+    ]},
+  { prompt: 'Ask Sanja where she lives.',
+    answers: [
+      {hr:'Gdje živiš?', en:'Where do you live?'},
+      {hr:'Gdje živiš ti?', en:'Where do you live?'},
+    ]},
+  { prompt: 'Ask Sanja how she is.',
+    answers: [
+      {hr:'Kako si?', en:'How are you?'},
+      {hr:'Kako si ti?', en:'How are you?'},
+      {hr:'Sve okej?', en:'Everything okay?'},
+    ]},
+  { prompt: 'Ask Sanja what she does.',
     answers: [
       {hr:'Što radiš?', en:'What do you do?'},
       {hr:'Što radiš ti?', en:'What do you do?'},
       {hr:'Gdje radiš?', en:'Where do you work?'},
-    ]
-  },
+    ]},
+  { prompt: "Ask Sanja what her name is.",
+    answers: [
+      {hr:'Kako se zoveš?', en:'What is your name?'},
+      {hr:'Kako se ti zoveš?', en:'What is your name?'},
+    ]},
+  { prompt: "Ask Sanja if she speaks English.",
+    answers: [
+      {hr:'Govoriš li engleski?', en:'Do you speak English?'},
+      {hr:'Znaš li engleski?', en:'Do you know English?'},
+      {hr:'Govoriš li engleski dobro?', en:'Do you speak English well?'},
+    ]},
+  { prompt: "Ask Sanja how long she has lived in Zagreb.",
+    answers: [
+      {hr:'Koliko dugo živiš u Zagrebu?', en:'How long have you lived in Zagreb?'},
+      {hr:'Živiš li dugo u Zagrebu?', en:'Have you lived in Zagreb long?'},
+    ]},
+  { prompt: "Ask Sanja if she is from Zagreb.",
+    answers: [
+      {hr:'Jesi li iz Zagreba?', en:'Are you from Zagreb?'},
+      {hr:'Jesi li Zagrepčanka?', en:'Are you from Zagreb? (to a woman)'},
+    ]},
 ];
 
 let tgreet = { q:null, a:null, detail:null };
