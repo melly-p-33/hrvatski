@@ -2693,6 +2693,10 @@
           <div class="topic-build-label">Meal <span style="font-size:0.65rem;color:var(--stone-pale)">(optional)</span></div>
           <div class="topic-build-chips" id="tfood-ask-meal-chips"></div>
         </div>
+        <div class="topic-build-row">
+          <div class="topic-build-label">Often <span style="font-size:0.65rem;color:var(--stone-pale)">(optional)</span></div>
+          <div class="topic-build-chips" id="tfood-ask-mod-chips"></div>
+        </div>
       </div>
       <!-- Prompted rows -->
       <div id="tfood-prompted-rows" style="display:none;">
@@ -8051,14 +8055,14 @@ const tfoodPrompts = [
 
 let tfood = { meal:null, verb:null, food:null, mod:null };
 let tfoodMode = 'answer';
-let tfoodAsk = { verb:null, food:null, meal:null };
+let tfoodAsk = { verb:null, food:null, meal:null, mod:null };
 let tfoodPr = { meal:null, verb:null, food:null, mod:null };
 let tfoodPromptIdx = 0;
 let tfoodPromptOrder = [];
 
 function initTopicFood(){
   tfood = { meal:null, verb:null, food:null, mod:null };
-  tfoodAsk = { verb:null, food:null, meal:null };
+  tfoodAsk = { verb:null, food:null, meal:null, mod:null };
   tfoodPr = { meal:null, verb:null, food:null, mod:null };
   tfoodMode = 'answer';
   tfoodPromptOrder = tfoodPrompts.map(function(_,i){ return i; }).sort(function(){ return Math.random()-0.5; });
@@ -8099,7 +8103,7 @@ function initTopicFood(){
 function tfoodSetMode(mode, btn){
   tfoodMode = mode;
   tfood    = { meal:null, verb:null, food:null, mod:null };
-  tfoodAsk = { verb:null, food:null, meal:null };
+  tfoodAsk = { verb:null, food:null, meal:null, mod:null };
   tfoodPr  = { meal:null, verb:null, food:null, mod:null };
 
   document.querySelectorAll('#topic-food .sb-group-tab').forEach(function(b){ b.classList.remove('active'); });
@@ -8145,6 +8149,9 @@ function buildTfoodAskChips(){
   document.getElementById('tfood-ask-meal-chips').innerHTML = tfoodMeals.map(function(m,i){
     return '<button class="topic-chip tc-meal" onclick="tfoodAskPickIdx(this,\'meal\',window.tfood_meal_data,'+i+')">' + m.hr + '</button>';
   }).join('');
+  document.getElementById('tfood-ask-mod-chips').innerHTML = tfoodMods.map(function(m,i){
+    return '<button class="topic-chip tc-mod" onclick="tfoodAskPickIdx(this,\'mod\',window.tfood_mod_data,'+i+')">' + m.hr + '</button>';
+  }).join('');
 }
 
 function buildTfoodPromptedChips(){
@@ -8187,7 +8194,7 @@ function tfoodPickIdx(btn, slot, arr, idx){
 
 function tfoodAskPickIdx(btn, slot, arr, idx){
   tfoodAsk[slot] = arr[idx];
-  var rowMap = {verb:'tfood-ask-verb-chips', food:'tfood-ask-food-chips', meal:'tfood-ask-meal-chips'};
+  var rowMap = {verb:'tfood-ask-verb-chips', food:'tfood-ask-food-chips', meal:'tfood-ask-meal-chips', mod:'tfood-ask-mod-chips'};
   document.getElementById(rowMap[slot]).querySelectorAll('.topic-chip').forEach(function(b){ b.classList.remove('tc-selected'); });
   btn.classList.add('tc-selected');
   tfoodUpdateDisplay();
@@ -8217,12 +8224,13 @@ function tfoodUpdateDisplay(){
     el.innerHTML = '<div class="topic-build-sentence">' + hr + '</div><div class="topic-build-translation">' + en + '</div>';
 
   } else if(tfoodMode === 'ask'){
-    var av = tfoodAsk.verb, af = tfoodAsk.food, am = tfoodAsk.meal;
+    var av = tfoodAsk.verb, af = tfoodAsk.food, am = tfoodAsk.meal, amod = tfoodAsk.mod;
     if(!av && !af){ el.innerHTML = '<div class="topic-build-placeholder">Pick a verb and food to build your question...</div>'; return; }
     var parts = [], enParts = [];
     if(av){ parts.push(av.hr); enParts.push(av.en); }
     if(af){ parts.push(af.hr); enParts.push(af.en); }
     if(am){ parts.push(am.hr); enParts.push(am.en); }
+    if(amod){ parts.push(amod.hr); enParts.push(amod.en); }
     var hr = (parts.join(' ') + '?'); hr = hr.charAt(0).toUpperCase() + hr.slice(1);
     var en = (enParts.join(' ') + '?'); en = en.charAt(0).toUpperCase() + en.slice(1);
     el.innerHTML = '<div class="topic-build-sentence">' + hr + '</div><div class="topic-build-translation">' + en + '</div>';
@@ -8271,7 +8279,7 @@ function tfoodSpeak(){
 
 function tfoodClear(){
   tfood    = { meal:null, verb:null, food:null, mod:null };
-  tfoodAsk = { verb:null, food:null, meal:null };
+  tfoodAsk = { verb:null, food:null, meal:null, mod:null };
   document.querySelectorAll('#topic-food .topic-chip').forEach(function(b){ b.classList.remove('tc-selected'); });
   var placeholder = tfoodMode === 'ask' ? 'Pick a verb and food to build your question...' : 'Pick a meal, verb and food to build your sentence...';
   document.getElementById('tfood-display').innerHTML = '<div class="topic-build-placeholder">' + placeholder + '</div>';
