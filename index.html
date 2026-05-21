@@ -2774,24 +2774,56 @@
     <!-- Build your answer -->
     <div class="topic-section-title">Build your answer</div>
     <div class="topic-build">
+      <div style="display:flex;gap:6px;margin-bottom:1rem;">
+        <button class="sb-group-tab active" id="tweather-mode-free" onclick="tweatherSetMode('free',this)">Free build</button>
+        <button class="sb-group-tab" id="tweather-mode-prompted" onclick="tweatherSetMode('prompted',this)">Prompted</button>
+      </div>
       <div class="topic-build-display" id="tweather-display">
         <div class="topic-build-placeholder">Pick a frame, descriptor and time to build your sentence...</div>
       </div>
-      <div class="topic-build-row">
-        <div class="topic-build-label">Frame</div>
-        <div class="topic-build-chips" id="tweather-frame-chips"></div>
+      <!-- Free build rows -->
+      <div id="tweather-free-rows">
+        <div class="topic-build-row">
+          <div class="topic-build-label">Frame</div>
+          <div class="topic-build-chips" id="tweather-frame-chips"></div>
+        </div>
+        <div class="topic-build-row">
+          <div class="topic-build-label">Weather</div>
+          <div class="topic-build-chips" id="tweather-desc-chips"></div>
+        </div>
+        <div class="topic-build-row">
+          <div class="topic-build-label">When/Where</div>
+          <div class="topic-build-chips" id="tweather-mod-chips"></div>
+        </div>
       </div>
-      <div class="topic-build-row">
-        <div class="topic-build-label">Weather</div>
-        <div class="topic-build-chips" id="tweather-desc-chips"></div>
-      </div>
-      <div class="topic-build-row">
-        <div class="topic-build-label">When/Where</div>
-        <div class="topic-build-chips" id="tweather-mod-chips"></div>
+      <!-- Prompted rows -->
+      <div id="tweather-prompted-rows" style="display:none;">
+        <div style="background:var(--sand);border-radius:var(--radius-sm);border:1px solid var(--sand-dark);padding:12px 16px;margin-bottom:1rem;">
+          <div style="font-size:0.68rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--stone-light);margin-bottom:6px;">Your task</div>
+          <div style="font-size:1rem;font-weight:500;color:var(--ink);" id="tweather-prompt-text">Loading...</div>
+        </div>
+        <div class="topic-build-row">
+          <div class="topic-build-label">Frame</div>
+          <div class="topic-build-chips" id="tweather-pr-frame-chips"></div>
+        </div>
+        <div class="topic-build-row">
+          <div class="topic-build-label">Weather</div>
+          <div class="topic-build-chips" id="tweather-pr-desc-chips"></div>
+        </div>
+        <div class="topic-build-row">
+          <div class="topic-build-label">When/Where <span style="font-size:0.65rem;color:var(--stone-pale)">(optional)</span></div>
+          <div class="topic-build-chips" id="tweather-pr-mod-chips"></div>
+        </div>
+        <div id="tweather-model-answer" style="display:none;margin-top:0.75rem;background:var(--olive-pale);border:1px solid #B8D090;border-radius:var(--radius-sm);padding:12px 16px;">
+          <div style="font-size:0.68rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--olive);margin-bottom:8px;font-weight:500;">Ways you could say it</div>
+          <div id="tweather-model-answer-content"></div>
+        </div>
       </div>
       <div class="topic-build-actions">
         <button class="btn btn-sea btn-icon" onclick="tweatherSpeak()" title="Hear it"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg></button>
-        <button class="btn btn-ghost" onclick="tweatherClear()">Clear</button>
+        <button class="btn btn-primary" id="tweather-done-btn" onclick="tweatherDone()" style="display:none;flex:1;font-weight:600;">Done ✓</button>
+        <button class="btn btn-ghost" id="tweather-skip-btn" onclick="tweatherNextPrompt()" style="display:none;">Skip &#8594;</button>
+        <button class="btn btn-ghost" id="tweather-clear-btn" onclick="tweatherClear()">Clear</button>
       </div>
     </div>
   </div>
@@ -2838,24 +2870,59 @@
     <!-- Build your answer -->
     <div class="topic-section-title">Build your answer</div>
     <div class="topic-build">
+      <div style="display:flex;gap:6px;margin-bottom:1rem;">
+        <button class="sb-group-tab active" id="tgreet-mode-free" onclick="tgreetSetMode('free',this)">Free build</button>
+        <button class="sb-group-tab" id="tgreet-mode-prompted" onclick="tgreetSetMode('prompted',this)">Prompted</button>
+      </div>
       <div class="topic-build-display" id="tgreet-display">
         <div class="topic-build-placeholder">Pick a question, then build your answer...</div>
       </div>
-      <div class="topic-build-row">
-        <div class="topic-build-label">Question</div>
-        <div class="topic-build-chips" id="tgreet-q-chips"></div>
+      <!-- Free build rows -->
+      <div id="tgreet-free-rows">
+        <div class="topic-build-row">
+          <div class="topic-build-label">Question</div>
+          <div class="topic-build-chips" id="tgreet-q-chips"></div>
+        </div>
+        <div class="topic-build-row">
+          <div class="topic-build-label">Answer</div>
+          <div class="topic-build-chips" id="tgreet-a-chips"></div>
+        </div>
+        <div class="topic-build-row" id="tgreet-detail-row">
+          <div class="topic-build-label">Detail</div>
+          <div class="topic-build-chips" id="tgreet-detail-chips"></div>
+        </div>
       </div>
-      <div class="topic-build-row">
-        <div class="topic-build-label">Answer</div>
-        <div class="topic-build-chips" id="tgreet-a-chips"></div>
-      </div>
-      <div class="topic-build-row" id="tgreet-detail-row">
-        <div class="topic-build-label">Detail</div>
-        <div class="topic-build-chips" id="tgreet-detail-chips"></div>
+      <!-- Prompted rows -->
+      <div id="tgreet-prompted-rows" style="display:none;">
+        <div style="background:var(--sand);border-radius:var(--radius-sm);border:1px solid var(--sand-dark);padding:12px 16px;margin-bottom:1rem;">
+          <div style="font-size:0.68rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--stone-light);margin-bottom:6px;">Your task</div>
+          <div style="font-size:1rem;font-weight:500;color:var(--ink);" id="tgreet-prompt-text">Loading...</div>
+        </div>
+        <!-- Statement answer row -->
+        <div class="topic-build-row">
+          <div class="topic-build-label">Answer</div>
+          <div class="topic-build-chips" id="tgreet-pr-a-chips"></div>
+        </div>
+        <!-- Question row (for "Ask Sanja..." prompts) -->
+        <div class="topic-build-row">
+          <div class="topic-build-label">Question</div>
+          <div class="topic-build-chips" id="tgreet-pr-q-chips"></div>
+        </div>
+        <!-- Detail row -->
+        <div class="topic-build-row" id="tgreet-pr-detail-row" style="display:none;">
+          <div class="topic-build-label">Detail</div>
+          <div class="topic-build-chips" id="tgreet-pr-detail-chips"></div>
+        </div>
+        <div id="tgreet-model-answer" style="display:none;margin-top:0.75rem;background:var(--olive-pale);border:1px solid #B8D090;border-radius:var(--radius-sm);padding:12px 16px;">
+          <div style="font-size:0.68rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--olive);margin-bottom:8px;font-weight:500;">Ways you could say it</div>
+          <div id="tgreet-model-answer-content"></div>
+        </div>
       </div>
       <div class="topic-build-actions">
         <button class="btn btn-sea btn-icon" onclick="tgreetSpeak()" title="Hear it"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg></button>
-        <button class="btn btn-ghost" onclick="tgreetClear()">Clear</button>
+        <button class="btn btn-primary" id="tgreet-done-btn" onclick="tgreetDone()" style="display:none;flex:1;font-weight:600;">Done ✓</button>
+        <button class="btn btn-ghost" id="tgreet-skip-btn" onclick="tgreetNextPrompt()" style="display:none;">Skip &#8594;</button>
+        <button class="btn btn-ghost" id="tgreet-clear-btn" onclick="tgreetClear()">Clear</button>
       </div>
     </div>
   </div>
@@ -8333,34 +8400,188 @@ const tweatherFrames = [
   {hr:'Nije', en:"It's not", needsDesc:true},
 ];
 
+const tweatherPrompts = [
+  {
+    prompt: "Say it's sunny today.",
+    answers: [
+      {hr:'Danas je sunčano.', en:"Today it's sunny."},
+      {hr:'Vrijeme je danas sunčano.', en:"The weather is sunny today."},
+      {hr:'Sunce sija danas.', en:'The sun is shining today.'},
+    ]
+  },
+  {
+    prompt: "Say it's cold in Zagreb.",
+    answers: [
+      {hr:'U Zagrebu je hladno.', en:"In Zagreb it's cold."},
+      {hr:'Vrijeme je hladno u Zagrebu.', en:'The weather is cold in Zagreb.'},
+    ]
+  },
+  {
+    prompt: "Ask if it's raining.",
+    answers: [
+      {hr:'Je li kišovito?', en:"Is it rainy?"},
+      {hr:'Pada li kiša?', en:'Is it raining?'},
+      {hr:'Je li kišovito danas?', en:"Is it rainy today?"},
+    ]
+  },
+  {
+    prompt: "Say the weather is bad.",
+    answers: [
+      {hr:'Vrijeme je loše.', en:'The weather is bad.'},
+      {hr:'Loše je vrijeme danas.', en:"Today the weather is bad."},
+      {hr:'Nije lijepo vrijeme.', en:"The weather isn't nice."},
+    ]
+  },
+  {
+    prompt: "Say it's windy but nice.",
+    answers: [
+      {hr:'Vjetrovito je ali lijepo.', en:"It's windy but nice."},
+      {hr:'Nije loše — ali je vjetrovito.', en:"Not bad — but it's windy."},
+    ]
+  },
+  {
+    prompt: "Ask if it's cold in Split.",
+    answers: [
+      {hr:'Je li hladno u Splitu?', en:"Is it cold in Split?"},
+      {hr:'Je li hladno u Splitu danas?', en:"Is it cold in Split today?"},
+    ]
+  },
+  {
+    prompt: "Say it's snowing.",
+    answers: [
+      {hr:'Pada snijeg.', en:"It's snowing."},
+      {hr:'Pada snijeg danas.', en:"It's snowing today."},
+      {hr:'Pada snijeg u planinama.', en:"It's snowing in the mountains."},
+    ]
+  },
+  {
+    prompt: "Say the weather is warm today.",
+    answers: [
+      {hr:'Danas je toplo.', en:"Today it's warm."},
+      {hr:'Vrijeme je toplo danas.', en:'The weather is warm today.'},
+      {hr:'Danas je lijepo i toplo.', en:"Today it's nice and warm."},
+    ]
+  },
+  {
+    prompt: "Say it's foggy in the morning.",
+    answers: [
+      {hr:'Ujutro je maglovito.', en:"In the morning it's foggy."},
+      {hr:'Maglovito je ujutro.', en:"It's foggy in the morning."},
+    ]
+  },
+  {
+    prompt: "Ask what the weather is like today.",
+    answers: [
+      {hr:'Kakvo je vrijeme danas?', en:"What's the weather like today?"},
+      {hr:'Kakvo je vrijeme?', en:"What's the weather like?"},
+    ]
+  },
+  {
+    prompt: "Say it's not cold, it's warm.",
+    answers: [
+      {hr:'Nije hladno, toplo je.', en:"It's not cold, it's warm."},
+      {hr:'Nije hladno nego toplo.', en:"It's not cold, it's warm."},
+      {hr:'Nije hladno — je toplo.', en:"It's not cold — it's warm."},
+    ]
+  },
+  {
+    prompt: "Say the sun is shining.",
+    answers: [
+      {hr:'Sunce sija.', en:'The sun is shining.'},
+      {hr:'Sunce sija danas.', en:'The sun is shining today.'},
+      {hr:'Sunce sija i lijepo je.', en:"The sun is shining and it's nice."},
+    ]
+  },
+  {
+    prompt: "Say it's stormy in the mountains.",
+    answers: [
+      {hr:'U planinama je olujno.', en:"In the mountains it's stormy."},
+      {hr:'Olujno je u planinama.', en:"It's stormy in the mountains."},
+    ]
+  },
+  {
+    prompt: "Ask if it's hot at the coast.",
+    answers: [
+      {hr:'Je li vruće na moru?', en:"Is it hot at the coast?"},
+      {hr:'Je li vruće na moru danas?', en:"Is it hot at the coast today?"},
+    ]
+  },
+  {
+    prompt: "Say the weather is cloudy but fresh.",
+    answers: [
+      {hr:'Oblačno je ali svježe.', en:"It's cloudy but fresh."},
+      {hr:'Vrijeme je oblačno i svježe.', en:'The weather is cloudy and fresh.'},
+      {hr:'Nije sunčano — oblačno je i svježe.', en:"It's not sunny — it's cloudy and fresh."},
+    ]
+  },
+];
+
 let tweather = { frame:null, desc:null, mod:null };
+let tweatherMode = 'free';
+let tweatherPr = { frame:null, desc:null, mod:null };
+let tweatherPromptIdx = 0;
+let tweatherPromptOrder = [];
 
 function initTopicWeather(){
   tweather = { frame:null, desc:null, mod:null };
+  tweatherPr = { frame:null, desc:null, mod:null };
+  tweatherMode = 'free';
+  tweatherPromptOrder = tweatherPrompts.map(function(_,i){ return i; }).sort(function(){ return Math.random()-0.5; });
+  tweatherPromptIdx = 0;
+
+  document.getElementById('tweather-mode-free').classList.add('active');
+  document.getElementById('tweather-mode-prompted').classList.remove('active');
+  document.getElementById('tweather-free-rows').style.display = '';
+  document.getElementById('tweather-prompted-rows').style.display = 'none';
+  document.getElementById('tweather-done-btn').style.display = 'none';
+  document.getElementById('tweather-skip-btn').style.display = 'none';
+  document.getElementById('tweather-clear-btn').style.display = '';
 
   document.getElementById('tweather-vocab').innerHTML = tweatherVocab.map(function(w){
-    return '<div class="topic-vocab-tile" onclick="speak(this.dataset.hr)" data-hr="'+w.hr+'">' +
-      '<span class="tvt-hr">'+w.hr+'</span><span class="tvt-en">'+w.en+'</span></div>';
+    return '<div class="topic-vocab-tile" onclick="speak(this.dataset.hr)" data-hr="' + w.hr + '">' +
+      '<span class="tvt-hr">' + w.hr + '</span><span class="tvt-en">' + w.en + '</span></div>';
   }).join('');
 
   document.getElementById('tweather-mods').innerHTML = tweatherMods.map(function(m){
-    return '<div class="topic-mod-tile" onclick="speak(this.dataset.hr)" data-hr="'+m.hr+'">' +
-      '<span class="tmt-hr">'+m.hr+'</span><span class="tmt-en">'+m.en+'</span></div>';
+    return '<div class="topic-mod-tile" onclick="speak(this.dataset.hr)" data-hr="' + m.hr + '">' +
+      '<span class="tmt-hr">' + m.hr + '</span><span class="tmt-en">' + m.en + '</span></div>';
   }).join('');
 
-  window.tweather_frame_chips_data = tweatherFrames;
-  window.tweather_desc_chips_data  = tweatherVocab;
-  window.tweather_mod_chips_data   = tweatherMods;
+  window.tweather_frame_data = tweatherFrames;
+  window.tweather_desc_data  = tweatherVocab;
+  window.tweather_mod_data   = tweatherMods;
 
-  var frameHtml = tweatherFrames.map(function(f,i){ return '<button class="topic-chip tc-meal" onclick="tweatherPickIdx(this,\'frame\',window.tweather_frame_chips_data,'+i+')">'+f.hr+'</button>'; }).join('');
-  var descHtml  = tweatherVocab.map(function(w,i){  return '<button class="topic-chip" onclick="tweatherPickIdx(this,\'desc\',window.tweather_desc_chips_data,'+i+')">'+w.hr+'</button>'; }).join('');
-  var modHtml   = tweatherMods.map(function(m,i){   return '<button class="topic-chip tc-mod" onclick="tweatherPickIdx(this,\'mod\',window.tweather_mod_chips_data,'+i+')">'+m.hr+'</button>'; }).join('');
+  var frameHtml = tweatherFrames.map(function(f,i){ return '<button class="topic-chip tc-meal" onclick="tweatherPickIdx(this,\'frame\',window.tweather_frame_data,'+i+')">' + f.hr + '</button>'; }).join('');
+  var descHtml  = tweatherVocab.map(function(w,i){  return '<button class="topic-chip" onclick="tweatherPickIdx(this,\'desc\',window.tweather_desc_data,'+i+')">' + w.hr + '</button>'; }).join('');
+  var modHtml   = tweatherMods.map(function(m,i){   return '<button class="topic-chip tc-mod" onclick="tweatherPickIdx(this,\'mod\',window.tweather_mod_data,'+i+')">' + m.hr + '</button>'; }).join('');
 
   document.getElementById('tweather-frame-chips').innerHTML = frameHtml;
   document.getElementById('tweather-desc-chips').innerHTML  = descHtml;
   document.getElementById('tweather-mod-chips').innerHTML   = modHtml;
 
+  // Prompted chips (same data, different IDs)
+  document.getElementById('tweather-pr-frame-chips').innerHTML = tweatherFrames.map(function(f,i){ return '<button class="topic-chip tc-meal" onclick="tweatherPrPickIdx(this,\'frame\',window.tweather_frame_data,'+i+')">' + f.hr + '</button>'; }).join('');
+  document.getElementById('tweather-pr-desc-chips').innerHTML  = tweatherVocab.map(function(w,i){  return '<button class="topic-chip" onclick="tweatherPrPickIdx(this,\'desc\',window.tweather_desc_data,'+i+')">' + w.hr + '</button>'; }).join('');
+  document.getElementById('tweather-pr-mod-chips').innerHTML   = tweatherMods.map(function(m,i){   return '<button class="topic-chip tc-mod" onclick="tweatherPrPickIdx(this,\'mod\',window.tweather_mod_data,'+i+')">' + m.hr + '</button>'; }).join('');
+
   tweatherUpdateDisplay();
+}
+
+function tweatherSetMode(mode, btn){
+  tweatherMode = mode;
+  tweather  = { frame:null, desc:null, mod:null };
+  tweatherPr = { frame:null, desc:null, mod:null };
+  document.querySelectorAll('#topic-weather .sb-group-tab').forEach(function(b){ b.classList.remove('active'); });
+  btn.classList.add('active');
+  document.getElementById('tweather-free-rows').style.display     = mode === 'free'     ? '' : 'none';
+  document.getElementById('tweather-prompted-rows').style.display = mode === 'prompted' ? '' : 'none';
+  document.getElementById('tweather-done-btn').style.display  = mode === 'prompted' ? '' : 'none';
+  document.getElementById('tweather-skip-btn').style.display  = mode === 'prompted' ? '' : 'none';
+  document.getElementById('tweather-clear-btn').style.display = mode === 'prompted' ? 'none' : '';
+  document.getElementById('tweather-model-answer').style.display = 'none';
+  document.querySelectorAll('#topic-weather .topic-chip').forEach(function(b){ b.classList.remove('tc-selected'); });
+  if(mode === 'prompted') tweatherLoadPrompt();
+  else tweatherUpdateDisplay();
 }
 
 function tweatherPickIdx(btn, slot, arr, idx){
@@ -8371,13 +8592,15 @@ function tweatherPickIdx(btn, slot, arr, idx){
   tweatherUpdateDisplay();
 }
 
-function tweatherUpdateDisplay(){
-  var el = document.getElementById('tweather-display');
-  var f = tweather.frame, d = tweather.desc, m = tweather.mod;
-  if(!f && !d){
-    el.innerHTML = '<div class="topic-build-placeholder">Pick a frame, descriptor and time to build your sentence...</div>';
-    return;
-  }
+function tweatherPrPickIdx(btn, slot, arr, idx){
+  tweatherPr[slot] = arr[idx];
+  var rowMap = {frame:'tweather-pr-frame-chips', desc:'tweather-pr-desc-chips', mod:'tweather-pr-mod-chips'};
+  document.getElementById(rowMap[slot]).querySelectorAll('.topic-chip').forEach(function(b){ b.classList.remove('tc-selected'); });
+  btn.classList.add('tc-selected');
+  tweatherUpdateDisplay();
+}
+
+function tweatherBuildSentence(f, d, m){
   var hr = '', en = '';
   if(f){
     if(f.needsDesc){
@@ -8393,10 +8616,57 @@ function tweatherUpdateDisplay(){
     hr = 'Vrijeme je ' + (m ? m.hr + ' ' : '') + d.hr;
     en = 'The weather is ' + (m ? m.en + ' ' : '') + d.en;
   }
+  return {hr: hr, en: en};
+}
+
+function tweatherUpdateDisplay(){
+  var el = document.getElementById('tweather-display');
+  var src = tweatherMode === 'prompted' ? tweatherPr : tweather;
+  var f = src.frame, d = src.desc, m = src.mod;
+
+  if(!f && !d){
+    var ph = tweatherMode === 'prompted'
+      ? 'Build your sentence using the chips below...'
+      : 'Pick a frame, descriptor and time to build your sentence...';
+    el.innerHTML = '<div class="topic-build-placeholder">' + ph + '</div>';
+    return;
+  }
+
+  var s = tweatherBuildSentence(f, d, m);
   var punct = (f && f.hr === 'Je li') ? '?' : '.';
-  hr = hr.charAt(0).toUpperCase() + hr.slice(1) + punct;
-  en = en.charAt(0).toUpperCase() + en.slice(1) + punct;
-  el.innerHTML = '<div class="topic-build-sentence">'+hr+'</div><div class="topic-build-translation">'+en+'</div>';
+  var hr = s.hr.charAt(0).toUpperCase() + s.hr.slice(1) + punct;
+  var en = s.en.charAt(0).toUpperCase() + s.en.slice(1) + punct;
+  el.innerHTML = '<div class="topic-build-sentence">' + hr + '</div><div class="topic-build-translation">' + en + '</div>';
+}
+
+function tweatherLoadPrompt(){
+  document.getElementById('tweather-model-answer').style.display = 'none';
+  document.querySelectorAll('#tweather-prompted-rows .topic-chip').forEach(function(b){ b.classList.remove('tc-selected'); });
+  tweatherPr = { frame:null, desc:null, mod:null };
+  var idx = tweatherPromptOrder[tweatherPromptIdx % tweatherPromptOrder.length];
+  document.getElementById('tweather-prompt-text').textContent = tweatherPrompts[idx].prompt;
+  document.getElementById('tweather-display').innerHTML = '<div class="topic-build-placeholder">Build your sentence using the chips below...</div>';
+}
+
+function tweatherNextPrompt(){
+  tweatherPromptIdx++;
+  tweatherLoadPrompt();
+}
+
+function tweatherDone(){
+  var idx = tweatherPromptOrder[tweatherPromptIdx % tweatherPromptOrder.length];
+  var p = tweatherPrompts[idx];
+  var html = p.answers.map(function(a, i){
+    var isLast = i === p.answers.length - 1;
+    return '<div style="margin-bottom:' + (isLast ? '0' : '8px') + ';padding-bottom:' + (isLast ? '0' : '8px') + ';border-bottom:' + (isLast ? 'none' : '1px solid rgba(107,122,58,0.2)') + ';">' +
+      '<div style="font-family:var(--font-display);font-size:1rem;font-weight:600;color:var(--ink);margin-bottom:2px;">' + a.hr + '</div>' +
+      '<div style="font-size:0.8rem;color:var(--stone-light);font-style:italic;">' + a.en + '</div>' +
+      '</div>';
+  }).join('');
+  document.getElementById('tweather-model-answer-content').innerHTML = html;
+  document.getElementById('tweather-model-answer').style.display = '';
+  var sent = document.querySelector('#tweather-display .topic-build-sentence');
+  if(sent) speak(sent.textContent.replace(/[.?]$/, ''));
 }
 
 function tweatherSpeak(){
@@ -8430,39 +8700,23 @@ const tgreetFeelings = [
 ];
 
 const tgreetPlaces = [
-  {hr:'Zagreb', en:'Zagreb'},
-  {hr:'Split', en:'Split'},
-  {hr:'Rijeka', en:'Rijeka'},
-  {hr:'Dubrovnik', en:'Dubrovnik'},
-  {hr:'Pula', en:'Pula'},
-  {hr:'Osijek', en:'Osijek'},
-  {hr:'London', en:'London'},
-  {hr:'New York', en:'New York'},
-  {hr:'u gradu', en:'in the city'},
-  {hr:'u predgrađu', en:'in the suburbs'},
-  {hr:'na moru', en:'by the coast'},
-  {hr:'u Engleskoj', en:'in England'},
-  {hr:'u Americi', en:'in America'},
-  {hr:'u Australiji', en:'in Australia'},
+  {hr:'Zagreb', en:'Zagreb'}, {hr:'Split', en:'Split'}, {hr:'Rijeka', en:'Rijeka'},
+  {hr:'Dubrovnik', en:'Dubrovnik'}, {hr:'Pula', en:'Pula'}, {hr:'Osijek', en:'Osijek'},
+  {hr:'London', en:'London'}, {hr:'New York', en:'New York'},
+  {hr:'u gradu', en:'in the city'}, {hr:'u predgrađu', en:'in the suburbs'},
+  {hr:'na moru', en:'by the coast'}, {hr:'u Engleskoj', en:'in England'},
+  {hr:'u Americi', en:'in America'}, {hr:'u Australiji', en:'in Australia'},
 ];
 
 const tgreetJobs = [
-  {hr:'učitelj', en:'teacher (m)'},
-  {hr:'učiteljica', en:'teacher (f)'},
-  {hr:'liječnik', en:'doctor (m)'},
-  {hr:'liječnica', en:'doctor (f)'},
-  {hr:'konobar', en:'waiter (m)'},
-  {hr:'konobarica', en:'waitress (f)'},
-  {hr:'novinar', en:'journalist (m)'},
-  {hr:'novinarka', en:'journalist (f)'},
-  {hr:'student', en:'student (m)'},
-  {hr:'studentica', en:'student (f)'},
-  {hr:'odvjetnik', en:'lawyer (m)'},
-  {hr:'odvjetnica', en:'lawyer (f)'},
-  {hr:'kuhar', en:'chef (m)'},
-  {hr:'kuharica', en:'chef (f)'},
-  {hr:'programer', en:'programmer (m)'},
-  {hr:'programerica', en:'programmer (f)'},
+  {hr:'učitelj', en:'teacher (m)'}, {hr:'učiteljica', en:'teacher (f)'},
+  {hr:'liječnik', en:'doctor (m)'}, {hr:'liječnica', en:'doctor (f)'},
+  {hr:'konobar', en:'waiter (m)'}, {hr:'konobarica', en:'waitress (f)'},
+  {hr:'novinar', en:'journalist (m)'}, {hr:'novinarka', en:'journalist (f)'},
+  {hr:'student', en:'student (m)'}, {hr:'studentica', en:'student (f)'},
+  {hr:'odvjetnik', en:'lawyer (m)'}, {hr:'odvjetnica', en:'lawyer (f)'},
+  {hr:'kuhar', en:'chef (m)'}, {hr:'kuharica', en:'chef (f)'},
+  {hr:'programer', en:'programmer (m)'}, {hr:'programerica', en:'programmer (f)'},
 ];
 
 const tgreetQuestions = [
@@ -8473,7 +8727,6 @@ const tgreetQuestions = [
   {hr:'Što radiš?', en:'What do you do?'},
 ];
 
-// Answer starters — each knows which detail type it needs
 const tgreetAnswers = [
   {hr:'Zovem se', en:'My name is', detail:'name'},
   {hr:'Ja sam', en:'I am', detail:'name'},
@@ -8489,67 +8742,221 @@ const tgreetAnswers = [
 ];
 
 const tgreetSubjects = [
-  {hr:'medicinu', en:'medicine'},
-  {hr:'pravo', en:'law'},
-  {hr:'ekonomiju', en:'economics'},
-  {hr:'arhitekturu', en:'architecture'},
-  {hr:'povijest', en:'history'},
-  {hr:'biologiju', en:'biology'},
-  {hr:'jezike', en:'languages'},
-  {hr:'informatiku', en:'computer science'},
+  {hr:'medicinu', en:'medicine'}, {hr:'pravo', en:'law'},
+  {hr:'ekonomiju', en:'economics'}, {hr:'arhitekturu', en:'architecture'},
+  {hr:'povijest', en:'history'}, {hr:'biologiju', en:'biology'},
+  {hr:'jezike', en:'languages'}, {hr:'informatiku', en:'computer science'},
+];
+
+const tgreetPrompts = [
+  {
+    prompt: 'Tell Sanja your name.',
+    answers: [
+      {hr:'Zovem se [ime].', en:'My name is [name].'},
+      {hr:'Ja sam [ime].', en:'I am [name].'},
+      {hr:'Moje ime je [ime].', en:'My name is [name].'},
+    ]
+  },
+  {
+    prompt: 'Say where you are from.',
+    answers: [
+      {hr:'Ja sam iz Londona.', en:"I'm from London."},
+      {hr:'Dolazim iz Engleske.', en:'I come from England.'},
+      {hr:'Ja sam iz [grada].', en:"I'm from [city]."},
+    ]
+  },
+  {
+    prompt: 'Say where you live.',
+    answers: [
+      {hr:'Živim u Londonu.', en:'I live in London.'},
+      {hr:'Živim u [gradu].', en:'I live in [city].'},
+      {hr:'Živim u Engleskoj.', en:'I live in England.'},
+    ]
+  },
+  {
+    prompt: "Say you're fine, thanks.",
+    answers: [
+      {hr:'Dobro sam, hvala.', en:"I'm fine, thanks."},
+      {hr:'Dobro sam, hvala. A ti?', en:"I'm fine, thanks. And you?"},
+      {hr:'Super, hvala!', en:'Great, thanks!'},
+    ]
+  },
+  {
+    prompt: "Ask Sanja where she's from.",
+    answers: [
+      {hr:'Odakle si?', en:'Where are you from?'},
+      {hr:'Odakle si ti?', en:'Where are you from?'},
+    ]
+  },
+  {
+    prompt: 'Say what you do for work.',
+    answers: [
+      {hr:'Radim kao [zanimanje].', en:'I work as [profession].'},
+      {hr:'Ja sam [zanimanje].', en:'I am [profession].'},
+      {hr:'Radim u [mjesto].', en:'I work in [place].'},
+    ]
+  },
+  {
+    prompt: "Say you're studying Croatian.",
+    answers: [
+      {hr:'Učim hrvatski.', en:"I'm learning Croatian."},
+      {hr:'Studiram hrvatski.', en:"I'm studying Croatian."},
+      {hr:'Učim hrvatski jezik.', en:"I'm learning the Croatian language."},
+    ]
+  },
+  {
+    prompt: "Say you're tired today.",
+    answers: [
+      {hr:'Umoran sam danas.', en:"I'm tired today. (m)"},
+      {hr:'Umorna sam danas.', en:"I'm tired today. (f)"},
+      {hr:'Malo sam umoran danas.', en:"I'm a little tired today. (m)"},
+    ]
+  },
+  {
+    prompt: 'Ask Sanja where she lives.',
+    answers: [
+      {hr:'Gdje živiš?', en:'Where do you live?'},
+      {hr:'Gdje živiš ti?', en:'Where do you live?'},
+    ]
+  },
+  {
+    prompt: 'Say nice to meet you.',
+    answers: [
+      {hr:'Drago mi je.', en:'Nice to meet you.'},
+      {hr:'Drago mi je upoznati te.', en:'Nice to meet you.'},
+    ]
+  },
+  {
+    prompt: 'Say you work as a teacher.',
+    answers: [
+      {hr:'Radim kao učiteljica.', en:'I work as a teacher. (f)'},
+      {hr:'Radim kao učitelj.', en:'I work as a teacher. (m)'},
+      {hr:'Ja sam učiteljica.', en:"I'm a teacher. (f)"},
+    ]
+  },
+  {
+    prompt: 'Ask Sanja how she is.',
+    answers: [
+      {hr:'Kako si?', en:'How are you?'},
+      {hr:'Kako si ti?', en:'How are you?'},
+      {hr:'Sve okej?', en:'Everything okay?'},
+    ]
+  },
+  {
+    prompt: "Say you're happy today.",
+    answers: [
+      {hr:'Sretan sam danas.', en:"I'm happy today. (m)"},
+      {hr:'Sretna sam danas.', en:"I'm happy today. (f)"},
+      {hr:'Jako sam sretan danas.', en:"I'm really happy today. (m)"},
+    ]
+  },
+  {
+    prompt: 'Say you live in London.',
+    answers: [
+      {hr:'Živim u Londonu.', en:'I live in London.'},
+      {hr:'Ja živim u Londonu.', en:'I live in London.'},
+    ]
+  },
+  {
+    prompt: 'Ask Sanja what she does.',
+    answers: [
+      {hr:'Što radiš?', en:'What do you do?'},
+      {hr:'Što radiš ti?', en:'What do you do?'},
+      {hr:'Gdje radiš?', en:'Where do you work?'},
+    ]
+  },
 ];
 
 let tgreet = { q:null, a:null, detail:null };
+let tgreetMode = 'free';
+let tgreetPr = { a:null, q:null, detail:null };
+let tgreetPromptIdx = 0;
+let tgreetPromptOrder = [];
 
 function initTopicGreetings(){
   tgreet = { q:null, a:null, detail:null };
+  tgreetPr = { a:null, q:null, detail:null };
+  tgreetMode = 'free';
+  tgreetPromptOrder = tgreetPrompts.map(function(_,i){ return i; }).sort(function(){ return Math.random()-0.5; });
+  tgreetPromptIdx = 0;
 
-  // Feelings vocab — tap to hear
+  document.getElementById('tgreet-mode-free').classList.add('active');
+  document.getElementById('tgreet-mode-prompted').classList.remove('active');
+  document.getElementById('tgreet-free-rows').style.display = '';
+  document.getElementById('tgreet-prompted-rows').style.display = 'none';
+  document.getElementById('tgreet-done-btn').style.display = 'none';
+  document.getElementById('tgreet-skip-btn').style.display = 'none';
+  document.getElementById('tgreet-clear-btn').style.display = '';
+
   document.getElementById('tgreet-feelings').innerHTML = tgreetFeelings.map(function(w){
     return '<div class="topic-vocab-tile" onclick="speak(this.dataset.hr)" data-hr="' + w.hr + '">' +
       '<span class="tvt-hr">' + w.hr + '</span><span class="tvt-en">' + w.en + '</span></div>';
   }).join('');
 
-  // Places vocab — tap to hear
   document.getElementById('tgreet-places').innerHTML = tgreetPlaces.map(function(w){
     return '<div class="topic-vocab-tile" onclick="speak(this.dataset.hr)" data-hr="' + w.hr + '">' +
       '<span class="tvt-hr">' + w.hr + '</span><span class="tvt-en">' + w.en + '</span></div>';
   }).join('');
 
-  // Jobs vocab — tap to hear
   document.getElementById('tgreet-jobs').innerHTML = tgreetJobs.map(function(w){
     return '<div class="topic-vocab-tile" onclick="speak(this.dataset.hr)" data-hr="' + w.hr + '">' +
       '<span class="tvt-hr">' + w.hr + '</span><span class="tvt-en">' + w.en + '</span></div>';
   }).join('');
 
-  // Store data on window for index-based onclick handlers
   window.tgreet_q_data = tgreetQuestions;
   window.tgreet_a_data = tgreetAnswers;
 
-  // Question chips
   document.getElementById('tgreet-q-chips').innerHTML = tgreetQuestions.map(function(q, i){
     return '<button class="topic-chip tc-meal" onclick="tgreetPickQ(' + i + ',this)">' + q.hr + '</button>';
   }).join('');
 
-  // Answer chips
   document.getElementById('tgreet-a-chips').innerHTML = tgreetAnswers.map(function(a, i){
     return '<button class="topic-chip tc-verb" onclick="tgreetPickA(' + i + ',this)">' + a.hr + '</button>';
   }).join('');
 
-  // Detail chips — hidden until answer picked
   document.getElementById('tgreet-detail-chips').innerHTML = '';
   document.getElementById('tgreet-detail-row').style.display = 'none';
+
+  // Prompted chips
+  document.getElementById('tgreet-pr-a-chips').innerHTML = tgreetAnswers.map(function(a, i){
+    return '<button class="topic-chip tc-verb" onclick="tgreetPrPickA(' + i + ',this)">' + a.hr + '</button>';
+  }).join('');
+
+  document.getElementById('tgreet-pr-q-chips').innerHTML = tgreetQuestions.map(function(q, i){
+    return '<button class="topic-chip tc-meal" onclick="tgreetPrPickQ(' + i + ',this)">' + q.hr + '</button>';
+  }).join('');
+
+  document.getElementById('tgreet-pr-detail-chips').innerHTML = '';
+  document.getElementById('tgreet-pr-detail-row').style.display = 'none';
 
   tgreetUpdateDisplay();
 }
 
+function tgreetSetMode(mode, btn){
+  tgreetMode = mode;
+  tgreet  = { q:null, a:null, detail:null };
+  tgreetPr = { a:null, q:null, detail:null };
+  document.querySelectorAll('#topic-greetings .sb-group-tab').forEach(function(b){ b.classList.remove('active'); });
+  btn.classList.add('active');
+  document.getElementById('tgreet-free-rows').style.display     = mode === 'free'     ? '' : 'none';
+  document.getElementById('tgreet-prompted-rows').style.display = mode === 'prompted' ? '' : 'none';
+  document.getElementById('tgreet-done-btn').style.display  = mode === 'prompted' ? '' : 'none';
+  document.getElementById('tgreet-skip-btn').style.display  = mode === 'prompted' ? '' : 'none';
+  document.getElementById('tgreet-clear-btn').style.display = mode === 'prompted' ? 'none' : '';
+  document.getElementById('tgreet-model-answer').style.display = 'none';
+  document.getElementById('tgreet-detail-row').style.display = 'none';
+  document.getElementById('tgreet-pr-detail-row').style.display = 'none';
+  document.querySelectorAll('#topic-greetings .topic-chip').forEach(function(b){ b.classList.remove('tc-selected'); });
+  if(mode === 'prompted') tgreetLoadPrompt();
+  else tgreetUpdateDisplay();
+}
+
+// Free build handlers (unchanged)
 function tgreetPickQ(idx, btn){
   tgreet.q = tgreetQuestions[idx];
-  tgreet.a = null;
-  tgreet.detail = null;
+  tgreet.a = null; tgreet.detail = null;
   document.getElementById('tgreet-q-chips').querySelectorAll('.topic-chip').forEach(function(b){ b.classList.remove('tc-selected'); });
   btn.classList.add('tc-selected');
-  // Reset answer chips selection
   document.getElementById('tgreet-a-chips').querySelectorAll('.topic-chip').forEach(function(b){ b.classList.remove('tc-selected'); });
   document.getElementById('tgreet-detail-chips').innerHTML = '';
   document.getElementById('tgreet-detail-row').style.display = 'none';
@@ -8561,47 +8968,7 @@ function tgreetPickA(idx, btn){
   tgreet.detail = null;
   document.getElementById('tgreet-a-chips').querySelectorAll('.topic-chip').forEach(function(b){ b.classList.remove('tc-selected'); });
   btn.classList.add('tc-selected');
-
-  // Build detail chips based on what answer needs
-  var detailRow = document.getElementById('tgreet-detail-row');
-  var detailEl = document.getElementById('tgreet-detail-chips');
-  var a = tgreet.a;
-
-  if(a.standalone || a.detail === 'none'){
-    detailEl.innerHTML = '<span style="font-size:0.82rem;color:var(--stone-light);font-style:italic;padding:6px 0 0;">Complete sentence — nothing more needed.</span>';
-    detailRow.style.display = 'flex';
-  } else if(a.detail === 'name'){
-    detailEl.innerHTML = '<span style="font-size:0.82rem;color:var(--terracotta);font-style:italic;padding:6px 0 0;">...then say your name!</span>';
-    detailRow.style.display = 'flex';
-  } else if(a.detail === 'place'){
-    window.tgreet_detail_data = tgreetPlaces;
-    detailEl.innerHTML = tgreetPlaces.map(function(p, i){
-      return '<button class="topic-chip tc-mod" onclick="tgreetPickDetail(' + i + ',window.tgreet_detail_data,this)">' + p.hr + '</button>';
-    }).join('');
-    detailRow.style.display = 'flex';
-  } else if(a.detail === 'job'){
-    window.tgreet_detail_data = tgreetJobs;
-    detailEl.innerHTML = tgreetJobs.map(function(j, i){
-      return '<button class="topic-chip tc-mod" onclick="tgreetPickDetail(' + i + ',window.tgreet_detail_data,this)">' + j.hr + '</button>';
-    }).join('');
-    detailRow.style.display = 'flex';
-  } else if(a.detail === 'feeling'){
-    window.tgreet_detail_data = tgreetFeelings;
-    detailEl.innerHTML = tgreetFeelings.map(function(f, i){
-      return '<button class="topic-chip tc-mod" onclick="tgreetPickDetail(' + i + ',window.tgreet_detail_data,this)">' + f.hr + '</button>';
-    }).join('');
-    detailRow.style.display = 'flex';
-  } else if(a.detail === 'subject'){
-    window.tgreet_detail_data = tgreetSubjects;
-    detailEl.innerHTML = tgreetSubjects.map(function(s, i){
-      return '<button class="topic-chip tc-mod" onclick="tgreetPickDetail(' + i + ',window.tgreet_detail_data,this)">' + s.hr + '</button>';
-    }).join('');
-    detailRow.style.display = 'flex';
-  } else {
-    detailEl.innerHTML = '';
-    detailRow.style.display = 'none';
-  }
-
+  tgreetBuildDetailChips('tgreet-detail-chips', 'tgreet-detail-row', tgreet.a, 'tgreetPickDetail');
   tgreetUpdateDisplay();
 }
 
@@ -8612,69 +8979,165 @@ function tgreetPickDetail(idx, arr, btn){
   tgreetUpdateDisplay();
 }
 
-function tgreetUpdateDisplay(){
-  var el = document.getElementById('tgreet-display');
-  var q = tgreet.q, a = tgreet.a, d = tgreet.detail;
+// Prompted build handlers
+function tgreetPrPickA(idx, btn){
+  tgreetPr.a = tgreetAnswers[idx];
+  tgreetPr.q = null; tgreetPr.detail = null;
+  document.getElementById('tgreet-pr-a-chips').querySelectorAll('.topic-chip').forEach(function(b){ b.classList.remove('tc-selected'); });
+  document.getElementById('tgreet-pr-q-chips').querySelectorAll('.topic-chip').forEach(function(b){ b.classList.remove('tc-selected'); });
+  btn.classList.add('tc-selected');
+  tgreetBuildDetailChips('tgreet-pr-detail-chips', 'tgreet-pr-detail-row', tgreetPr.a, 'tgreetPrPickDetail');
+  tgreetUpdateDisplay();
+}
 
-  if(!q && !a){
-    el.innerHTML = '<div class="topic-build-placeholder">Pick a question, then build your answer...</div>';
-    return;
+function tgreetPrPickQ(idx, btn){
+  tgreetPr.q = tgreetQuestions[idx];
+  tgreetPr.a = null; tgreetPr.detail = null;
+  document.getElementById('tgreet-pr-q-chips').querySelectorAll('.topic-chip').forEach(function(b){ b.classList.remove('tc-selected'); });
+  document.getElementById('tgreet-pr-a-chips').querySelectorAll('.topic-chip').forEach(function(b){ b.classList.remove('tc-selected'); });
+  btn.classList.add('tc-selected');
+  document.getElementById('tgreet-pr-detail-chips').innerHTML = '';
+  document.getElementById('tgreet-pr-detail-row').style.display = 'none';
+  tgreetUpdateDisplay();
+}
+
+function tgreetPrPickDetail(idx, arr, btn){
+  tgreetPr.detail = arr[idx];
+  document.getElementById('tgreet-pr-detail-chips').querySelectorAll('.topic-chip').forEach(function(b){ b.classList.remove('tc-selected'); });
+  btn.classList.add('tc-selected');
+  tgreetUpdateDisplay();
+}
+
+function tgreetBuildDetailChips(chipsId, rowId, a, handlerName){
+  var detailEl = document.getElementById(chipsId);
+  var detailRow = document.getElementById(rowId);
+  if(!a){ detailEl.innerHTML = ''; detailRow.style.display = 'none'; return; }
+
+  if(a.standalone || a.detail === 'none'){
+    detailEl.innerHTML = '<span style="font-size:0.82rem;color:var(--stone-light);font-style:italic;padding:6px 0 0;">Complete sentence — nothing more needed.</span>';
+    detailRow.style.display = 'flex';
+  } else if(a.detail === 'name'){
+    detailEl.innerHTML = '<span style="font-size:0.82rem;color:var(--terracotta);font-style:italic;padding:6px 0 0;">...then say your name!</span>';
+    detailRow.style.display = 'flex';
+  } else {
+    var arr, items;
+    if(a.detail === 'place'){       arr = 'tgreet_place_data';   items = tgreetPlaces;   window.tgreet_place_data = tgreetPlaces; }
+    else if(a.detail === 'job'){    arr = 'tgreet_job_data';     items = tgreetJobs;     window.tgreet_job_data = tgreetJobs; }
+    else if(a.detail === 'feeling'){arr = 'tgreet_feel_data';    items = tgreetFeelings; window.tgreet_feel_data = tgreetFeelings; }
+    else if(a.detail === 'subject'){arr = 'tgreet_subj_data';    items = tgreetSubjects; window.tgreet_subj_data = tgreetSubjects; }
+    else { detailEl.innerHTML = ''; detailRow.style.display = 'none'; return; }
+    detailEl.innerHTML = items.map(function(item, i){
+      return '<button class="topic-chip tc-mod" onclick="' + handlerName + '(' + i + ',window.' + arr + ',this)">' + item.hr + '</button>';
+    }).join('');
+    detailRow.style.display = 'flex';
   }
+}
 
+function tgreetBuildSentenceHTML(a, detail, q){
+  if(!a && !q) return null;
   var hrParts = [], enParts = [];
-
-  // Show question in display as context
   if(q){
     hrParts.push('<span style="color:var(--stone-light);font-size:0.85rem;font-family:var(--font-body);font-weight:400;">' + q.hr + '</span>');
     enParts.push('<span style="color:var(--stone-light)">' + q.en + '</span>');
   }
-
   if(a){
-    var answerHr = a.hr;
-    var answerEn = a.en;
-
-    if(d && !a.standalone && a.detail !== 'name' && a.detail !== 'none'){
-      answerHr = answerHr + ' ' + d.hr;
-      answerEn = answerEn + ' ' + d.en;
+    var ansHr = a.hr, ansEn = a.en;
+    if(detail && !a.standalone && a.detail !== 'name' && a.detail !== 'none'){
+      ansHr = ansHr + ' ' + detail.hr;
+      ansEn = ansEn + ' ' + detail.en;
     }
-
-    if(!a.standalone){
-      answerHr = answerHr + '.';
-      answerEn = answerEn + '.';
-    }
-
-    // Capitalise
-    answerHr = answerHr.charAt(0).toUpperCase() + answerHr.slice(1);
-    answerEn = answerEn.charAt(0).toUpperCase() + answerEn.slice(1);
-
-    hrParts.push('<span style="font-family:var(--font-display);font-size:1.2rem;font-weight:600;color:var(--ink);">' + answerHr + '</span>');
-    enParts.push('<span style="font-size:0.82rem;color:var(--stone-light);font-style:italic;">' + answerEn + '</span>');
+    if(!a.standalone){ ansHr += '.'; ansEn += '.'; }
+    ansHr = ansHr.charAt(0).toUpperCase() + ansHr.slice(1);
+    ansEn = ansEn.charAt(0).toUpperCase() + ansEn.slice(1);
+    hrParts.push('<span style="font-family:var(--font-display);font-size:1.2rem;font-weight:600;color:var(--ink);">' + ansHr + '</span>');
+    enParts.push('<span style="font-size:0.82rem;color:var(--stone-light);font-style:italic;">' + ansEn + '</span>');
+  } else if(q) {
+    // Question only — show the question as the main answer
+    hrParts = [];
+    enParts = [];
+    var qHr = q.hr.charAt(0).toUpperCase() + q.hr.slice(1);
+    var qEn = q.en.charAt(0).toUpperCase() + q.en.slice(1);
+    hrParts.push('<span style="font-family:var(--font-display);font-size:1.2rem;font-weight:600;color:var(--ink);">' + qHr + '</span>');
+    enParts.push('<span style="font-size:0.82rem;color:var(--stone-light);font-style:italic;">' + qEn + '</span>');
   }
+  return '<div style="display:flex;flex-direction:column;gap:4px;">' + hrParts.join('<br>') + '</div>' +
+         '<div style="margin-top:4px;display:flex;flex-direction:column;gap:2px;">' + enParts.join('<br>') + '</div>';
+}
 
-  el.innerHTML =
-    '<div style="display:flex;flex-direction:column;gap:4px;">' +
-    hrParts.join('<br>') +
-    '</div>' +
-    '<div style="margin-top:4px;display:flex;flex-direction:column;gap:2px;">' +
-    enParts.join('<br>') +
-    '</div>';
+function tgreetUpdateDisplay(){
+  var el = document.getElementById('tgreet-display');
+  var html;
+  if(tgreetMode === 'free'){
+    html = tgreetBuildSentenceHTML(tgreet.a, tgreet.detail, tgreet.q);
+  } else {
+    // Prompted: answer takes priority; if only question picked show question
+    html = tgreetBuildSentenceHTML(tgreetPr.a, tgreetPr.detail, tgreetPr.q);
+  }
+  if(!html){
+    var ph = tgreetMode === 'prompted' ? 'Build your answer or question using the chips below...' : 'Pick a question, then build your answer...';
+    el.innerHTML = '<div class="topic-build-placeholder">' + ph + '</div>';
+  } else {
+    el.innerHTML = html;
+  }
+}
+
+function tgreetLoadPrompt(){
+  document.getElementById('tgreet-model-answer').style.display = 'none';
+  document.getElementById('tgreet-pr-detail-chips').innerHTML = '';
+  document.getElementById('tgreet-pr-detail-row').style.display = 'none';
+  document.querySelectorAll('#tgreet-prompted-rows .topic-chip').forEach(function(b){ b.classList.remove('tc-selected'); });
+  tgreetPr = { a:null, q:null, detail:null };
+  var idx = tgreetPromptOrder[tgreetPromptIdx % tgreetPromptOrder.length];
+  document.getElementById('tgreet-prompt-text').textContent = tgreetPrompts[idx].prompt;
+  document.getElementById('tgreet-display').innerHTML = '<div class="topic-build-placeholder">Build your answer or question using the chips below...</div>';
+}
+
+function tgreetNextPrompt(){
+  tgreetPromptIdx++;
+  tgreetLoadPrompt();
+}
+
+function tgreetDone(){
+  var idx = tgreetPromptOrder[tgreetPromptIdx % tgreetPromptOrder.length];
+  var p = tgreetPrompts[idx];
+  var html = p.answers.map(function(a, i){
+    var isLast = i === p.answers.length - 1;
+    return '<div style="margin-bottom:' + (isLast ? '0' : '8px') + ';padding-bottom:' + (isLast ? '0' : '8px') + ';border-bottom:' + (isLast ? 'none' : '1px solid rgba(107,122,58,0.2)') + ';">' +
+      '<div style="font-family:var(--font-display);font-size:1rem;font-weight:600;color:var(--ink);margin-bottom:2px;">' + a.hr + '</div>' +
+      '<div style="font-size:0.8rem;color:var(--stone-light);font-style:italic;">' + a.en + '</div>' +
+      '</div>';
+  }).join('');
+  document.getElementById('tgreet-model-answer-content').innerHTML = html;
+  document.getElementById('tgreet-model-answer').style.display = '';
+  var sent = document.querySelector('#tgreet-display .topic-build-sentence');
+  if(!sent) sent = document.querySelector('#tgreet-display span[style*="font-display"]');
+  if(sent) speak(sent.textContent.replace(/[.?]$/, ''));
 }
 
 function tgreetSpeak(){
-  var a = tgreet.a, d = tgreet.detail;
-  if(!a) return;
-  var text = a.hr;
-  if(d && !a.standalone && a.detail !== 'name' && a.detail !== 'none') text = text + ' ' + d.hr;
-  speak(text.replace(/\.$/, ''));
+  var el = document.getElementById('tgreet-display');
+  var src = tgreetMode === 'free' ? tgreet : tgreetPr;
+  var a = src.a, d = src.detail, q = src.q;
+  var text = '';
+  if(a){
+    text = a.hr;
+    if(d && !a.standalone && a.detail !== 'name' && a.detail !== 'none') text = text + ' ' + d.hr;
+  } else if(q){ text = q.hr; }
+  if(text) speak(text.replace(/[.?]$/, ''));
 }
 
 function tgreetClear(){
   tgreet = { q:null, a:null, detail:null };
+  tgreetPr = { a:null, q:null, detail:null };
   document.querySelectorAll('#topic-greetings .topic-chip').forEach(function(b){ b.classList.remove('tc-selected'); });
   document.getElementById('tgreet-detail-chips').innerHTML = '';
   document.getElementById('tgreet-detail-row').style.display = 'none';
+  document.getElementById('tgreet-pr-detail-chips').innerHTML = '';
+  document.getElementById('tgreet-pr-detail-row').style.display = 'none';
+  if(tgreetMode === 'prompted') document.getElementById('tgreet-model-answer').style.display = 'none';
   tgreetUpdateDisplay();
 }
+
 </script>
 </body>
 </html>
