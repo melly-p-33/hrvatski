@@ -2712,6 +2712,10 @@
           <div class="topic-build-label">Verb</div>
           <div class="topic-build-chips" id="tfood-pr-verb-chips"></div>
         </div>
+        <div class="topic-build-row" id="tfood-pr-ask-verb-row">
+          <div class="topic-build-label">Question verb</div>
+          <div class="topic-build-chips" id="tfood-pr-ask-verb-chips"></div>
+        </div>
         <div class="topic-build-row">
           <div class="topic-build-label">Food</div>
           <div class="topic-build-chips" id="tfood-pr-food-chips"></div>
@@ -8056,7 +8060,7 @@ const tfoodPrompts = [
 let tfood = { meal:null, verb:null, food:null, mod:null };
 let tfoodMode = 'answer';
 let tfoodAsk = { verb:null, food:null, meal:null, mod:null };
-let tfoodPr = { meal:null, verb:null, food:null, mod:null };
+let tfoodPr = { meal:null, verb:null, askVerb:null, food:null, mod:null };
 let tfoodPromptIdx = 0;
 let tfoodPromptOrder = [];
 
@@ -8104,7 +8108,7 @@ function tfoodSetMode(mode, btn){
   tfoodMode = mode;
   tfood    = { meal:null, verb:null, food:null, mod:null };
   tfoodAsk = { verb:null, food:null, meal:null, mod:null };
-  tfoodPr  = { meal:null, verb:null, food:null, mod:null };
+  tfoodPr  = { meal:null, verb:null, askVerb:null, food:null, mod:null };
 
   document.querySelectorAll('#topic-food .sb-group-tab').forEach(function(b){ b.classList.remove('active'); });
   btn.classList.add('active');
@@ -8161,6 +8165,9 @@ function buildTfoodPromptedChips(){
   document.getElementById('tfood-pr-verb-chips').innerHTML = tfoodVerbs.map(function(v,i){
     return '<button class="topic-chip tc-verb" onclick="tfoodPrPickIdx(this,\'verb\',window.tfood_verb_data,'+i+')">' + v.hr + '</button>';
   }).join('');
+  document.getElementById('tfood-pr-ask-verb-chips').innerHTML = tfoodAskVerbs.map(function(v,i){
+    return '<button class="topic-chip tc-verb" onclick="tfoodPrPickIdx(this,\'askVerb\',window.tfood_ask_verb_data,'+i+')">' + v.hr + '</button>';
+  }).join('');
   document.getElementById('tfood-pr-food-chips').innerHTML = tfoodVocab.map(function(f,i){
     return '<button class="topic-chip" onclick="tfoodPrPickIdx(this,\'food\',window.tfood_food_data,'+i+')">' + f.hr + '</button>';
   }).join('');
@@ -8172,7 +8179,7 @@ function buildTfoodPromptedChips(){
 function tfoodLoadPrompt(){
   document.getElementById('tfood-model-answer').style.display = 'none';
   document.querySelectorAll('#tfood-prompted-rows .topic-chip').forEach(function(b){ b.classList.remove('tc-selected'); });
-  tfoodPr = { meal:null, verb:null, food:null, mod:null };
+  tfoodPr = { meal:null, verb:null, askVerb:null, food:null, mod:null };
   var idx = tfoodPromptOrder[tfoodPromptIdx % tfoodPromptOrder.length];
   var p = tfoodPrompts[idx];
   document.getElementById('tfood-prompt-text').textContent = p.prompt;
@@ -8202,7 +8209,7 @@ function tfoodAskPickIdx(btn, slot, arr, idx){
 
 function tfoodPrPickIdx(btn, slot, arr, idx){
   tfoodPr[slot] = arr[idx];
-  var rowMap = {meal:'tfood-pr-meal-chips', verb:'tfood-pr-verb-chips', food:'tfood-pr-food-chips', mod:'tfood-pr-mod-chips'};
+  var rowMap = {meal:'tfood-pr-meal-chips', verb:'tfood-pr-verb-chips', askVerb:'tfood-pr-ask-verb-chips', food:'tfood-pr-food-chips', mod:'tfood-pr-mod-chips'};
   document.getElementById(rowMap[slot]).querySelectorAll('.topic-chip').forEach(function(b){ b.classList.remove('tc-selected'); });
   btn.classList.add('tc-selected');
   tfoodUpdateDisplay();
@@ -8236,16 +8243,27 @@ function tfoodUpdateDisplay(){
     el.innerHTML = '<div class="topic-build-sentence">' + hr + '</div><div class="topic-build-translation">' + en + '</div>';
 
   } else {
-    // Prompted — build display same as answer mode
-    var m = tfoodPr.meal, v = tfoodPr.verb, f = tfoodPr.food, mod = tfoodPr.mod;
-    if(!m && !v && !f){ el.innerHTML = '<div class="topic-build-placeholder">Build your answer using the chips below...</div>'; return; }
-    var parts = [], enParts = [];
-    if(m){ parts.push(m.hr); enParts.push(m.en); }
-    if(mod){ parts.push(mod.hr); enParts.push(mod.en); }
-    if(v){ parts.push(v.hr); enParts.push(v.en); }
-    if(f){ parts.push(f.hr); enParts.push(f.en); }
-    var hr = (parts.join(' ') + '.'); hr = hr.charAt(0).toUpperCase() + hr.slice(1);
-    var en = (enParts.join(' ') + '.'); en = en.charAt(0).toUpperCase() + en.slice(1);
+    // Prompted — handle both statement and question forms
+    var m = tfoodPr.meal, v = tfoodPr.verb, av = tfoodPr.askVerb, f = tfoodPr.food, mod = tfoodPr.mod;
+    if(!m && !v && !av && !f){ el.innerHTML = '<div class="topic-build-placeholder">Build your answer using the chips below...</div>'; return; }
+
+    var parts = [], enParts = [], isQuestion = !!av;
+    if(av){
+      // Question form: Jedeš li + food + meal + mod?
+      parts.push(av.hr); enParts.push(av.en);
+      if(f){ parts.push(f.hr); enParts.push(f.en); }
+      if(m){ parts.push(m.hr); enParts.push(m.en); }
+      if(mod){ parts.push(mod.hr); enParts.push(mod.en); }
+    } else {
+      // Statement form
+      if(m){ parts.push(m.hr); enParts.push(m.en); }
+      if(mod){ parts.push(mod.hr); enParts.push(mod.en); }
+      if(v){ parts.push(v.hr); enParts.push(v.en); }
+      if(f){ parts.push(f.hr); enParts.push(f.en); }
+    }
+    var punct = isQuestion ? '?' : '.';
+    var hr = (parts.join(' ') + punct); hr = hr.charAt(0).toUpperCase() + hr.slice(1);
+    var en = (enParts.join(' ') + punct); en = en.charAt(0).toUpperCase() + en.slice(1);
     el.innerHTML = '<div class="topic-build-sentence">' + hr + '</div><div class="topic-build-translation">' + en + '</div>';
   }
 }
