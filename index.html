@@ -1676,6 +1676,127 @@
     .topic-build-sentence { font-size: 1rem; }
   }
 
+  /* ── TRANSLATOR ── */
+  .trans-panel {
+    background: var(--white);
+    border: 1px solid rgba(90,82,72,0.1);
+    border-radius: var(--radius);
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+  }
+  .trans-lang-bar {
+    display: flex;
+    align-items: center;
+    padding: 8px 14px;
+    background: var(--sand);
+    border-bottom: 1px solid var(--sand-dark);
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--stone-light);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    gap: 8px;
+  }
+  .trans-textarea {
+    width: 100%;
+    min-height: 110px;
+    padding: 14px 16px;
+    font-family: var(--font-body);
+    font-size: 1rem;
+    color: var(--ink);
+    background: var(--white);
+    border: none;
+    resize: none;
+    outline: none;
+    line-height: 1.6;
+    box-sizing: border-box;
+  }
+  .trans-textarea::placeholder { color: var(--stone-pale); }
+  .trans-result {
+    min-height: 110px;
+    padding: 14px 16px;
+    font-size: 1rem;
+    color: var(--ink);
+    line-height: 1.6;
+  }
+  .trans-result-text {
+    font-family: var(--font-display);
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: 6px;
+  }
+  .trans-pronunciation {
+    font-size: 0.82rem;
+    color: var(--terracotta);
+    font-style: italic;
+    margin-bottom: 4px;
+  }
+  .trans-note {
+    font-size: 0.82rem;
+    color: var(--stone-light);
+    line-height: 1.5;
+  }
+  .trans-swap-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    border: 1.5px solid var(--sand-dark);
+    background: var(--white);
+    cursor: pointer;
+    color: var(--stone-light);
+    transition: all 0.15s;
+    flex-shrink: 0;
+    font-size: 1rem;
+  }
+  .trans-swap-btn:hover { border-color: var(--sea); color: var(--sea); background: var(--sea-pale); }
+  .trans-loading {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--stone-light);
+    font-size: 0.88rem;
+    font-style: italic;
+    padding: 14px 16px;
+  }
+  .trans-loading-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--terracotta);
+    animation: trans-bounce 1.2s infinite;
+  }
+  .trans-loading-dot:nth-child(2) { animation-delay: 0.2s; background: var(--sea); }
+  .trans-loading-dot:nth-child(3) { animation-delay: 0.4s; background: var(--olive); }
+  @keyframes trans-bounce {
+    0%, 80%, 100% { transform: scale(0.6); opacity: 0.4; }
+    40% { transform: scale(1); opacity: 1; }
+  }
+  .trans-history {
+    margin-top: 1.5rem;
+  }
+  .trans-history-title {
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--stone-light);
+    font-weight: 500;
+    margin-bottom: 10px;
+  }
+  .trans-history-item {
+    background: var(--white);
+    border: 1px solid rgba(90,82,72,0.08);
+    border-radius: var(--radius-sm);
+    padding: 10px 14px;
+    margin-bottom: 6px;
+    cursor: pointer;
+    transition: border-color 0.12s;
+  }
+  .trans-history-item:hover { border-color: var(--sand-dark); }
+  .trans-history-src { font-size: 0.88rem; color: var(--stone); margin-bottom: 2px; }
+  .trans-history-tgt { font-size: 0.9rem; font-family: var(--font-display); font-weight: 600; color: var(--ink); }
+
 </style>
 </head>
 <body>
@@ -1710,6 +1831,7 @@
     <button class="nav-group-btn" id="grp-practice" onclick="switchGroup('practice',this)">Practice</button>
     <button class="nav-group-btn" id="grp-reference" onclick="switchGroup('reference',this)">Reference</button>
     <button class="nav-group-btn" id="grp-topics" onclick="switchGroup('topics',this)">Topics</button>
+    <button class="nav-group-btn" id="grp-tools" onclick="switchGroup('tools',this)">Tools</button>
   </div>
   <div class="nav-sub active" id="sub-learn">
     <button class="nav-btn active" onclick="switchTab('flashcards',this)">Flashcards</button>
@@ -1739,6 +1861,9 @@
     <button class="nav-btn" onclick="switchTab('topic-weather',this)">Weather</button>
     <button class="nav-btn" onclick="switchTab('topic-greetings',this)">Greetings</button>
     <button class="nav-btn" onclick="switchTab('topic-verbs',this)">Verbs</button>
+  </div>
+  <div class="nav-sub" id="sub-tools">
+    <button class="nav-btn" onclick="switchTab('translator',this)">Translate</button>
   </div>
 </nav>
 
@@ -3262,6 +3387,63 @@
         <button class="btn btn-ghost" onclick="tverbClear()">Clear</button>
         <button class="btn btn-ghost" onclick="tverbNext()">New &#8635;</button>
       </div>
+    </div>
+  </div>
+  <!-- ── TRANSLATOR ── -->
+  <div id="translator" class="section">
+    <div class="section-header">
+      <div class="section-title">Translate</div>
+      <div class="section-sub">Croatian ↔ English — detects language automatically</div>
+    </div>
+
+    <!-- Direction indicator + swap -->
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
+      <div style="flex:1;font-size:0.82rem;font-weight:500;color:var(--ink);" id="trans-direction">Croatian → English</div>
+      <button class="trans-swap-btn" onclick="transSwap()" title="Swap languages">⇅</button>
+      <div style="flex:1;font-size:0.82rem;font-weight:500;color:var(--ink);text-align:right;" id="trans-direction-r">English → Croatian</div>
+    </div>
+
+    <!-- Input panel -->
+    <div class="trans-panel" style="margin-bottom:10px;">
+      <div class="trans-lang-bar">
+        <span id="trans-src-lang">Croatian / English</span>
+        <span style="margin-left:auto;font-size:0.7rem;cursor:pointer;color:var(--stone-pale);" onclick="transClear()">✕ clear</span>
+      </div>
+      <textarea class="trans-textarea" id="trans-input"
+        placeholder="Type Croatian or English..."
+        autocomplete="off" autocorrect="off" spellcheck="false"
+        oninput="transOnInput()"></textarea>
+    </div>
+
+    <!-- Translate button -->
+    <button class="btn btn-primary" onclick="transTranslate()" id="trans-btn"
+      style="width:100%;font-size:1rem;font-weight:600;height:44px;margin-bottom:10px;">
+      Translate ↵
+    </button>
+
+    <!-- Result panel -->
+    <div class="trans-panel" id="trans-result-panel" style="display:none;">
+      <div class="trans-lang-bar">
+        <span id="trans-tgt-lang">English</span>
+        <button class="btn btn-sea btn-sm btn-icon" onclick="transSpeak()" style="margin-left:auto;width:28px;height:28px;">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
+        </button>
+      </div>
+      <div class="trans-result" id="trans-result">
+        <div class="trans-loading" id="trans-loading" style="display:none;">
+          <div class="trans-loading-dot"></div>
+          <div class="trans-loading-dot"></div>
+          <div class="trans-loading-dot"></div>
+          <span>Translating...</span>
+        </div>
+        <div id="trans-result-inner"></div>
+      </div>
+    </div>
+
+    <!-- History -->
+    <div class="trans-history" id="trans-history" style="display:none;">
+      <div class="trans-history-title">Recent</div>
+      <div id="trans-history-list"></div>
     </div>
   </div>
 
@@ -5132,6 +5314,7 @@ const tabGroups = {
   quiz:'practice', typeit:'practice', listen:'practice', match:'practice', fillin:'practice', nouns:'practice', builder:'practice',
   vocab:'reference', phrases:'reference', alphabet:'reference', visual:'reference', lessons:'reference', grammar:'reference',
   'topic-food':'topics', 'topic-weather':'topics', 'topic-greetings':'topics', 'topic-verbs':'topics',
+  'translator':'tools',
 };
 
 function switchGroup(group, el){
@@ -5168,6 +5351,7 @@ function switchTab(id, el){
   if(id === 'topic-weather') initTopicWeather();
   if(id === 'topic-greetings') initTopicGreetings();
   if(id === 'topic-verbs') initTopicVerbs();
+  if(id === 'translator') initTranslator();
 }
 
 // ── PERSISTENCE ──
@@ -6108,6 +6292,7 @@ function switchTabById(id){
   if(id === 'topic-weather') initTopicWeather();
   if(id === 'topic-greetings') initTopicGreetings();
   if(id === 'topic-verbs') initTopicVerbs();
+  if(id === 'translator') initTranslator();
 }
 
 function toggleFav(key){
@@ -10116,6 +10301,163 @@ function tverbNext(){
   }
 }
 
+
+// ── TRANSLATOR ──
+
+let transMode = 'hr-en'; // 'hr-en' or 'en-hr'
+let transHistory = [];
+let transDebounceTimer = null;
+let transCurrentHrText = ''; // last Croatian text for speaking
+
+function initTranslator(){
+  transMode = 'hr-en';
+  document.getElementById('trans-input').value = '';
+  document.getElementById('trans-result-panel').style.display = 'none';
+  document.getElementById('trans-result-inner').innerHTML = '';
+  transUpdateDirectionUI();
+  transRenderHistory();
+}
+
+function transUpdateDirectionUI(){
+  if(transMode === 'hr-en'){
+    document.getElementById('trans-src-lang').textContent = 'Croatian';
+    document.getElementById('trans-tgt-lang').textContent = 'English';
+    document.getElementById('trans-direction').textContent = 'Croatian → English';
+    document.getElementById('trans-direction-r').textContent = 'English → Croatian';
+    document.getElementById('trans-input').placeholder = 'Type Croatian...';
+  } else {
+    document.getElementById('trans-src-lang').textContent = 'English';
+    document.getElementById('trans-tgt-lang').textContent = 'Croatian';
+    document.getElementById('trans-direction').textContent = 'English → Croatian';
+    document.getElementById('trans-direction-r').textContent = 'Croatian → English';
+    document.getElementById('trans-input').placeholder = 'Type English...';
+  }
+}
+
+function transSwap(){
+  transMode = transMode === 'hr-en' ? 'en-hr' : 'hr-en';
+  // If there's a result, swap input/result
+  var resultEl = document.getElementById('trans-result-inner');
+  var input = document.getElementById('trans-input');
+  var mainText = resultEl.querySelector('.trans-result-text');
+  if(mainText && mainText.textContent){
+    var old = input.value;
+    input.value = mainText.textContent;
+    if(old) transTranslate();
+  }
+  transUpdateDirectionUI();
+}
+
+function transOnInput(){
+  // Auto-detect language direction from input
+  var val = document.getElementById('trans-input').value;
+  if(!val.trim()) return;
+  // Simple heuristic: Croatian-specific chars suggest HR input
+  var hasCroatian = /[čćšžđ]/i.test(val);
+  if(hasCroatian && transMode !== 'hr-en'){
+    transMode = 'hr-en';
+    transUpdateDirectionUI();
+  }
+}
+
+function transTranslate(){
+  var input = document.getElementById('trans-input').value.trim();
+  if(!input) return;
+
+  document.getElementById('trans-result-panel').style.display = '';
+  document.getElementById('trans-loading').style.display = 'flex';
+  document.getElementById('trans-result-inner').innerHTML = '';
+
+  var isHrToEn = transMode === 'hr-en';
+  var systemPrompt = isHrToEn
+    ? 'You are a Croatian-English translator helping a beginner learner. When given Croatian text, provide: 1) The English translation, 2) A pronunciation hint for the Croatian (showing syllable breaks), 3) A brief note if there is anything interesting about the word choice, formality, or grammar that a learner would benefit from knowing. Format your response as JSON with keys: "translation" (string), "pronunciation" (string, can be empty if input is a single common word), "note" (string, keep brief, can be empty). Return only valid JSON, no markdown.'
+    : 'You are an English-Croatian translator helping a beginner learner. When given English text, provide: 1) The Croatian translation, 2) A pronunciation hint for the Croatian translation (showing syllable breaks), 3) A brief note if there is anything interesting about the word choice, formality, or grammar that a learner would benefit from knowing — especially verb conjugation patterns or noun gender. Format your response as JSON with keys: "translation" (string), "pronunciation" (string), "note" (string, keep brief, can be empty). Return only valid JSON, no markdown.';
+
+  fetch('https://api.anthropic.com/v1/messages', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      model: 'claude-sonnet-4-20250514',
+      max_tokens: 1000,
+      system: systemPrompt,
+      messages: [{ role: 'user', content: input }]
+    })
+  })
+  .then(function(r){ return r.json(); })
+  .then(function(data){
+    document.getElementById('trans-loading').style.display = 'none';
+    var raw = data.content && data.content[0] ? data.content[0].text : '';
+    try {
+      var parsed = JSON.parse(raw.replace(/```json|```/g,'').trim());
+      var translation = parsed.translation || '';
+      var pronunciation = parsed.pronunciation || '';
+      var note = parsed.note || '';
+
+      // Store Croatian text for speaking
+      transCurrentHrText = isHrToEn ? input : translation;
+
+      var html = '<div class="trans-result-text">' + translation + '</div>';
+      if(pronunciation) html += '<div class="trans-pronunciation">' + pronunciation + '</div>';
+      if(note) html += '<div class="trans-note">💡 ' + note + '</div>';
+      document.getElementById('trans-result-inner').innerHTML = html;
+
+      // Add to history
+      transHistory.unshift({ src: input, tgt: translation, mode: transMode });
+      if(transHistory.length > 10) transHistory.pop();
+      transRenderHistory();
+    } catch(e) {
+      document.getElementById('trans-result-inner').innerHTML =
+        '<div class="trans-note" style="color:var(--terracotta)">Could not parse response. Please try again.</div>';
+    }
+  })
+  .catch(function(e){
+    document.getElementById('trans-loading').style.display = 'none';
+    document.getElementById('trans-result-inner').innerHTML =
+      '<div class="trans-note" style="color:var(--terracotta)">Translation failed. Check your connection and try again.</div>';
+  });
+}
+
+function transSpeak(){
+  if(transCurrentHrText) speak(transCurrentHrText);
+}
+
+function transClear(){
+  document.getElementById('trans-input').value = '';
+  document.getElementById('trans-result-panel').style.display = 'none';
+  document.getElementById('trans-result-inner').innerHTML = '';
+  transCurrentHrText = '';
+}
+
+function transRenderHistory(){
+  if(!transHistory.length){
+    document.getElementById('trans-history').style.display = 'none';
+    return;
+  }
+  document.getElementById('trans-history').style.display = '';
+  document.getElementById('trans-history-list').innerHTML = transHistory.map(function(h, i){
+    return '<div class="trans-history-item" onclick="transLoadHistory(' + i + ')">' +
+      '<div class="trans-history-src">' + h.src + '</div>' +
+      '<div class="trans-history-tgt">' + h.tgt + '</div>' +
+      '</div>';
+  }).join('');
+}
+
+function transLoadHistory(idx){
+  var h = transHistory[idx];
+  if(!h) return;
+  transMode = h.mode;
+  transUpdateDirectionUI();
+  document.getElementById('trans-input').value = h.src;
+  transTranslate();
+}
+
+// Allow Enter key to translate (Shift+Enter for newline)
+document.addEventListener('keydown', function(e){
+  if(e.key === 'Enter' && !e.shiftKey && document.activeElement.id === 'trans-input'){
+    e.preventDefault();
+    transTranslate();
+  }
+});
 </script>
 </body>
 </html>
