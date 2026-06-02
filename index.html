@@ -3126,6 +3126,10 @@
           <div class="topic-build-label">Weather</div>
           <div class="topic-build-chips" id="tweather-desc-chips"></div>
         </div>
+        <div class="topic-build-row" id="tweather-desc2-row" style="display:none;">
+          <div class="topic-build-label">But it's <span style="font-size:0.65rem;color:var(--stone-pale)">(optional)</span></div>
+          <div class="topic-build-chips" id="tweather-desc2-chips"></div>
+        </div>
         <div class="topic-build-row">
           <div class="topic-build-label">When/Where</div>
           <div class="topic-build-chips" id="tweather-mod-chips"></div>
@@ -3144,6 +3148,10 @@
         <div class="topic-build-row">
           <div class="topic-build-label">Weather</div>
           <div class="topic-build-chips" id="tweather-pr-desc-chips"></div>
+        </div>
+        <div class="topic-build-row" id="tweather-pr-desc2-row" style="display:none;">
+          <div class="topic-build-label">But it's <span style="font-size:0.65rem;color:var(--stone-pale)">(optional)</span></div>
+          <div class="topic-build-chips" id="tweather-pr-desc2-chips"></div>
         </div>
         <div class="topic-build-row">
           <div class="topic-build-label">When/Where <span style="font-size:0.65rem;color:var(--stone-pale)">(optional)</span></div>
@@ -9254,15 +9262,15 @@ const tweatherPrompts = [
     ]},
 ];
 
-let tweather = { frame:null, desc:null, mod:null };
+let tweather = { frame:null, desc:null, desc2:null, mod:null };
 let tweatherMode = 'free';
-let tweatherPr = { frame:null, desc:null, mod:null };
+let tweatherPr = { frame:null, desc:null, desc2:null, mod:null };
 let tweatherPromptIdx = 0;
 let tweatherPromptOrder = [];
 
 function initTopicWeather(){
-  tweather = { frame:null, desc:null, mod:null };
-  tweatherPr = { frame:null, desc:null, mod:null };
+  tweather = { frame:null, desc:null, desc2:null, mod:null };
+  tweatherPr = { frame:null, desc:null, desc2:null, mod:null };
   tweatherMode = 'free';
   tweatherPromptOrder = tweatherPrompts.map(function(_,i){ return i; }).sort(function(){ return Math.random()-0.5; });
   tweatherPromptIdx = 0;
@@ -9307,8 +9315,8 @@ function initTopicWeather(){
 
 function tweatherSetMode(mode, btn){
   tweatherMode = mode;
-  tweather  = { frame:null, desc:null, mod:null };
-  tweatherPr = { frame:null, desc:null, mod:null };
+  tweather  = { frame:null, desc:null, desc2:null, mod:null };
+  tweatherPr = { frame:null, desc:null, desc2:null, mod:null };
   document.querySelectorAll('#topic-weather .sb-group-tab').forEach(function(b){ b.classList.remove('active'); });
   btn.classList.add('active');
   document.getElementById('tweather-free-rows').style.display     = mode === 'free'     ? '' : 'none';
@@ -9324,25 +9332,44 @@ function tweatherSetMode(mode, btn){
 
 function tweatherPickIdx(btn, slot, arr, idx){
   tweather[slot] = arr[idx];
-  var rowMap = {frame:'tweather-frame-chips', desc:'tweather-desc-chips', mod:'tweather-mod-chips'};
+  var rowMap = {frame:'tweather-frame-chips', desc:'tweather-desc-chips', desc2:'tweather-desc2-chips', mod:'tweather-mod-chips'};
   document.getElementById(rowMap[slot]).querySelectorAll('.topic-chip').forEach(function(b){ b.classList.remove('tc-selected'); });
   btn.classList.add('tc-selected');
+  // Show desc2 row only when Nije frame is selected
+  if(slot === 'frame'){
+    var isNije = tweather.frame && tweather.frame.hr === 'Nije';
+    document.getElementById('tweather-desc2-row').style.display = isNije ? '' : 'none';
+    if(!isNije){ tweather.desc2 = null; document.getElementById('tweather-desc2-chips').querySelectorAll('.topic-chip').forEach(function(b){ b.classList.remove('tc-selected'); }); }
+  }
   tweatherUpdateDisplay();
 }
 
 function tweatherPrPickIdx(btn, slot, arr, idx){
   tweatherPr[slot] = arr[idx];
-  var rowMap = {frame:'tweather-pr-frame-chips', desc:'tweather-pr-desc-chips', mod:'tweather-pr-mod-chips'};
+  var rowMap = {frame:'tweather-pr-frame-chips', desc:'tweather-pr-desc-chips', desc2:'tweather-pr-desc2-chips', mod:'tweather-pr-mod-chips'};
   document.getElementById(rowMap[slot]).querySelectorAll('.topic-chip').forEach(function(b){ b.classList.remove('tc-selected'); });
   btn.classList.add('tc-selected');
+  if(slot === 'frame'){
+    var isNije = tweatherPr.frame && tweatherPr.frame.hr === 'Nije';
+    document.getElementById('tweather-pr-desc2-row').style.display = isNije ? '' : 'none';
+    if(!isNije){ tweatherPr.desc2 = null; document.getElementById('tweather-pr-desc2-chips').querySelectorAll('.topic-chip').forEach(function(b){ b.classList.remove('tc-selected'); }); }
+  }
   tweatherUpdateDisplay();
 }
 
-function tweatherBuildSentence(f, d, m){
+function tweatherBuildSentence(f, d, d2, m){
   var hr = '', en = '';
   if(f){
     if(f.needsDesc){
-      if(m && d){ hr = f.hr + ' ' + m.hr + ' ' + d.hr; en = f.en + ' ' + m.en + ' ' + d.en; }
+      if(f.hr === 'Nije' && d && d2){
+        // "Nije [desc], [desc2] je." pattern
+        hr = 'Nije ' + d.hr + ', ' + d2.hr + ' je';
+        en = "Not " + d.en + ", it is " + d2.en;
+        if(m){ hr += ' ' + m.hr; en += ' ' + m.en; }
+      } else if(f.hr === 'Nije' && d){
+        hr = 'Nije ' + d.hr; en = "It's not " + d.en;
+        if(m){ hr += ' ' + m.hr; en += ' ' + m.en; }
+      } else if(m && d){ hr = f.hr + ' ' + m.hr + ' ' + d.hr; en = f.en + ' ' + m.en + ' ' + d.en; }
       else if(d){ hr = f.hr + ' ' + d.hr; en = f.en + ' ' + d.en; }
       else if(m){ hr = f.hr + ' ' + m.hr + '...'; en = f.en + ' ' + m.en + '...'; }
       else { hr = f.hr + '...'; en = f.en + '...'; }
@@ -9370,7 +9397,8 @@ function tweatherUpdateDisplay(){
     return;
   }
 
-  var s = tweatherBuildSentence(f, d, m);
+  var d2 = src.desc2 || null;
+  var s = tweatherBuildSentence(f, d, d2, m);
   var punct = (f && f.hr === 'Je li') ? '?' : '.';
   var hr = s.hr.charAt(0).toUpperCase() + s.hr.slice(1) + punct;
   var en = s.en.charAt(0).toUpperCase() + s.en.slice(1) + punct;
@@ -9413,7 +9441,8 @@ function tweatherSpeak(){
 }
 
 function tweatherClear(){
-  tweather = { frame:null, desc:null, mod:null };
+  tweather = { frame:null, desc:null, desc2:null, mod:null };
+  document.getElementById('tweather-desc2-row').style.display = 'none';
   document.querySelectorAll('#topic-weather .topic-chip').forEach(function(b){ b.classList.remove('tc-selected'); });
   tweatherUpdateDisplay();
 }
@@ -10369,46 +10398,34 @@ function transTranslate(){
   document.getElementById('trans-result-inner').innerHTML = '';
 
   var isHrToEn = transMode === 'hr-en';
-  var systemPrompt = isHrToEn
-    ? 'You are a Croatian-English translator helping a beginner learner. When given Croatian text, provide: 1) The English translation, 2) A pronunciation hint for the Croatian (showing syllable breaks), 3) A brief note if there is anything interesting about the word choice, formality, or grammar that a learner would benefit from knowing. Format your response as JSON with keys: "translation" (string), "pronunciation" (string, can be empty if input is a single common word), "note" (string, keep brief, can be empty). Return only valid JSON, no markdown.'
-    : 'You are an English-Croatian translator helping a beginner learner. When given English text, provide: 1) The Croatian translation, 2) A pronunciation hint for the Croatian translation (showing syllable breaks), 3) A brief note if there is anything interesting about the word choice, formality, or grammar that a learner would benefit from knowing — especially verb conjugation patterns or noun gender. Format your response as JSON with keys: "translation" (string), "pronunciation" (string), "note" (string, keep brief, can be empty). Return only valid JSON, no markdown.';
+  var langPair = isHrToEn ? 'hr|en' : 'en|hr';
+  var url = 'https://api.mymemory.translated.net/get?q=' + encodeURIComponent(input) + '&langpair=' + langPair;
 
-  fetch('https://api.anthropic.com/v1/messages', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      model: 'claude-sonnet-4-20250514',
-      max_tokens: 1000,
-      system: systemPrompt,
-      messages: [{ role: 'user', content: input }]
-    })
-  })
+  fetch(url)
   .then(function(r){ return r.json(); })
   .then(function(data){
     document.getElementById('trans-loading').style.display = 'none';
-    var raw = data.content && data.content[0] ? data.content[0].text : '';
-    try {
-      var parsed = JSON.parse(raw.replace(/```json|```/g,'').trim());
-      var translation = parsed.translation || '';
-      var pronunciation = parsed.pronunciation || '';
-      var note = parsed.note || '';
+    var translation = data.responseData && data.responseData.translatedText ? data.responseData.translatedText : '';
+    if(!translation){ throw new Error('No translation'); }
 
-      // Store Croatian text for speaking
-      transCurrentHrText = isHrToEn ? input : translation;
+    // Store Croatian text for speaking
+    transCurrentHrText = isHrToEn ? input : translation;
 
-      var html = '<div class="trans-result-text">' + translation + '</div>';
-      if(pronunciation) html += '<div class="trans-pronunciation">' + pronunciation + '</div>';
-      if(note) html += '<div class="trans-note">💡 ' + note + '</div>';
-      document.getElementById('trans-result-inner').innerHTML = html;
+    // Build pronunciation hint for Croatian text
+    var croatianText = isHrToEn ? input : translation;
+    var html = '<div class="trans-result-text">' + translation + '</div>';
 
-      // Add to history
-      transHistory.unshift({ src: input, tgt: translation, mode: transMode });
-      if(transHistory.length > 10) transHistory.pop();
-      transRenderHistory();
-    } catch(e) {
-      document.getElementById('trans-result-inner').innerHTML =
-        '<div class="trans-note" style="color:var(--terracotta)">Could not parse response. Please try again.</div>';
+    // Show a note about the direction
+    if(!isHrToEn){
+      html += '<div class="trans-pronunciation">🔊 Tap the speaker to hear the Croatian</div>';
     }
+
+    document.getElementById('trans-result-inner').innerHTML = html;
+
+    // Add to history
+    transHistory.unshift({ src: input, tgt: translation, mode: transMode });
+    if(transHistory.length > 10) transHistory.pop();
+    transRenderHistory();
   })
   .catch(function(e){
     document.getElementById('trans-loading').style.display = 'none';
